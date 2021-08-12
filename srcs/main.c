@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:54:07 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/12 05:32:42 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/08/12 16:00:50 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	main(int ac, char **av)
 {
+	return (ft_pwd(ac - 1, av + 1));
 	return (ft_echo(ac - 1, av + 1));
 	return (0);
 }

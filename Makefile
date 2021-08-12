@@ -6,13 +6,14 @@
 #    By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/12 13:07:16 by anclarma          #+#    #+#              #
-#    Updated: 2021/08/12 05:27:07 by anclarma         ###   ########.fr        #
+#    Updated: 2021/08/12 16:00:00 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= minishell
 C_FILES		= main.c						\
-			  ft_echo.c
+			  ft_echo.c						\
+			  ft_pwd.c
 SRCS		= $(addprefix srcs/,$(C_FILES))
 OBJS		= $(SRCS:.c=.o)
 DEPS		= $(OBJS:.o=.d)
