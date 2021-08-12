@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:57:17 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/12 16:53:32 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/08/12 18:04:15 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/errno.h>
-
-static int	ft_strlen(const char *s)
-{
-	int	len;
-
-	len = 0;
-	while (s[len])
-		len++;
-	return (len);
-}
+#include "libft.h"
 
 static int	ft_error(const char *name, const char *error)
 {
