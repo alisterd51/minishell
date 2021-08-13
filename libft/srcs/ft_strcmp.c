@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/12 17:48:34 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/13 05:14:34 by anclarma         ###   ########.fr       */
+/*   Created: 2021/08/14 00:29:28 by anclarma          #+#    #+#             */
+/*   Updated: 2021/08/14 00:40:03 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
-
-size_t	ft_strlen(const char *s)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	size_t	len;
+	int	i;
 
-	if (!s)
-		return (0);
-	len = 0;
-	while (s[len])
-		len++;
-	return (len);
+	i = 0;
+	while ((unsigned char)s1[i] == (unsigned char)s2[i] && s1[i])
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

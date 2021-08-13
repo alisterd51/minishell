@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/12 17:48:34 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/13 05:14:34 by anclarma         ###   ########.fr       */
+/*   Created: 2021/08/13 23:48:07 by anclarma          #+#    #+#             */
+/*   Updated: 2021/08/14 00:05:07 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include <stdlib.h>
 
-size_t	ft_strlen(const char *s)
+char	*ft_strchr(const char *s, int c)
 {
-	size_t	len;
-
 	if (!s)
-		return (0);
-	len = 0;
-	while (s[len])
-		len++;
-	return (len);
+		return (NULL);
+	while (*s || !c)
+	{
+		if (*s == c)
+			return ((char *)s);
+		s++;
+	}
+	return (NULL);
 }

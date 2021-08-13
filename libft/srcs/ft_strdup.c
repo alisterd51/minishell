@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/12 17:48:34 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/13 05:14:34 by anclarma         ###   ########.fr       */
+/*   Created: 2021/08/14 00:48:54 by anclarma          #+#    #+#             */
+/*   Updated: 2021/08/14 00:57:52 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include <stdlib.h>
 
-size_t	ft_strlen(const char *s)
+char	*ft_strdup(const char *s1)
 {
+	char	*dst;
 	size_t	len;
 
-	if (!s)
-		return (0);
 	len = 0;
-	while (s[len])
+	while (s1[len])
 		len++;
-	return (len);
+	dst = (char *)malloc(sizeof(char) * (len + 1));
+	if (!dst)
+		return (NULL);
+	len = 0;
+	while (s1[len])
+	{
+		dst[len] = s1[len];
+		len++;
+	}
+	dst[len] = '\0';
+	return (dst);
 }
