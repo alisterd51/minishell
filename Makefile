@@ -6,11 +6,12 @@
 #    By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/12 13:07:16 by anclarma          #+#    #+#              #
-#    Updated: 2021/08/13 02:03:22 by anclarma         ###   ########.fr        #
+#    Updated: 2021/08/13 04:59:23 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= minishell
+LIBFT		= libft/libft.a
 C_FILES		= main.c						\
 			  ft_echo.c						\
 			  ft_cd.c						\
@@ -33,10 +34,10 @@ all:		$(NAME)
 %.o:%.c
 			$(CC) $(CFLAGS) $(CINCLUDES) -MMD -MP -c $< -o $@
 
-$(NAME):	sub_make $(OBJS)
+$(NAME):	$(LIBFT) $(OBJS)
 			$(CC) $(OBJS) $(CFLAGS) $(CLIBS) -o $@
 
-sub_make:
+$(LIBFT):
 			make -C libft all
 
 clean:

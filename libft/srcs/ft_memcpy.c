@@ -6,9 +6,11 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/13 02:45:27 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/13 02:47:38 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/08/13 04:31:29 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <stddef.h>
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {

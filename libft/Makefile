@@ -6,7 +6,7 @@
 #    By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/12 13:07:16 by anclarma          #+#    #+#              #
-#    Updated: 2021/08/13 02:30:31 by anclarma         ###   ########.fr        #
+#    Updated: 2021/08/13 04:48:05 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,16 @@ C_FILES		= ft_isalnum.c				\
 			  ft_isspace.c				\
 			  ft_tolower.c				\
 			  ft_toupper.c				\
+			  ft_memccpy.c				\
+			  ft_memcpy.c				\
+			  ft_memchr.c				\
+			  ft_memcmp.c				\
+			  ft_memmove.c				\
+			  ft_memset.c				\
+			  ft_putchar_fd.c			\
+			  ft_putendl_fd.c			\
+			  ft_putnbr_fd.c			\
+			  ft_putstr_fd.c			\
 			  ft_strlen.c
 SRCS		= $(addprefix srcs/,$(C_FILES))
 OBJS		= $(SRCS:.c=.o)

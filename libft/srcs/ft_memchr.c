@@ -6,9 +6,11 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/13 02:48:25 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/13 02:49:38 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/08/13 04:31:55 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <stddef.h>
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {
