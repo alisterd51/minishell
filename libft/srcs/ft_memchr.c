@@ -1,18 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/12 04:57:54 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/13 01:44:47 by anclarma         ###   ########.fr       */
+/*   Created: 2021/08/13 02:48:25 by anclarma          #+#    #+#             */
+/*   Updated: 2021/08/13 02:49:38 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_unset(int ac, char **av)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	(void)ac;
-	(void)av;
-	return (0);
+	size_t	i;
+
+	i = -1;
+	while (++i < n)
+		if (*((unsigned char *)s + i) == (unsigned char)c)
+			return ((void *)(s + i));
+	return (NULL);
 }

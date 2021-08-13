@@ -6,8 +6,13 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:57:31 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/12 04:57:33 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/08/13 01:44:19 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
+int	ft_export(int ac, char **av)
+{
+	(void)ac;
+	(void)av;
+	return (0);
+}

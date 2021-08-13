@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:57:17 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/12 18:04:15 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/08/13 01:59:55 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ int	ft_pwd(int ac, char **av)
 		if (!buf)
 			return (ft_error("pwd", strerror(errno)));
 	}
-	write(1, buf, ft_strlen(buf));
-	write(1, "\n", 1);
+	ft_putendl_fd(buf, 1);
 	free(buf);
 	return (0);
 }
