@@ -6,15 +6,13 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:54:07 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/12 16:00:50 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/08/14 16:13:15 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
-
 int	main(int ac, char **av)
 {
-	return (ft_pwd(ac - 1, av + 1));
-	return (ft_echo(ac - 1, av + 1));
+	(void)ac;
+	(void)av;
 	return (0);
 }

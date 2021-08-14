@@ -6,20 +6,13 @@
 #    By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/12 13:07:16 by anclarma          #+#    #+#              #
-#    Updated: 2021/08/13 04:59:23 by anclarma         ###   ########.fr        #
+#    Updated: 2021/08/14 16:12:44 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= minishell
 LIBFT		= libft/libft.a
-C_FILES		= main.c						\
-			  ft_echo.c						\
-			  ft_cd.c						\
-			  ft_pwd.c						\
-			  ft_export.c					\
-			  ft_unset.c					\
-			  ft_env.c						\
-			  ft_exit.c
+C_FILES		= main.c
 SRCS		= $(addprefix srcs/,$(C_FILES))
 OBJS		= $(SRCS:.c=.o)
 DEPS		= $(OBJS:.o=.d)
