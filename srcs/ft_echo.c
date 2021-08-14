@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:56:56 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/12 18:03:44 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/08/14 11:33:16 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_echo(int ac, char **av)
 	}
 	while (ac > 0)
 	{
-		write (1, *av, ft_strlen(*av));
+		write(1, *av, ft_strlen(*av));
 		av++;
 		ac--;
 		if (ac > 0)
