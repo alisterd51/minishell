@@ -6,12 +6,21 @@
 #    By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/12 13:07:16 by anclarma          #+#    #+#              #
-#    Updated: 2021/08/15 02:25:04 by anclarma         ###   ########.fr        #
+#    Updated: 2021/08/15 21:58:46 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= libft.a
-C_FILES		= ft_isalnum.c				\
+C_FILES		= ft_lstadd_back.c			\
+			  ft_lstadd_front.c			\
+			  ft_lstclear.c				\
+			  ft_lstdelone.c			\
+			  ft_lstiter.c				\
+			  ft_lstlast.c				\
+			  ft_lstmap.c				\
+			  ft_lstnew.c				\
+			  ft_lstsize.c				\
+			  ft_isalnum.c				\
 			  ft_isalpha.c				\
 			  ft_isascii.c				\
 			  ft_isdigit.c				\

@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   init_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/15 04:47:50 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/15 18:51:13 by anclarma         ###   ########.fr       */
+/*   Created: 2021/08/15 18:36:10 by anclarma          #+#    #+#             */
+/*   Updated: 2021/08/15 18:48:41 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "libft.h"
 
-int	ft_env(t_list *env)
+t_list	*init_env(char **env)
 {
-	char	*env_var;
+	t_list	*list_env;
 
-	env_var = getenv("TERM_PROGRAM");
-	ft_putstr_fd("TERM_PROGRAM", 1);
-	ft_putstr_fd("=", 1);
-	ft_putendl_fd(env_var, 1);
-	while (env)
+	list_env = NULL;
+	while (*env)
 	{
-		ft_putendl_fd(env->content, 1);
-		env = env->next;
+		ft_lstadd_back(&list_env, ft_lstnew(*env));
+		env++;
 	}
-	return (0);
+	return (list_env);
 }
