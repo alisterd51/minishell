@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 18:01:55 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/12 20:45:29 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/08/15 02:20:49 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,10 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t	ft_strlen(const char *s);
 size_t	ft_strnlen(const char *s, size_t maxlen);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
+
+/*
+** ft_stdlib.h
+*/
+void	*ft_realloc(void *ptr, size_t size);
 
 #endif

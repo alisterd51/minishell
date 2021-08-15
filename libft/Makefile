@@ -6,7 +6,7 @@
 #    By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/12 13:07:16 by anclarma          #+#    #+#              #
-#    Updated: 2021/08/14 01:19:41 by anclarma         ###   ########.fr        #
+#    Updated: 2021/08/15 02:25:04 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,8 @@ C_FILES		= ft_isalnum.c				\
 			  ft_strlcpy.c				\
 			  ft_strlen.c				\
 			  ft_strnlen.c				\
-			  ft_strnstr.c
+			  ft_strnstr.c				\
+			  ft_realloc.c
 SRCS		= $(addprefix srcs/,$(C_FILES))
 OBJS		= $(SRCS:.c=.o)
 DEPS		= $(OBJS:.o=.d)
