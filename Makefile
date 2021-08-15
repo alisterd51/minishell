@@ -6,7 +6,7 @@
 #    By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/12 13:07:16 by anclarma          #+#    #+#              #
-#    Updated: 2021/08/15 00:29:36 by anclarma         ###   ########.fr        #
+#    Updated: 2021/08/15 04:51:42 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME		= minishell
 LIBFT		= libft/libft.a
 C_FILES		= main.c						\
 			  ft_echo.c						\
-			  ft_pwd.c
+			  ft_pwd.c						\
+			  ft_env.c
 SRCS		= $(addprefix srcs/,$(C_FILES))
 OBJS		= $(SRCS:.c=.o)
 DEPS		= $(OBJS:.o=.d)
