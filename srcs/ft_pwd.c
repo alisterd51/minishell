@@ -6,12 +6,13 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 18:08:03 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/15 02:21:40 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/08/15 02:58:58 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 #include <sys/errno.h>
 #include "libft.h"
 
@@ -68,8 +69,13 @@ int	ft_pwd(int ac, char **av)
 		av++;
 	}
 	buf = alloc_pwd();
+	if (!buf)
+	{
+		ft_putstr_fd("pwd: ", 2);
+		ft_putendl_fd(strerror(errno), 2);
+		return (1);
+	}
 	ft_putendl_fd(buf, 1);
 	free(buf);
-	//if errno, affichage msg
 	return (0);
 }
