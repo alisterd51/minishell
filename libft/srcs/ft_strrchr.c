@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/13 23:54:52 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/14 01:21:12 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/08/16 17:02:57 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_strrchr(const char *s, int c)
 {
 	char	*dst;
 
+	if (!s)
+		return (NULL);
 	dst = NULL;
 	if (!*s && !c)
 		return ((char *)s);
