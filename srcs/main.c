@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:54:07 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/15 04:58:14 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/08/16 05:51:07 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,5 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	(void)env;
-	return (ft_env(ac - 1, av + 1));
 	return (0);
 }
