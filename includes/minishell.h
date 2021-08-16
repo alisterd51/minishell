@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.h                                          :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/12 05:30:04 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/16 06:34:05 by anclarma         ###   ########.fr       */
+/*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
+/*   Updated: 2021/08/16 06:34:31 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_H
-# define BUILTIN_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 # include "libft.h"
 
 /*
-** ft_echo.c
+** init_list.c
 */
-int	ft_echo(int ac, char **av);
-
-/*
-** ft_pwd.c
-*/
-int	ft_pwd(int ac, char **av);
-
-/*
-** ft_env.c
-*/
-int	ft_env(t_list *env);
+t_list	*init_env(char **env);
 
 #endif
