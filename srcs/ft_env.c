@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 04:47:50 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/15 18:51:13 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/08/16 05:47:09 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,6 @@
 
 int	ft_env(t_list *env)
 {
-	char	*env_var;
-
-	env_var = getenv("TERM_PROGRAM");
-	ft_putstr_fd("TERM_PROGRAM", 1);
-	ft_putstr_fd("=", 1);
-	ft_putendl_fd(env_var, 1);
 	while (env)
 	{
 		ft_putendl_fd(env->content, 1);

@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/15 19:12:53 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/16 05:44:48 by anclarma         ###   ########.fr       */
+/*   Created: 2021/08/16 02:58:05 by anclarma          #+#    #+#             */
+/*   Updated: 2021/08/16 03:06:51 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "libft.h"
 
-int	ft_lstsize(t_list *lst)
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-	int	ret;
-
-	ret = 0;
-	while (lst)
-	{
-		ret++;
-		lst = lst->next;
-	}
-	return (ret);
+	del(lst->content);
+	free(lst);
 }

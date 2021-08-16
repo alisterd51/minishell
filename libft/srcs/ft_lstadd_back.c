@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 22:01:21 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/15 22:41:27 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/08/16 02:47:23 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
 	while (*lst)
-		lst = &(lst->next);
+		lst = &((*lst)->next);
 	*lst = new;
 }
