@@ -6,7 +6,7 @@
 #    By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/12 13:07:16 by anclarma          #+#    #+#              #
-#    Updated: 2021/08/26 16:28:06 by anclarma         ###   ########.fr        #
+#    Updated: 2021/08/26 18:43:15 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ C_FILES		= ft_lstadd_back.c				\
 			  ft_strnlen.c					\
 			  ft_strnstr.c					\
 			  ft_bzero.c					\
+			  ft_atoi.c						\
 			  ft_calloc.c					\
 			  ft_realloc.c
 SRCS		= $(addprefix srcs/,$(C_FILES))
