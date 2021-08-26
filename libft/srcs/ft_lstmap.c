@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 04:07:34 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/16 05:33:55 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/08/26 18:00:16 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	}
 	if (error)
 		ft_lstclear(&new_lst, del);
-	return (lst);
+	return (new_lst);
 }
