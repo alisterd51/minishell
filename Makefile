@@ -6,7 +6,7 @@
 #    By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/12 13:07:16 by anclarma          #+#    #+#              #
-#    Updated: 2021/08/30 23:20:45 by anclarma         ###   ########.fr        #
+#    Updated: 2021/08/31 00:01:48 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ LIBFT		= libft/libft.a
 C_FILES		= main.c						\
 			  ft_echo.c						\
 			  ft_pwd.c						\
+			  ft_exit.c						\
 			  ft_env.c						\
 			  init_list.c					\
 			  clean_list.c

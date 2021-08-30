@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 05:30:04 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/16 06:34:05 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/08/31 00:01:28 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ int	ft_echo(int ac, char **av);
 ** ft_pwd.c
 */
 int	ft_pwd(int ac, char **av);
+
+/*
+** ft_exit.c
+*/
+int	ft_exit(int ac, char **av);
 
 /*
 ** ft_env.c
