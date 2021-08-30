@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 18:08:03 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/31 00:59:31 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/08/31 01:10:15 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,7 @@ int	ft_exit(int ac, char **av)
 	//cas 2: argument[0] non numerique
 	//	exit 2 et affichache msg d'erreur
 	//cas 3: 2 ou + arg et argument[0] numerique
-	//	return 1 et affichage d'erreur
+	//	return 2 et affichage d'erreur
+	//All builtins return an exit status of 2 to indicate incorrect usage,
+	//	generally invalid options or missing arguments
 }
