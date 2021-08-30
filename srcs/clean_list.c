@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   clean_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/30 23:16:01 by anclarma         ###   ########.fr       */
+/*   Created: 2021/08/30 23:18:49 by anclarma          #+#    #+#             */
+/*   Updated: 2021/08/30 23:21:30 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-# include "libft.h"
+#include <stdlib.h>
+#include "libft.h"
 
-/*
-** init_list.c
-*/
-t_list	*init_env(char **env);
-
-/*
-** clean_list.c
-*/
-void	clean_env(t_list **lst_env);
-
-#endif
+void	clean_env(t_list **lst_env)
+{
+	ft_lstclear(lst_env, free);
+}

@@ -6,7 +6,7 @@
 #    By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/12 13:07:16 by anclarma          #+#    #+#              #
-#    Updated: 2021/08/26 16:25:25 by anclarma         ###   ########.fr        #
+#    Updated: 2021/08/30 23:20:45 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ C_FILES		= main.c						\
 			  ft_echo.c						\
 			  ft_pwd.c						\
 			  ft_env.c						\
-			  init_list.c
+			  init_list.c					\
+			  clean_list.c
 SRCS		= $(addprefix srcs/,$(C_FILES))
 OBJS		= $(SRCS:.c=.o)
 DEPS		= $(OBJS:.o=.d)

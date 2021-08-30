@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 18:36:10 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/15 18:48:41 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/08/30 23:16:50 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_list	*init_env(char **env)
 	list_env = NULL;
 	while (*env)
 	{
-		ft_lstadd_back(&list_env, ft_lstnew(*env));
+		ft_lstadd_back(&list_env, ft_lstnew(ft_strdup(*env)));
 		env++;
 	}
 	return (list_env);
