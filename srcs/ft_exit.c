@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 18:08:03 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/31 01:10:15 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/09/05 14:43:48 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,45 @@
 #include <string.h>
 #include "libft.h"
 
-int	ft_exit(int ac, char **av)
+static int	ft_strisnum(char *str)
+{
+	if (!str)
+		return (0);
+	while (ft_isspace(*str))
+		str++;
+	if (*str == '-' || *str == '+')
+		str++;
+	while (ft_isdigit(*str))
+		str++;
+	while (ft_isspace(*str))
+		str++;
+	if (*str != '\0')
+		return (0);
+	return (1);
+}
+
+int	ft_exit(int ac, char **av, int status)
 {
 	ft_putendl_fd("exit", 1);
-	if (ac == 1)
+	if (ac == 0)
 	{
-		exit(0);//
+		exit(status);
 		return (0);
 	}
-	else
+	else if (!ft_strisnum(av[0]))
 	{
-		ft_putstr_fd("exit: ", 2);
-		ft_putendl_fd(strerror(E2BIG), 2);
-		return (1);
+		ft_putstr_fd("minishell: exit: ", 2);
+		ft_putstr_fd(av[0], 2);
+		ft_putendl_fd(": numeric argument required", 2);
+		exit(255);
+		return (2);
 	}
-	//cas 0: aucun argument
-	//	exit 0
-	//cas 1: 1 arg et argument[0] numerique (signed long long)
-	//	exit value (unsigned char)
-	//cas 2: argument[0] non numerique
-	//	exit 2 et affichache msg d'erreur
-	//cas 3: 2 ou + arg et argument[0] numerique
-	//	return 2 et affichage d'erreur
-	//All builtins return an exit status of 2 to indicate incorrect usage,
-	//	generally invalid options or missing arguments
+	else if (ac > 1)
+	{
+		ft_putstr_fd("minishell: exit: ", 2);
+		ft_putendl_fd("numeric argument required", 2);
+		return (2);
+	}
+	else
+		return (ft_atoi(av[0]));
 }
