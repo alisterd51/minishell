@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 18:08:03 by anclarma          #+#    #+#             */
-/*   Updated: 2021/09/05 14:43:48 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/09/05 15:26:12 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static int	ft_strisnum(char *str)
 		str++;
 	if (*str == '-' || *str == '+')
 		str++;
+	if (!ft_isdigit(*str))
+		return (0);
 	while (ft_isdigit(*str))
 		str++;
 	while (ft_isspace(*str))
