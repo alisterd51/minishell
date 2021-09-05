@@ -6,13 +6,11 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 18:08:03 by anclarma          #+#    #+#             */
-/*   Updated: 2021/09/05 15:37:56 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/09/05 15:55:28 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <errno.h>
 #include <stdlib.h>
-#include <string.h>
 #include "libft.h"
 
 static int	ft_strisnum(char *str)
