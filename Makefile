@@ -6,7 +6,7 @@
 #    By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/12 13:07:16 by anclarma          #+#    #+#              #
-#    Updated: 2021/09/26 14:37:08 by anclarma         ###   ########.fr        #
+#    Updated: 2021/09/27 21:56:16 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ C_FILES		= main.c						\
 			  ft_env.c						\
 			  ft_export.c					\
 			  init_list.c					\
+			  init_ast.c					\
 			  clean_list.c
 SRCS		= $(addprefix srcs/,$(C_FILES))
 OBJS		= $(SRCS:.c=.o)

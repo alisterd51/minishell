@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2021/09/26 18:33:49 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/09/27 21:55:30 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@ enum	e_ast_type
 typedef enum e_red_type	t_red_type;
 enum	e_red_type
 {
-	S_LEFT = 0,
-	D_LEFT = 1,
-	S_RIGHT = 2,
-	D_RIGHT = 3
+	NONE = 0,
+	S_LEFT = 1,
+	D_LEFT = 2,
+	S_RIGHT = 3,
+	D_RIGHT = 4
 };
 
 typedef struct s_ast	t_ast;
@@ -67,6 +68,11 @@ struct	s_redir
 ** init_list.c
 */
 t_list	*init_env(char **env);
+
+/*
+** init_ast.c
+*/
+t_ast	*init_ast(int ac, char **av);
 
 /*
 ** clean_list.c
