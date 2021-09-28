@@ -1,51 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2021/09/28 19:52:46 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/09/28 19:53:06 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-# include "libft.h"
-# include "struct.h"
+#ifndef STRUCT_H
+# define STRUCT_H
 
-# define NONE		0
-# define PIPELINE	1
-# define COMMAND	2
-# define S_LEFT		3
-# define D_LEFT		4
-# define S_RIGHT	5
-# define D_RIGHT	6
+typedef struct s_ast	t_ast;
+struct	s_ast
+{
+	int		type;
+	void	*paw1;
+	void	*paw2;
+};
 
-/*
-** init_list.c
-*/
-t_list	*init_env(char **env);
+typedef struct s_arg	t_arg;
+struct	s_arg
+{
+	char	*arg;
+	t_arg	*next;
+};
 
-/*
-** init_ast.c
-*/
-t_ast	*init_ast(int ac, char **av);
-
-/*
-** print_ast.c
-*/
-void	print_ast(t_ast *ast);
-
-/*
-** clean_list.c
-*/
-void	clean_env(t_list **lst_env);
-
-/*
-** clean_ast.c
-*/
-void	clean_ast(t_ast **ast);
+typedef struct s_redir	t_redir;
+struct	s_redir
+{
+	int		type;
+	char	*file;
+	t_redir	*next;
+};
 
 #endif
