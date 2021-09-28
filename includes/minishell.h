@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2021/09/28 19:52:46 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/09/28 21:52:41 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_ast	*init_ast(int ac, char **av);
 /*
 ** print_ast.c
 */
-void	print_ast(t_ast *ast);
+void	print_ast(t_ast *ast, int level);
 
 /*
 ** clean_list.c
