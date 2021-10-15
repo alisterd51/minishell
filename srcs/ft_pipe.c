@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:04:52 by anclarma          #+#    #+#             */
-/*   Updated: 2021/10/15 13:02:40 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/10/15 15:07:01 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,6 @@
 
 #define OUTPUT_END	0
 #define INPUT_END	1
-
-static int	ft_pipe1(int *fd, t_ast *ast, char **env)
-{
-	close(fd[INPUT_END]);
-	dup2(fd[OUTPUT_END], STDIN_FILENO);
-	close(fd[OUTPUT_END]);
-	return (exec_ast(ast->paw2, env));
-}
-
-static int	ft_pipe2(int *fd, t_ast *ast, char **env)
-{
-	close(fd[OUTPUT_END]);
-	dup2(fd[INPUT_END], STDIN_FILENO);
-	close(fd[INPUT_END]);
-	return (exec_ast(ast->paw1, env));
-}
 
 int	ft_pipe(t_ast *ast, char **env)
 {
@@ -43,13 +27,23 @@ int	ft_pipe(t_ast *ast, char **env)
 	pipe(fd);
 	pid1 = fork();
 	ret = 0;
-	if (pid1 == 0)
-		ret = ft_pipe1(fd, ast, env);
+	if(pid1 == 0)
+	{
+		close(fd[INPUT_END]);
+		dup2(fd[OUTPUT_END], STDIN_FILENO);
+		close(fd[OUTPUT_END]);
+		ret = exec_ast(ast->paw2, env);
+	}
 	else
 	{
 		pid2 = fork();
-		if (pid2 == 0)
-			ret = ft_pipe2(fd, ast, env);
+		if(pid2 == 0)
+		{
+			close(fd[OUTPUT_END]);
+			dup2(fd[INPUT_END], STDOUT_FILENO);
+			close(fd[INPUT_END]);
+			ret = exec_ast(ast->paw1, env);
+		}
 		close(fd[OUTPUT_END]);
 		close(fd[INPUT_END]);
 		waitpid(-1, NULL, 0);
