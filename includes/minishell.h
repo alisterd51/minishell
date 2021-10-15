@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2021/09/28 21:52:41 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/10/15 15:12:19 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,21 @@ void	clean_env(t_list **lst_env);
 ** clean_ast.c
 */
 void	clean_ast(t_ast **ast);
+
+/*
+** exec_ast.c
+*/
+int		exec_ast(t_ast *ast, char **env);
+
+/*
+** utils_ast.c
+*/
+char	**arg_to_tab(t_arg *arg);
+void	clean_tab(char ***tab);
+
+/*
+** ft_pipe.c
+*/
+int		ft_pipe(t_ast *ast, char **env);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/12 13:07:16 by anclarma          #+#    #+#              #
-#    Updated: 2021/10/12 17:05:17 by anclarma         ###   ########.fr        #
+#    Updated: 2021/10/15 15:36:47 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,10 +18,12 @@ C_FILES		= main.c						\
 			  ft_exit.c						\
 			  ft_env.c						\
 			  ft_export.c					\
+			  ft_pipe.c						\
 			  init_ast.c					\
 			  print_ast.c					\
 			  clean_ast.c					\
-			  ast_utils.c					\
+			  utils_ast.c					\
+			  exec_ast.c					\
 			  init_list.c					\
 			  clean_list.c
 SRCS		= $(addprefix srcs/,$(C_FILES))
