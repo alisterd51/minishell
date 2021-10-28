@@ -6,7 +6,7 @@
 #    By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/12 13:07:16 by anclarma          #+#    #+#              #
-#    Updated: 2021/10/28 23:01:50 by anclarma         ###   ########.fr        #
+#    Updated: 2021/10/28 23:47:18 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,7 @@ C_FILES		= main.c						\
 			  utils_ast.c					\
 			  exec_ast.c					\
 			  init_list.c					\
-			  clean_list.c					\
-			  prompt.c
+			  clean_list.c
 SRCS		= $(addprefix srcs/,$(C_FILES))
 OBJS		= $(SRCS:.c=.o)
 DEPS		= $(OBJS:.o=.d)
@@ -35,7 +34,7 @@ CFLAGS		= -Wall -Wextra -Werror			\
 			  -MMD -MP
 CINCLUDES	= -I ./includes					\
 			  -I ./libft/includes
-CLIBS		= -L ./libft -lft
+CLIBS		= -L ./libft -lft -lreadline
 
 all:		$(NAME)
 
