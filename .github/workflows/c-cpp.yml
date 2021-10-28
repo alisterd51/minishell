@@ -1,0 +1,17 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ anclarma_dev ]
+  pull_request:
+    branches: [ anclarma_dev ]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: make
+      run: make
+    - name: make check
+      run: make check
