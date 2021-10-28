@@ -6,7 +6,7 @@
 #    By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/12 13:07:16 by anclarma          #+#    #+#              #
-#    Updated: 2021/10/15 15:36:47 by anclarma         ###   ########.fr        #
+#    Updated: 2021/10/28 22:44:06 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,9 @@ CLIBS		= -L ./libft -lft
 
 all:		$(NAME)
 
+check:		all
+			@test/run_tests.sh
+
 %.o:%.c
 			$(CC) $(CFLAGS) $(CINCLUDES) -MMD -MP -c $< -o $@
 
@@ -49,6 +52,7 @@ $(LIBFT):
 
 clean:
 			make -C libft fclean
+			make -C test fclean
 			rm -f $(OBJS) $(DEPS)
 
 fclean:		clean
@@ -58,4 +62,4 @@ re:			fclean all
 
 -include	$(DEPS)
 
-.PHONY:		all clean fclean re
+.PHONY:		all check clean fclean re 

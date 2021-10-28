@@ -15,3 +15,8 @@ jobs:
       run: make
     - name: make check
       run: make check
+    - name: norminette
+      run: |
+        pip3 install norminette
+        norminette
+        norminette --version
