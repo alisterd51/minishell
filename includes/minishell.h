@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2021/10/15 15:12:19 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/10/28 23:04:16 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,10 @@ void	clean_tab(char ***tab);
 ** ft_pipe.c
 */
 int		ft_pipe(t_ast *ast, char **env);
+
+/*
+** prompt.c
+*/
+void	print_prompt(char **env);
 
 #endif

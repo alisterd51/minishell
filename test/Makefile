@@ -6,7 +6,7 @@
 #    By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/12 13:07:16 by anclarma          #+#    #+#              #
-#    Updated: 2021/10/28 22:28:09 by anclarma         ###   ########.fr        #
+#    Updated: 2021/10/28 23:08:12 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ NAME4		= test_exit
 NAME5		= test_export
 NAME6		= test_pwd
 NAME7		= test_libft
+NAME8		= test_prompt
 LIBFT		= ../libft/libft.a
 C_FILES		= ft_echo.c						\
 			  ft_pwd.c						\
@@ -30,7 +31,8 @@ C_FILES		= ft_echo.c						\
 			  utils_ast.c					\
 			  exec_ast.c					\
 			  init_list.c					\
-			  clean_list.c
+			  clean_list.c					\
+			  prompt.c
 SRCS		= $(addprefix ../srcs/,$(C_FILES))
 
 SRCS1		= $(SRCS)						\
@@ -47,6 +49,8 @@ SRCS6		= $(SRCS)						\
 			  main_ft_pwd.c
 SRCS7		= $(SRCS)						\
 			  main_libft.c
+SRCS8		= $(SRCS)						\
+			  main_prompt.c
 
 OBJS1		= $(SRCS1:.c=.o)
 DEPS1		= $(OBJS1:.o=.d)
@@ -62,6 +66,8 @@ OBJS6		= $(SRCS6:.c=.o)
 DEPS6		= $(OBJS6:.o=.d)
 OBJS7		= $(SRCS7:.c=.o)
 DEPS7		= $(OBJS7:.o=.d)
+OBJS8		= $(SRCS8:.c=.o)
+DEPS5		= $(OBJS8:.o=.d)
 
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror			\
@@ -72,7 +78,7 @@ CLIBS		= -L ../libft -lft
 
 all:		$(NAME1) $(NAME2) $(NAME3)		\
 			$(NAME4) $(NAME5) $(NAME6)		\
-			$(NAME7)
+			$(NAME7) $(NAME8)
 
 %.o:%.c
 			$(CC) $(CFLAGS) $(CINCLUDES) -MMD -MP -c $< -o $@
@@ -98,6 +104,9 @@ $(NAME6):	$(LIBFT) $(OBJS6)
 $(NAME7):	$(LIBFT) $(OBJS7)
 			$(CC) $(OBJS7) $(CFLAGS) $(CLIBS) -o $@
 
+$(NAME8):	$(LIBFT) $(OBJS8)
+			$(CC) $(OBJS8) $(CFLAGS) $(CLIBS) -o $@
+
 $(LIBFT):
 			make -C ../libft all
 
@@ -109,11 +118,13 @@ clean:
 				$(OBJS4) $(DEPS4)	\
 				$(OBJS5) $(DEPS5)	\
 				$(OBJS6) $(DEPS6)	\
-				$(OBJS7) $(DEPS7)
+				$(OBJS7) $(DEPS7)	\
+				$(OBJS8) $(DEPS8)
 
 fclean:		clean
 			rm -f $(NAME1) $(NAME2) $(NAME3)	\
-			$(NAME4) $(NAME5) $(NAME6) $(NAME7)
+			$(NAME4) $(NAME5) $(NAME6) $(NAME7)	\
+			$(NAME8)
 
 re:			fclean all
 
