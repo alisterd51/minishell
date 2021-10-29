@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2021/10/15 15:13:18 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/10/29 21:06:46 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,32 @@
 #include <unistd.h>
 #include "minishell.h"
 
+#include <stdio.h>
+
+static int	is_builtin(char *path)
+{
+	return (!ft_strcmp(path, "echo")
+		|| !ft_strcmp(path, "cd")
+		|| !ft_strcmp(path, "pwd")
+		|| !ft_strcmp(path, "export")
+		|| !ft_strcmp(path, "unset")
+		|| !ft_strcmp(path, "env")
+		|| !ft_strcmp(path, "exit"));
+}
+
+static int	exec_builtin(char **tab, char **env)
+{
+	(void)tab;
+	(void)env;
+	printf("c'est un builtin\n");
+	return (0);
+}
+
 static int	exec_arg(t_arg *arg, char **env)
 {
 	char	**tab;
 	int		ret;
+	int		status;
 	pid_t	pid;
 
 	pid = fork();
@@ -26,9 +48,15 @@ static int	exec_arg(t_arg *arg, char **env)
 	{
 		tab = arg_to_tab(arg);
 		if (tab)
-			ret = execve(*tab, tab, env);
+		{
+			if (is_builtin(tab[0]))
+				ret = exec_builtin(tab, env);
+			else
+				ret = execve(tab[0], tab, env);
+		}
 		clean_tab(&tab);
 	}
+	wait(&status);
 	return (ret);
 }
 

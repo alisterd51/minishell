@@ -2,13 +2,15 @@ name: C/C++ CI
 
 on:
   push:
-    branches: [ anclarma_dev ]
+    branches: [ anclarma_dev, main ]
   pull_request:
-    branches: [ anclarma_dev ]
+    branches: [ anclarma_dev, main ]
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ${{ matrix.os }}
+      matrix:
+        os: [ubuntu-18.04, ubuntu-20.04, macos-11]
     steps:
     - uses: actions/checkout@v2
     - name: make
