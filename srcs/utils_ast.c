@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:45:24 by anclarma          #+#    #+#             */
-/*   Updated: 2021/10/15 12:46:22 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/10/29 08:34:41 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,14 @@ char	**arg_to_tab(t_arg *arg)
 	return (ret);
 }
 
-void	clean_tab(char ***tab)
+int	tabsize(char **tab)
 {
-	int	i;
+	int	size;
 
-	i = 0;
-	while ((*tab)[i])
-	{
-		free((*tab)[i]);
-		(*tab)[i] = NULL;
-		i++;
-	}
-	free(*tab);
-	*tab = NULL;
+	size = 0;
+	if (!tab)
+		return (0);
+	while (tab[size])
+		size++;
+	return (size);
 }

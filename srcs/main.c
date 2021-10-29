@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:54:07 by anclarma          #+#    #+#             */
-/*   Updated: 2021/10/28 23:52:35 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/10/29 03:34:44 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,17 @@
 int	main(int ac, char **av, char **env)
 {
 	char	*line;
+	char	**tab;
+	t_ast	*ast;
 
 	line = readline("minishell-beta-v0.1$ ");
 	while (line)
 	{
+		tab = line_to_tab(line);
+		ast = init_ast(tabsize(tab), tab);
+		clean_tab(&tab);
+		print_ast(ast, 0);
+		clean_ast(&ast);
 		free(line);
 		line = readline("minishell-beta-v0.1$ ");
 	}
