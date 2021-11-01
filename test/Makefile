@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+         #
+#    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/05/12 13:07:16 by anclarma          #+#    #+#              #
-#    Updated: 2021/10/29 08:39:03 by anclarma         ###   ########.fr        #
+#    Created: 2021/11/01 19:41:40 by anclarma          #+#    #+#              #
+#    Updated: 2021/11/01 20:10:11 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,9 @@ NAME5		= test_export
 NAME6		= test_pwd
 NAME7		= test_libft
 NAME8		= test_prompt
-LIBFT		= ../libft/libft.a
+LIBFT		= ../libft/libft.a 
+C_DIR		= ../srcs
+O_DIR		= ../objs
 C_FILES		= ft_echo.c						\
 			  ft_pwd.c						\
 			  ft_exit.c						\
@@ -33,92 +35,88 @@ C_FILES		= ft_echo.c						\
 			  exec_ast.c					\
 			  init_list.c					\
 			  clean_list.c
-SRCS		= $(addprefix ../srcs/,$(C_FILES))
-
-SRCS1		= $(SRCS)						\
-			  main_ast.c
-SRCS2		= $(SRCS)						\
-			  main_ft_echo.c
-SRCS3		= $(SRCS)						\
-			  main_ft_env.c
-SRCS4		= $(SRCS)						\
-			  main_ft_exit.c
-SRCS5		= $(SRCS)						\
-			  main_ft_export.c
-SRCS6		= $(SRCS)						\
-			  main_ft_pwd.c
-SRCS7		= $(SRCS)						\
-			  main_libft.c
-
+SRCS		= $(patsubst %, $(C_DIR)/%, $(C_FILES))
+SRCS1		= main_ast.c
+SRCS2		= main_ft_echo.c
+SRCS3		= main_ft_env.c
+SRCS4		= main_ft_exit.c
+SRCS5		= main_ft_export.c
+SRCS6		= main_ft_pwd.c
+SRCS7		= main_libft.c
+O_FILES		= $(C_FILES:.c=.o)
+OBJS		= $(patsubst %, $(O_DIR)/%, $(O_FILES))
 OBJS1		= $(SRCS1:.c=.o)
-DEPS1		= $(OBJS1:.o=.d)
 OBJS2		= $(SRCS2:.c=.o)
-DEPS2		= $(OBJS2:.o=.d)
 OBJS3		= $(SRCS3:.c=.o)
-DEPS3		= $(OBJS3:.o=.d)
 OBJS4		= $(SRCS4:.c=.o)
-DEPS4		= $(OBJS4:.o=.d)
 OBJS5		= $(SRCS5:.c=.o)
-DEPS5		= $(OBJS5:.o=.d)
 OBJS6		= $(SRCS6:.c=.o)
-DEPS6		= $(OBJS6:.o=.d)
 OBJS7		= $(SRCS7:.c=.o)
-DEPS7		= $(OBJS7:.o=.d)
-
-CC			= cc
-CFLAGS		= -Wall -Wextra -Werror			\
+CC			= gcc
+CXX			= g++
+CFLAGS		= -Wall -Wextra -Werror		\
 			  -MMD -MP
-CINCLUDES	= -I ../includes				\
+CXXFLAGS	= -Wall -Wextra -Werror		\
+			  -std=c++98				\
+			  -MMD -MP
+LFLAGS		= -Wall -Wextra -Werror
+CINCLUDES	= -I ../includes			\
 			  -I ../libft/includes
 CLIBS		= -L ../libft -lft -lreadline
 
-all:		$(NAME1) $(NAME2) $(NAME3)		\
-			$(NAME4) $(NAME5) $(NAME6)		\
+all:		$(NAME1) $(NAME2) $(NAME3)	\
+			$(NAME4) $(NAME5) $(NAME6)	\
 			$(NAME7)
 
-%.o:%.c
-			$(CC) $(CFLAGS) $(CINCLUDES) -MMD -MP -c $< -o $@
+check:		all
 
-$(NAME1):	$(LIBFT) $(OBJS1)
-			$(CC) $(OBJS1) $(CFLAGS) $(CLIBS) -o $@
+./%.o: ./%.c
+			$(CC) $(CFLAGS) $(CINCLUDES) -c $< -o $@
 
-$(NAME2):	$(LIBFT) $(OBJS2)
-			$(CC) $(OBJS2) $(CFLAGS) $(CLIBS) -o $@
+$(O_DIR)/%.o: $(C_DIR)/%.c
+			$(CC) $(CFLAGS) $(CINCLUDES) -c $< -o $@
 
-$(NAME3):	$(LIBFT) $(OBJS3)
-			$(CC) $(OBJS3) $(CFLAGS) $(CLIBS) -o $@
+$(O_DIR)/%.o: $(C_DIR)/%.cpp
+			$(CXX) $(CXXFLAGS) $(CINCLUDES) -c $< -o $@
 
-$(NAME4):	$(LIBFT) $(OBJS4)
-			$(CC) $(OBJS4) $(CFLAGS) $(CLIBS) -o $@
+$(NAME1):	$(LIBFT) $(OBJS) $(OBJS1)
+			$(CC) $(OBJS) $(OBJS1) $(CFLAGS) $(CLIBS) -o $@
 
-$(NAME5):	$(LIBFT) $(OBJS5)
-			$(CC) $(OBJS5) $(CFLAGS) $(CLIBS) -o $@
+$(NAME2):	$(LIBFT) $(OBJS) $(OBJS2)
+			$(CC) $(OBJS) $(OBJS2) $(CFLAGS) $(CLIBS) -o $@
 
-$(NAME6):	$(LIBFT) $(OBJS6)
-			$(CC) $(OBJS6) $(CFLAGS) $(CLIBS) -o $@
+$(NAME3):	$(LIBFT) $(OBJS) $(OBJS3)
+			$(CC) $(OBJS) $(OBJS3) $(CFLAGS) $(CLIBS) -o $@
 
-$(NAME7):	$(LIBFT) $(OBJS7)
-			$(CC) $(OBJS7) $(CFLAGS) $(CLIBS) -o $@
+$(NAME4):	$(LIBFT) $(OBJS) $(OBJS4)
+			$(CC) $(OBJS) $(OBJS4) $(CFLAGS) $(CLIBS) -o $@
+
+$(NAME5):	$(LIBFT) $(OBJS) $(OBJS5)
+			$(CC) $(OBJS) $(OBJS5) $(CFLAGS) $(CLIBS) -o $@
+
+$(NAME6):	$(LIBFT) $(OBJS) $(OBJS6)
+			$(CC) $(OBJS) $(OBJS6) $(CFLAGS) $(CLIBS) -o $@
+
+$(NAME7):	$(LIBFT) $(OBJS) $(OBJS7)
+			$(CC) $(OBJS) $(OBJS7) $(CFLAGS) $(CLIBS) -o $@
 
 $(LIBFT):
 			make -C ../libft all
 
+$(O_DIR):
+			mkdir $(O_DIR)
+
 clean:
-			make -C ../libft fclean
-			rm -f $(OBJS1) $(DEPS1)	\
-				$(OBJS2) $(DEPS2)	\
-				$(OBJS3) $(DEPS3)	\
-				$(OBJS4) $(DEPS4)	\
-				$(OBJS5) $(DEPS5)	\
-				$(OBJS6) $(DEPS6)	\
-				$(OBJS7) $(DEPS7)
+			rm -f *.o *.d
 
 fclean:		clean
-			rm -f $(NAME1) $(NAME2) $(NAME3)	\
-			$(NAME4) $(NAME5) $(NAME6) $(NAME7)
+			rm -f $(NAME1) $(NAME2)	\
+				$(NAME3) $(NAME4)	\
+				$(NAME5) $(NAME6)	\
+				$(NAME7)
 
 re:			fclean all
 
--include	$(DEPS)
+-include	$(OBJS:.o=.d)
 
-.PHONY:		all check clean fclean re 
+.PHONY:		all clean fclean re

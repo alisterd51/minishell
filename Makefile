@@ -3,37 +3,44 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+         #
+#    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/05/12 13:07:16 by anclarma          #+#    #+#              #
-#    Updated: 2021/10/29 08:44:18 by anclarma         ###   ########.fr        #
+#    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
+#    Updated: 2021/11/01 19:32:41 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= minishell
 LIBFT		= libft/libft.a
-C_FILES		= main.c						\
-			  ft_echo.c						\
-			  ft_pwd.c						\
-			  ft_exit.c						\
-			  ft_env.c						\
-			  ft_export.c					\
-			  ft_pipe.c						\
-			  init_ast.c					\
-			  print_ast.c					\
-			  clean_ast.c					\
-			  utils_ast.c					\
-			  utils_tab.c					\
-			  exec_ast.c					\
-			  init_list.c					\
+C_DIR		= srcs
+O_DIR		= objs
+C_FILES		= main.c					\
+			  ft_echo.c					\
+			  ft_pwd.c					\
+			  ft_exit.c					\
+			  ft_env.c					\
+			  ft_export.c				\
+			  ft_pipe.c					\
+			  init_ast.c				\
+			  print_ast.c				\
+			  clean_ast.c				\
+			  utils_ast.c				\
+			  utils_tab.c				\
+			  exec_ast.c				\
+			  init_list.c				\
 			  clean_list.c
-SRCS		= $(addprefix srcs/,$(C_FILES))
-OBJS		= $(SRCS:.c=.o)
-DEPS		= $(OBJS:.o=.d)
-CC			= cc
-CFLAGS		= -Wall -Wextra -Werror			\
+SRCS		= $(patsubst %, $(C_DIR)/%, $(C_FILES))
+O_FILES		= $(C_FILES:.c=.o)
+OBJS		= $(patsubst %, $(O_DIR)/%, $(O_FILES))
+CC			= gcc
+CXX			= g++
+CFLAGS		= -Wall -Wextra -Werror		\
 			  -MMD -MP
-CINCLUDES	= -I ./includes					\
+CXXFLAGS	= -Wall -Wextra -Werror		\
+			  -std=c++98				\
+			  -MMD -MP
+LFLAGS		= -Wall -Wextra -Werror
+CINCLUDES	= -I ./includes				\
 			  -I ./libft/includes
 CLIBS		= -L ./libft -lft -lreadline
 
@@ -42,11 +49,17 @@ all:		$(NAME)
 check:		all
 			@test/run_tests.sh
 
-%.o:%.c
-			$(CC) $(CFLAGS) $(CINCLUDES) -MMD -MP -c $< -o $@
+$(O_DIR)/%.o: $(C_DIR)/%.c
+			$(CC) $(CFLAGS) $(CINCLUDES) -c $< -o $@
 
-$(NAME):	$(LIBFT) $(OBJS)
-			$(CC) $(OBJS) $(CFLAGS) $(CLIBS) -o $@
+$(O_DIR)/%.o: $(C_DIR)/%.cpp
+			$(CXX) $(CXXFLAGS) $(CINCLUDES) -c $< -o $@
+
+$(O_DIR):
+			mkdir $(O_DIR)
+
+$(NAME):	$(LIBFT) $(O_DIR) $(OBJS)
+			$(CC) $(OBJS) $(LFLAGS) $(CLIBS) -o $@
 
 $(LIBFT):
 			make -C libft all
@@ -54,13 +67,13 @@ $(LIBFT):
 clean:
 			make -C libft fclean
 			make -C test fclean
-			rm -f $(OBJS) $(DEPS)
+			rm -rf $(O_DIR)
 
 fclean:		clean
 			rm -f $(NAME)
 
 re:			fclean all
 
--include	$(DEPS)
+-include	$(OBJS:.o=.d)
 
-.PHONY:		all check clean fclean re 
+.PHONY:		all check clean fclean re
