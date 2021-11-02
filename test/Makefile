@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:41:40 by anclarma          #+#    #+#              #
-#    Updated: 2021/11/01 20:10:11 by anclarma         ###   ########.fr        #
+#    Updated: 2021/11/02 01:10:33 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,32 +79,31 @@ $(O_DIR)/%.o: $(C_DIR)/%.c
 $(O_DIR)/%.o: $(C_DIR)/%.cpp
 			$(CXX) $(CXXFLAGS) $(CINCLUDES) -c $< -o $@
 
-$(NAME1):	$(LIBFT) $(OBJS) $(OBJS1)
+$(NAME1):	$(LIBFT) $(O_DIR) $(OBJS) $(OBJS1)
 			$(CC) $(OBJS) $(OBJS1) $(CFLAGS) $(CLIBS) -o $@
 
-$(NAME2):	$(LIBFT) $(OBJS) $(OBJS2)
+$(NAME2):	$(LIBFT) $(O_DIR) $(OBJS) $(OBJS2)
 			$(CC) $(OBJS) $(OBJS2) $(CFLAGS) $(CLIBS) -o $@
 
-$(NAME3):	$(LIBFT) $(OBJS) $(OBJS3)
+$(NAME3):	$(LIBFT) $(O_DIR) $(OBJS) $(OBJS3)
 			$(CC) $(OBJS) $(OBJS3) $(CFLAGS) $(CLIBS) -o $@
 
-$(NAME4):	$(LIBFT) $(OBJS) $(OBJS4)
+$(NAME4):	$(LIBFT) $(O_DIR) $(OBJS) $(OBJS4)
 			$(CC) $(OBJS) $(OBJS4) $(CFLAGS) $(CLIBS) -o $@
 
-$(NAME5):	$(LIBFT) $(OBJS) $(OBJS5)
+$(NAME5):	$(LIBFT) $(O_DIR) $(OBJS) $(OBJS5)
 			$(CC) $(OBJS) $(OBJS5) $(CFLAGS) $(CLIBS) -o $@
 
-$(NAME6):	$(LIBFT) $(OBJS) $(OBJS6)
+$(NAME6):	$(LIBFT) $(O_DIR) $(OBJS) $(OBJS6)
 			$(CC) $(OBJS) $(OBJS6) $(CFLAGS) $(CLIBS) -o $@
 
-$(NAME7):	$(LIBFT) $(OBJS) $(OBJS7)
+$(NAME7):	$(LIBFT) $(O_DIR) $(OBJS) $(OBJS7)
 			$(CC) $(OBJS) $(OBJS7) $(CFLAGS) $(CLIBS) -o $@
-
-$(LIBFT):
-			make -C ../libft all
 
 $(O_DIR):
 			mkdir $(O_DIR)
+$(LIBFT):
+			make -C ../libft all
 
 clean:
 			rm -f *.o *.d
