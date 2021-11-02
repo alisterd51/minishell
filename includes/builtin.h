@@ -6,13 +6,18 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 05:30:04 by anclarma          #+#    #+#             */
-/*   Updated: 2021/09/11 22:48:20 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/11/02 04:49:06 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTIN_H
 # define BUILTIN_H
 # include "libft.h"
+
+/*
+** ft_cd.c
+*/
+int	ft_cd(int ac, char **av, t_list **env);
 
 /*
 ** ft_echo.c

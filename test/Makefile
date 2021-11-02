@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:41:40 by anclarma          #+#    #+#              #
-#    Updated: 2021/11/02 01:40:39 by anclarma         ###   ########.fr        #
+#    Updated: 2021/11/02 04:38:00 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,11 +17,12 @@ NAME4		= test_exit
 NAME5		= test_export
 NAME6		= test_pwd
 NAME7		= test_libft
-NAME8		= test_prompt
+NAME8		= test_cd
 LIBFT		= ../libft/libft.a 
 C_DIR		= ../srcs
 O_DIR		= ../objs
-C_FILES		= ft_echo.c						\
+C_FILES		= ft_cd.c						\
+			  ft_echo.c						\
 			  ft_pwd.c						\
 			  ft_exit.c						\
 			  ft_env.c						\
@@ -43,6 +44,7 @@ SRCS4		= main_ft_exit.c
 SRCS5		= main_ft_export.c
 SRCS6		= main_ft_pwd.c
 SRCS7		= main_libft.c
+SRCS8		= main_ft_cd.c
 O_FILES		= $(C_FILES:.c=.o)
 OBJS		= $(patsubst %, $(O_DIR)/%, $(O_FILES))
 OBJS1		= $(SRCS1:.c=.o)
@@ -52,6 +54,7 @@ OBJS4		= $(SRCS4:.c=.o)
 OBJS5		= $(SRCS5:.c=.o)
 OBJS6		= $(SRCS6:.c=.o)
 OBJS7		= $(SRCS7:.c=.o)
+OBJS8		= $(SRCS8:.c=.o)
 CC			= gcc
 CXX			= g++
 MAKE		= make
@@ -69,7 +72,7 @@ CLIBS		= -L ../libft -lft -lreadline
 
 all:		$(NAME1) $(NAME2) $(NAME3)	\
 			$(NAME4) $(NAME5) $(NAME6)	\
-			$(NAME7)
+			$(NAME7) $(NAME8)
 
 check:		all
 
@@ -103,6 +106,9 @@ $(NAME6):	$(LIBFT) $(O_DIR) $(OBJS) $(OBJS6)
 $(NAME7):	$(LIBFT) $(O_DIR) $(OBJS) $(OBJS7)
 			$(CC) $(OBJS) $(OBJS7) $(CFLAGS) $(CLIBS) -o $@
 
+$(NAME8):	$(LIBFT) $(O_DIR) $(OBJS) $(OBJS8)
+			$(CC) $(OBJS) $(OBJS8) $(CFLAGS) $(CLIBS) -o $@
+
 $(O_DIR):
 			$(MKDIR) $(O_DIR)
 $(LIBFT):
@@ -115,7 +121,7 @@ fclean:		clean
 			$(RM) $(NAME1) $(NAME2)	\
 				$(NAME3) $(NAME4)	\
 				$(NAME5) $(NAME6)	\
-				$(NAME7)
+				$(NAME7) $(NAME8)
 
 re:			fclean all
 
