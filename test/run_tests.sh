@@ -23,8 +23,8 @@ test_default_main()
 	./test_libft
 	printf "${LIGHT_CYAN}${BOLD}test_pwd${RESET}\n"
 	./test_pwd
-	printf "${LIGHT_CYAN}${BOLD}test_cd${RESET}\n"
-	./test_cd
+	printf "${LIGHT_CYAN}${BOLD}test_cd ..${RESET}\n"
+	./test_cd ".."
 }
 
 main()
