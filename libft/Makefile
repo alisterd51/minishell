@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 20:14:19 by anclarma          #+#    #+#              #
-#    Updated: 2021/11/01 20:17:16 by anclarma         ###   ########.fr        #
+#    Updated: 2021/11/02 01:42:43 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,9 @@ OBJS		= $(patsubst %, $(O_DIR)/%, $(O_FILES))
 CC			= gcc
 CXX			= g++
 AR			= ar rc
+MAKE		= make
+RM			= rm -f
+MKDIR		= mkdir -p
 CFLAGS		= -Wall -Wextra -Werror		\
 			  -MMD -MP
 CXXFLAGS	= -Wall -Wextra -Werror		\
@@ -81,16 +84,16 @@ $(O_DIR)/%.o: $(C_DIR)/%.cpp
 			$(CXX) $(CXXFLAGS) $(CINCLUDES) -c $< -o $@
 
 $(O_DIR):
-			mkdir $(O_DIR)
+			$(MKDIR) $(O_DIR)
 
 $(NAME):	$(O_DIR) $(OBJS)
 			$(AR) $@ $(OBJS)
 
 clean:
-			rm -rf $(O_DIR)
+			$(RM) -r $(O_DIR)
 
 fclean:		clean
-			rm -f $(NAME)
+			$(RM) $(NAME)
 
 re:			fclean all
 

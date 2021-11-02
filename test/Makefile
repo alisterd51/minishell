@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:41:40 by anclarma          #+#    #+#              #
-#    Updated: 2021/11/02 01:10:33 by anclarma         ###   ########.fr        #
+#    Updated: 2021/11/02 01:40:39 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,9 @@ OBJS6		= $(SRCS6:.c=.o)
 OBJS7		= $(SRCS7:.c=.o)
 CC			= gcc
 CXX			= g++
+MAKE		= make
+RM			= rm -f
+MKDIR		= mkdir -p
 CFLAGS		= -Wall -Wextra -Werror		\
 			  -MMD -MP
 CXXFLAGS	= -Wall -Wextra -Werror		\
@@ -101,15 +104,15 @@ $(NAME7):	$(LIBFT) $(O_DIR) $(OBJS) $(OBJS7)
 			$(CC) $(OBJS) $(OBJS7) $(CFLAGS) $(CLIBS) -o $@
 
 $(O_DIR):
-			mkdir $(O_DIR)
+			$(MKDIR) $(O_DIR)
 $(LIBFT):
-			make -C ../libft all
+			$(MAKE) -C ../libft all
 
 clean:
-			rm -f *.o *.d
+			$(RM) *.o *.d
 
 fclean:		clean
-			rm -f $(NAME1) $(NAME2)	\
+			$(RM) $(NAME1) $(NAME2)	\
 				$(NAME3) $(NAME4)	\
 				$(NAME5) $(NAME6)	\
 				$(NAME7)

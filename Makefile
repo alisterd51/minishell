@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
-#    Updated: 2021/11/01 19:32:41 by anclarma         ###   ########.fr        #
+#    Updated: 2021/11/02 01:38:02 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,9 @@ O_FILES		= $(C_FILES:.c=.o)
 OBJS		= $(patsubst %, $(O_DIR)/%, $(O_FILES))
 CC			= gcc
 CXX			= g++
+MAKE		= make
+RM			= rm -f
+MKDIR		= mkdir -p
 CFLAGS		= -Wall -Wextra -Werror		\
 			  -MMD -MP
 CXXFLAGS	= -Wall -Wextra -Werror		\
@@ -56,21 +59,21 @@ $(O_DIR)/%.o: $(C_DIR)/%.cpp
 			$(CXX) $(CXXFLAGS) $(CINCLUDES) -c $< -o $@
 
 $(O_DIR):
-			mkdir $(O_DIR)
+			$(MKDIR) $(O_DIR)
 
 $(NAME):	$(LIBFT) $(O_DIR) $(OBJS)
 			$(CC) $(OBJS) $(LFLAGS) $(CLIBS) -o $@
 
 $(LIBFT):
-			make -C libft all
+			$(MAKE) -C libft all
 
 clean:
-			make -C libft fclean
-			make -C test fclean
-			rm -rf $(O_DIR)
+			$(MAKE) -C libft fclean
+			$(MAKE) -C test fclean
+			$(RM) -r $(O_DIR)
 
 fclean:		clean
-			rm -f $(NAME)
+			$(RM) $(NAME)
 
 re:			fclean all
 
