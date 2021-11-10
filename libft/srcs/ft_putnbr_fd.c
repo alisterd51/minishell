@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/13 04:39:16 by anclarma          #+#    #+#             */
-/*   Updated: 2021/11/10 21:09:42 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/11/10 21:59:00 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ void	ft_putnbr_fd(int n, int fd)
 		}
 		if (n > 9)
 			ft_putnbr_fd(n / 10, fd);
-		ft_putchar_fd((char)(n % 10) + '0', fd);
+		ft_putchar_fd((char)n % 10 + '0', fd);
 	}
 }
