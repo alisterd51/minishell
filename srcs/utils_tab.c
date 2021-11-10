@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:45:24 by anclarma          #+#    #+#             */
-/*   Updated: 2021/10/29 08:36:28 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/11/10 21:32:22 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	clean_tab(char ***tab)
 	*tab = NULL;
 }
 
-static int	linesize(char *line)
+static size_t	linesize(char *line)
 {
-	int	count;
+	size_t	count;
 
 	count = 0;
 	while (*line)
@@ -48,9 +48,9 @@ static int	linesize(char *line)
 	return (count);
 }
 
-static int	strsize(char *line)
+static size_t	strsize(char *line)
 {
-	int	size;
+	size_t	size;
 
 	size = 0;
 	while (line[size] && !ft_isspace(line[size]))
@@ -61,7 +61,7 @@ static int	strsize(char *line)
 static char	*parse_line_to_str(char **line)
 {
 	char	*ret;
-	int		size;
+	size_t	size;
 
 	ret = NULL;
 	while (ft_isspace(**line))
@@ -79,8 +79,8 @@ static char	*parse_line_to_str(char **line)
 
 char	**line_to_tab(char *line)
 {
-	int		size;
-	int		i;
+	size_t	size;
+	size_t	i;
 	char	**ret;
 
 	size = linesize(line);

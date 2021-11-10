@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:45:24 by anclarma          #+#    #+#             */
-/*   Updated: 2021/10/29 08:34:41 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/11/10 21:14:43 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include "libft.h"
 #include "minishell.h"
 
-static int	argsize(t_arg *arg)
+static size_t	argsize(t_arg *arg)
 {
-	int	ret;
+	size_t	ret;
 
 	ret = 0;
 	while (arg)
@@ -30,8 +30,8 @@ static int	argsize(t_arg *arg)
 char	**arg_to_tab(t_arg *arg)
 {
 	char	**ret;
-	int		size;
-	int		i;
+	size_t	size;
+	size_t	i;
 
 	size = argsize(arg);
 	ret = (char **)malloc(sizeof(char *) * (size + 1));
