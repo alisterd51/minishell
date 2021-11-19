@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
-#    Updated: 2021/11/10 21:00:46 by anclarma         ###   ########.fr        #
+#    Updated: 2021/11/19 19:57:05 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,11 +34,9 @@ O_FILES		= $(C_FILES:.c=.o)
 OBJS		= $(patsubst %, $(O_DIR)/%, $(O_FILES))
 CC			= gcc
 CXX			= g++
-MAKE		= make
-RM			= rm -f
-MKDIR		= mkdir -p
 CFLAGS		= -Wall -Wextra -Werror		\
 			  -Wconversion				\
+			  -std=c99					\
 			  -MMD -MP
 CXXFLAGS	= -Wall -Wextra -Werror		\
 			  -std=c++98				\
@@ -60,21 +58,21 @@ $(O_DIR)/%.o: $(C_DIR)/%.cpp
 			$(CXX) $(CXXFLAGS) $(CINCLUDES) -c $< -o $@
 
 $(O_DIR):
-			$(MKDIR) $(O_DIR)
+			mkdir $(O_DIR)
 
 $(NAME):	$(LIBFT) $(O_DIR) $(OBJS)
 			$(CC) $(OBJS) $(LFLAGS) $(CLIBS) -o $@
 
 $(LIBFT):
-			$(MAKE) -C libft all
+			make -C libft all
 
 clean:
-			$(MAKE) -C libft fclean
-			$(MAKE) -C test fclean
-			$(RM) -r $(O_DIR)
+			make -C libft fclean
+			make -C test fclean
+			rm -rf $(O_DIR)
 
 fclean:		clean
-			$(RM) $(NAME)
+			rm -f $(NAME)
 
 re:			fclean all
 
