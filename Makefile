@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
-#    Updated: 2021/11/19 19:57:05 by anclarma         ###   ########.fr        #
+#    Updated: 2021/11/19 21:09:29 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,8 @@ CC			= gcc
 CXX			= g++
 CFLAGS		= -Wall -Wextra -Werror		\
 			  -Wconversion				\
+			  -Wpedantic				\
+			  -pedantic-errors			\
 			  -std=c99					\
 			  -MMD -MP
 CXXFLAGS	= -Wall -Wextra -Werror		\

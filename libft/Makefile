@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 20:14:19 by anclarma          #+#    #+#              #
-#    Updated: 2021/11/19 20:35:51 by anclarma         ###   ########.fr        #
+#    Updated: 2021/11/19 21:11:42 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,8 @@ CXX			= g++
 AR			= ar rc
 CFLAGS		= -Wall -Wextra -Werror		\
 			  -Wconversion				\
+			  -Wpedantic				\
+			  -pedantic-errors			\
 			  -std=c99					\
 			  -MMD -MP
 CXXFLAGS	= -Wall -Wextra -Werror		\

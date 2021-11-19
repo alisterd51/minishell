@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:41:40 by anclarma          #+#    #+#              #
-#    Updated: 2021/11/19 20:54:48 by anclarma         ###   ########.fr        #
+#    Updated: 2021/11/19 21:12:03 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,8 @@ RM			= rm -f
 MKDIR		= mkdir -p
 CFLAGS		= -Wall -Wextra -Werror		\
 			  -Wconversion				\
+			  -Wpedantic				\
+			  -pedantic-errors			\
 			  -std=c99					\
 			  -MMD -MP
 CXXFLAGS	= -Wall -Wextra -Werror		\
