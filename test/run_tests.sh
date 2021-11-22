@@ -25,6 +25,8 @@ test_default_main()
 	./test_pwd
 	printf "${LIGHT_CYAN}${BOLD}test_cd ..${RESET}\n"
 	./test_cd ".."
+	printf "${LIGHT_CYAN}${BOLD}test_solve_path cat${RESET}\n"
+	./test_solve_path "cat"
 }
 
 main()

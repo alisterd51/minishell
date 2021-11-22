@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:41:40 by anclarma          #+#    #+#              #
-#    Updated: 2021/11/19 21:12:03 by anclarma         ###   ########.fr        #
+#    Updated: 2021/11/22 13:07:27 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ NAME5		= test_export
 NAME6		= test_pwd
 NAME7		= test_libft
 NAME8		= test_cd
+NAME9		= test_solve_path
 LIBFT		= ../libft/libft.a 
 C_DIR		= ../srcs
 O_DIR		= ../objs
@@ -35,7 +36,8 @@ C_FILES		= ft_cd.c						\
 			  utils_tab.c					\
 			  exec_ast.c					\
 			  init_list.c					\
-			  clean_list.c
+			  clean_list.c					\
+			  solve_path.c
 SRCS		= $(patsubst %, $(C_DIR)/%, $(C_FILES))
 SRCS1		= main_ast.c
 SRCS2		= main_ft_echo.c
@@ -45,6 +47,7 @@ SRCS5		= main_ft_export.c
 SRCS6		= main_ft_pwd.c
 SRCS7		= main_libft.c
 SRCS8		= main_ft_cd.c
+SRCS9		= main_solve_path.c
 O_FILES		= $(C_FILES:.c=.o)
 OBJS		= $(patsubst %, $(O_DIR)/%, $(O_FILES))
 OBJS1		= $(SRCS1:.c=.o)
@@ -55,6 +58,7 @@ OBJS5		= $(SRCS5:.c=.o)
 OBJS6		= $(SRCS6:.c=.o)
 OBJS7		= $(SRCS7:.c=.o)
 OBJS8		= $(SRCS8:.c=.o)
+OBJS9		= $(SRCS9:.c=.o)
 CC			= gcc
 CXX			= g++
 MAKE		= make
@@ -76,7 +80,7 @@ CLIBS		= -L ../libft -lft -lreadline
 
 all:		$(NAME1) $(NAME2) $(NAME3)	\
 			$(NAME4) $(NAME5) $(NAME6)	\
-			$(NAME7) $(NAME8)
+			$(NAME7) $(NAME8) $(NAME9)
 
 check:		all
 
@@ -113,6 +117,9 @@ $(NAME7):	$(LIBFT) $(O_DIR) $(OBJS) $(OBJS7)
 $(NAME8):	$(LIBFT) $(O_DIR) $(OBJS) $(OBJS8)
 			$(CC) $(OBJS) $(OBJS8) $(CFLAGS) $(CLIBS) -o $@
 
+$(NAME9):	$(LIBFT) $(O_DIR) $(OBJS) $(OBJS9)
+			$(CC) $(OBJS) $(OBJS9) $(CFLAGS) $(CLIBS) -o $@
+
 $(O_DIR):
 			$(MKDIR) $(O_DIR)
 $(LIBFT):
@@ -125,7 +132,8 @@ fclean:		clean
 			$(RM) $(NAME1) $(NAME2)	\
 				$(NAME3) $(NAME4)	\
 				$(NAME5) $(NAME6)	\
-				$(NAME7) $(NAME8)
+				$(NAME7) $(NAME8)	\
+				$(NAME9)
 
 re:			fclean all
 

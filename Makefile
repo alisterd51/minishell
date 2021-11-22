@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
-#    Updated: 2021/11/19 21:09:29 by anclarma         ###   ########.fr        #
+#    Updated: 2021/11/22 13:26:53 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ C_FILES		= main.c					\
 			  utils_tab.c				\
 			  exec_ast.c				\
 			  init_list.c				\
-			  clean_list.c
+			  clean_list.c				\
+			  solve_path.c
 SRCS		= $(patsubst %, $(C_DIR)/%, $(C_FILES))
 O_FILES		= $(C_FILES:.c=.o)
 OBJS		= $(patsubst %, $(O_DIR)/%, $(O_FILES))

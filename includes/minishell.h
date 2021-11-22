@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2021/10/29 08:40:36 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/11/22 12:51:26 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,10 @@ char	**line_to_tab(char *line);
 ** ft_pipe.c
 */
 int		ft_pipe(t_ast *ast, char **env);
+
+/*
+** solve_path.c
+*/
+char	*solve_path(char *path, char *key);
 
 #endif
