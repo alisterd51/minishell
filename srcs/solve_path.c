@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:49:00 by anclarma          #+#    #+#             */
-/*   Updated: 2021/11/22 13:25:19 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/11/23 08:44:15 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,5 +120,5 @@ char	*solve_path(char *path, char *key)
 		i++;
 	}
 	free_spath(&spath);
-	return (NULL);
+	return (ft_strdup(key));
 }

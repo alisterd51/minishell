@@ -6,12 +6,13 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2021/10/29 21:06:46 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/11/23 09:19:04 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/wait.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include "minishell.h"
 
 #include <stdio.h>
@@ -35,6 +36,17 @@ static int	exec_builtin(char **tab, char **env)
 	return (0);
 }
 
+static int	exec_arg_1(char **tab, char **env)
+{
+	char	*cpath;
+	int		ret;
+
+	cpath = solve_path(getenv("PATH"), tab[0]);
+	ret = execve(cpath, tab, env);
+	free(cpath);
+	return (ret);
+}
+
 static int	exec_arg(t_arg *arg, char **env)
 {
 	char	**tab;
@@ -52,7 +64,7 @@ static int	exec_arg(t_arg *arg, char **env)
 			if (is_builtin(tab[0]))
 				ret = exec_builtin(tab, env);
 			else
-				ret = execve(tab[0], tab, env);
+				ret = exec_arg_1(tab, env);
 		}
 		clean_tab(&tab);
 	}
