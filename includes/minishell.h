@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2021/11/22 12:51:26 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/11/23 09:49:34 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,11 @@ int		ft_pipe(t_ast *ast, char **env);
 ** solve_path.c
 */
 char	*solve_path(char *path, char *key);
+
+/*
+** ret_status.c
+*/
+int		ft_get_status(void);
+void	ft_set_status(int status);
 
 #endif
