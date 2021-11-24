@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2021/11/23 09:49:34 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/11/24 20:54:34 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	clean_ast(t_ast **ast);
 /*
 ** exec_ast.c
 */
-int		exec_ast(t_ast *ast, char **env);
+int		exec_ast(t_ast *ast, t_list **lst_env);
 
 /*
 ** utils_ast.c
@@ -67,9 +67,14 @@ void	clean_tab(char ***tab);
 char	**line_to_tab(char *line);
 
 /*
+** utils_list.c
+*/
+char	**list_to_tab(t_list *lst_env);
+
+/*
 ** ft_pipe.c
 */
-int		ft_pipe(t_ast *ast, char **env);
+int		ft_pipe(t_ast *ast, t_list **lst_env);
 
 /*
 ** solve_path.c

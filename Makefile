@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
-#    Updated: 2021/11/23 09:50:07 by anclarma         ###   ########.fr        #
+#    Updated: 2021/11/24 20:52:34 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ C_FILES		= main.c					\
 			  clean_ast.c				\
 			  utils_ast.c				\
 			  utils_tab.c				\
+			  utils_list.c				\
 			  exec_ast.c				\
 			  init_list.c				\
 			  clean_list.c				\

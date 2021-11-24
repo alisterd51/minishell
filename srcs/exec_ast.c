@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2021/11/23 09:19:04 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/11/24 20:59:24 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,26 +28,29 @@ static int	is_builtin(char *path)
 		|| !ft_strcmp(path, "exit"));
 }
 
-static int	exec_builtin(char **tab, char **env)
+static int	exec_builtin(char **tab, t_list **lst_env)
 {
 	(void)tab;
-	(void)env;
+	(void)lst_env;
 	printf("c'est un builtin\n");
 	return (0);
 }
 
-static int	exec_arg_1(char **tab, char **env)
+static int	exec_arg_1(char **tab, t_list **lst_env)
 {
+	char	**env;
 	char	*cpath;
 	int		ret;
 
 	cpath = solve_path(getenv("PATH"), tab[0]);
+	env = list_to_tab(*lst_env);
 	ret = execve(cpath, tab, env);
+	clean_tab(&env);
 	free(cpath);
 	return (ret);
 }
 
-static int	exec_arg(t_arg *arg, char **env)
+static int	exec_arg(t_arg *arg, t_list **lst_env)
 {
 	char	**tab;
 	int		ret;
@@ -62,9 +65,9 @@ static int	exec_arg(t_arg *arg, char **env)
 		if (tab)
 		{
 			if (is_builtin(tab[0]))
-				ret = exec_builtin(tab, env);
+				ret = exec_builtin(tab, lst_env);
 			else
-				ret = exec_arg_1(tab, env);
+				ret = exec_arg_1(tab, lst_env);
 		}
 		clean_tab(&tab);
 	}
@@ -72,15 +75,15 @@ static int	exec_arg(t_arg *arg, char **env)
 	return (ret);
 }
 
-int	exec_ast(t_ast *ast, char **env)
+int	exec_ast(t_ast *ast, t_list **lst_env)
 {
 	int	ret;
 
 	if (ast == NULL)
 		return (0);
 	if (ast->type == PIPELINE)
-		ret = ft_pipe(ast, env);
+		ret = ft_pipe(ast, lst_env);
 	else
-		ret = exec_arg(ast->paw1, env);
+		ret = exec_arg(ast->paw1, lst_env);
 	return (ret);
 }
