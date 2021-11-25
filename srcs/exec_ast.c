@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2021/11/24 20:59:24 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/11/25 03:14:19 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,21 @@ static int	exec_builtin(char **tab, t_list **lst_env)
 	(void)tab;
 	(void)lst_env;
 	printf("c'est un builtin\n");
-	return (0);
+/*	if (!ft_strcmp(path, "echo"))
+		return (ft_echo());
+	else if (!ft_strcmp(path, "cd"))
+		return (ft_cd());
+	else if (!ft_strcmp(path, "pwd"))
+		return (ft_pwd());
+	else if (!ft_strcmp(path, "export"))
+		return (ft_export());
+	else if (!ft_strcmp(path, "unset"))
+		return (ft_env());
+	else if (!ft_strcmp(path, "env"))
+		return (ft_env());
+	else if (!ft_strcmp(path, "exit"))
+		return (ft_exit());
+*/	return (0);
 }
 
 static int	exec_arg_1(char **tab, t_list **lst_env)
