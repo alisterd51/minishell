@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2021/11/25 03:14:19 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/11/26 01:45:08 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "minishell.h"
+#include "builtin.h"
 
 #include <stdio.h>
 
@@ -28,26 +29,33 @@ static int	is_builtin(char *path)
 		|| !ft_strcmp(path, "exit"));
 }
 
+static int	tablen(char **tab)
+{
+	int	ret;
+
+	ret = 0;
+	while (tab[ret] != NULL)
+		ret++;
+	return (ret);
+}
+
 static int	exec_builtin(char **tab, t_list **lst_env)
 {
-	(void)tab;
-	(void)lst_env;
-	printf("c'est un builtin\n");
-/*	if (!ft_strcmp(path, "echo"))
-		return (ft_echo());
-	else if (!ft_strcmp(path, "cd"))
-		return (ft_cd());
-	else if (!ft_strcmp(path, "pwd"))
-		return (ft_pwd());
-	else if (!ft_strcmp(path, "export"))
-		return (ft_export());
-	else if (!ft_strcmp(path, "unset"))
-		return (ft_env());
-	else if (!ft_strcmp(path, "env"))
-		return (ft_env());
-	else if (!ft_strcmp(path, "exit"))
-		return (ft_exit());
-*/	return (0);
+	if (!ft_strcmp(*tab, "echo"))
+		return (ft_echo(tablen(tab), tab));
+	else if (!ft_strcmp(*tab, "cd"))
+		return (ft_cd(tablen(tab), tab, lst_env));
+	else if (!ft_strcmp(*tab, "pwd"))
+		return (ft_pwd(tablen(tab), tab));
+	else if (!ft_strcmp(*tab, "export"))
+		return (ft_export(tablen(tab), tab, lst_env));
+/*	else if (!ft_strcmp(*tab, "unset"))
+		return (ft_unset());
+*/	else if (!ft_strcmp(*tab, "env"))
+		return (ft_env(*lst_env));
+	else if (!ft_strcmp(*tab, "exit"))
+		return (ft_exit(tablen(tab), tab, 0/*get status*/));
+	return (0);
 }
 
 static int	exec_arg_1(char **tab, t_list **lst_env)

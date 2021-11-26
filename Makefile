@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
-#    Updated: 2021/11/24 20:52:34 by anclarma         ###   ########.fr        #
+#    Updated: 2021/11/26 01:47:38 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ LIBFT		= libft/libft.a
 C_DIR		= srcs
 O_DIR		= objs
 C_FILES		= main.c					\
+			  ft_cd.c					\
 			  ft_echo.c					\
 			  ft_pwd.c					\
 			  ft_exit.c					\
