@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:26:01 by anclarma          #+#    #+#             */
-/*   Updated: 2021/11/24 21:16:00 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/11/27 02:01:17 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ int	ft_export(int ac, char **av, t_list **env)
 	while (*av)
 	{
 		if (is_special_param(*av))
-			ft_putendl_fd("bash: export: `10=a': not a valid identifier", 2);
+		{
+			ft_putstr_fd("minishell: export: `", 2);
+			ft_putstr_fd(*av, 2);
+			ft_putendl_fd("': not a valid identifier", 2);
+		}
 		else
 			ft_lstadd_back(env, ft_lstnew(ft_strdup(*av)));
 		av++;
