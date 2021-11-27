@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
-#    Updated: 2021/11/27 01:00:01 by anclarma         ###   ########.fr        #
+#    Updated: 2021/11/27 01:14:23 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,17 +45,11 @@ CFLAGS		= -Wall -Wextra -Werror		\
 			  -Wpedantic				\
 			  -pedantic-errors			\
 			  -std=c99					\
-			  -MMD -MP					\
-			  -fsanitize=address		\
-			  -fsanitize=leak			\
-			  -fsanitize=undefined
+			  -MMD -MP
 CXXFLAGS	= -Wall -Wextra -Werror		\
 			  -std=c++98				\
 			  -MMD -MP
-LFLAGS		= -Wall -Wextra -Werror		\
-			  -fsanitize=address		\
-			  -fsanitize=leak			\
-			  -fsanitize=undefined
+LFLAGS		= -Wall -Wextra -Werror
 CINCLUDES	= -I ./includes				\
 			  -I ./libft/includes
 CLIBS		= -L ./libft -lft -lreadline
