@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2021/11/24 20:54:34 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/11/27 00:58:30 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,11 @@ char	**line_to_tab(char *line);
 ** utils_list.c
 */
 char	**list_to_tab(t_list *lst_env);
+
+/*
+** utils_list2.c
+*/
+int		tablen(char **tab);
 
 /*
 ** ft_pipe.c

@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 05:30:04 by anclarma          #+#    #+#             */
-/*   Updated: 2021/11/02 04:49:06 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/11/27 00:49:08 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,10 @@ int	ft_env(t_list *env);
 ** ft_export.c
 */
 int	ft_export(int ac, char **av, t_list **env);
+
+/*
+** ft_unset.c
+*/
+int	ft_unset(int ac, char **av, t_list **env);
 
 #endif

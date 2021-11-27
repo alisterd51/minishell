@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cd.c                                            :+:      :+:    :+:   */
+/*   utils_tab2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/02 03:52:18 by anclarma          #+#    #+#             */
-/*   Updated: 2021/11/26 23:57:05 by anclarma         ###   ########.fr       */
+/*   Created: 2021/11/27 00:56:28 by anclarma          #+#    #+#             */
+/*   Updated: 2021/11/27 01:06:16 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include "libft.h"
+#include <stddef.h>
 
-int	ft_cd(int ac, char **av, t_list **env)
+int	tablen(char **tab)
 {
 	int	ret;
 
-	(void)env;
-	if (ac > 2)
-	{
-		ft_putendl_fd("cd: trop d'arguments", 2);
-		ret = 1;
-	}
-	else if (ac == 2)
-		ret = chdir(av[1]);
-	else
-		ret = chdir("/Users/anclarma");
+	ret = 0;
+	while (tab[ret] != NULL)
+		ret++;
 	return (ret);
 }

@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
-#    Updated: 2021/11/26 01:47:38 by anclarma         ###   ########.fr        #
+#    Updated: 2021/11/27 01:00:01 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,12 +21,14 @@ C_FILES		= main.c					\
 			  ft_exit.c					\
 			  ft_env.c					\
 			  ft_export.c				\
+			  ft_unset.c				\
 			  ft_pipe.c					\
 			  init_ast.c				\
 			  print_ast.c				\
 			  clean_ast.c				\
 			  utils_ast.c				\
 			  utils_tab.c				\
+			  utils_tab2.c				\
 			  utils_list.c				\
 			  exec_ast.c				\
 			  init_list.c				\
@@ -43,11 +45,17 @@ CFLAGS		= -Wall -Wextra -Werror		\
 			  -Wpedantic				\
 			  -pedantic-errors			\
 			  -std=c99					\
-			  -MMD -MP
+			  -MMD -MP					\
+			  -fsanitize=address		\
+			  -fsanitize=leak			\
+			  -fsanitize=undefined
 CXXFLAGS	= -Wall -Wextra -Werror		\
 			  -std=c++98				\
 			  -MMD -MP
-LFLAGS		= -Wall -Wextra -Werror
+LFLAGS		= -Wall -Wextra -Werror		\
+			  -fsanitize=address		\
+			  -fsanitize=leak			\
+			  -fsanitize=undefined
 CINCLUDES	= -I ./includes				\
 			  -I ./libft/includes
 CLIBS		= -L ./libft -lft -lreadline

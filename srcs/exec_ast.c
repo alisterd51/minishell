@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2021/11/26 01:45:08 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/11/27 00:58:59 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,6 @@ static int	is_builtin(char *path)
 		|| !ft_strcmp(path, "exit"));
 }
 
-static int	tablen(char **tab)
-{
-	int	ret;
-
-	ret = 0;
-	while (tab[ret] != NULL)
-		ret++;
-	return (ret);
-}
-
 static int	exec_builtin(char **tab, t_list **lst_env)
 {
 	if (!ft_strcmp(*tab, "echo"))
@@ -49,12 +39,12 @@ static int	exec_builtin(char **tab, t_list **lst_env)
 		return (ft_pwd(tablen(tab), tab));
 	else if (!ft_strcmp(*tab, "export"))
 		return (ft_export(tablen(tab), tab, lst_env));
-/*	else if (!ft_strcmp(*tab, "unset"))
-		return (ft_unset());
-*/	else if (!ft_strcmp(*tab, "env"))
+	else if (!ft_strcmp(*tab, "unset"))
+		return (ft_unset(tablen(tab), tab, lst_env));
+	else if (!ft_strcmp(*tab, "env"))
 		return (ft_env(*lst_env));
 	else if (!ft_strcmp(*tab, "exit"))
-		return (ft_exit(tablen(tab), tab, 0/*get status*/));
+		return (ft_exit(tablen(tab), tab, ft_get_status()));
 	return (0);
 }
 
