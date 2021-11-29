@@ -102,3 +102,27 @@ char	**line_to_tab(char *line)
 	ret[i] = NULL;
 	return (ret);
 }
+/*
+char	**parse_quotes(char *line)
+{
+	size_t	single_quotes;
+	size_t	double_quotes;
+	size_t	i;
+
+	single_quotes = 0;
+	double_quotes = 0;
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == ''')
+			single_quotes++;
+		else if (line[i] == '"')
+			double_quotes++;
+		write(1, line + i, 1);
+		if ((single_quotes > 0 || double_quotes > 0)
+				&& (single_quotes % 2 == 0 && double_quotes % 2 == 0))
+			write(1, "\n", 1);
+		i++;
+	}
+}
+*/
