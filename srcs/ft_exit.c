@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 18:08:03 by anclarma          #+#    #+#             */
-/*   Updated: 2021/11/26 02:08:08 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/12/15 18:51:07 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,15 @@ int	ft_exit(int ac, char **av, int status)
 		exit(255);
 		return (1);
 	}
-	else if (ac > 1)
+	else if (ac > 2)
 	{
 		ft_putstr_fd("minishell: exit: ", 2);
 		ft_putendl_fd("too many arguments", 2);
 		return (1);
 	}
 	else
+	{
+		exit(ft_atoi(av[1]));
 		return (ft_atoi(av[1]));
+	}
 }
