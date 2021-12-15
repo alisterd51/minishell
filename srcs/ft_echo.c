@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 18:08:03 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/14 19:10:07 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/12/15 16:57:24 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	ft_echo(int ac, char **av)
 	int	newline;
 
 	newline = 1;
+	ac--;
+	av++;
 	while (ac > 0 && valid_option("neE", *av))
 	{
 		if (ft_strchr(*av, 'n'))

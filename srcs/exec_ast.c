@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2021/12/15 15:51:13 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/12/15 16:52:19 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,22 @@ static int	exec_arg_1(char **tab, t_list **lst_env)
 	char	**env;
 	char	*cpath;
 	int		ret;
+	int		status;
+	pid_t	pid;
 
 	cpath = solve_path(getenv("PATH"), tab[0]);
-	env = list_to_tab(*lst_env);
-	ret = execve(cpath, tab, env);
-	clean_tab(&env);
+	ret = 0;
+	if (access(cpath, X_OK) == 0)
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			env = list_to_tab(*lst_env);
+			ret = execve(cpath, tab, env);
+			clean_tab(&env);
+		}
+		wait(&status);
+	}
 	free(cpath);
 	return (ret);
 }
@@ -66,22 +77,13 @@ static int	exec_arg(t_arg *arg, t_list **lst_env)
 {
 	char	**tab;
 	int		ret;
-	int		status;
-	pid_t	pid;
 
 	tab = arg_to_tab(arg);
 	ret = 0;
 	if (tab && is_builtin(tab[0]))
-	{
 		ret = exec_builtin(tab, lst_env);
-	}
 	else if (tab)
-	{
-		pid = fork();
-		if (pid == 0)
-			ret = exec_arg_1(tab, lst_env);
-		wait(&status);
-	}
+		ret = exec_arg_1(tab, lst_env);
 	clean_tab(&tab);
 	return (ret);
 }
