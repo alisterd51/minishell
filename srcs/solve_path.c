@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:49:00 by anclarma          #+#    #+#             */
-/*   Updated: 2021/11/23 08:44:15 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/12/15 17:29:46 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ static size_t	nb_spath(char *path)
 	size_t	nb;
 
 	nb = 0;
+	if (!path)
+		return (0);
 	if (*path)
 		nb++;
 	while (*path)
