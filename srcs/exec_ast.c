@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2021/11/27 00:58:59 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/12/15 15:51:13 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,21 +69,20 @@ static int	exec_arg(t_arg *arg, t_list **lst_env)
 	int		status;
 	pid_t	pid;
 
-	pid = fork();
+	tab = arg_to_tab(arg);
 	ret = 0;
-	if (pid == 0)
+	if (tab && is_builtin(tab[0]))
 	{
-		tab = arg_to_tab(arg);
-		if (tab)
-		{
-			if (is_builtin(tab[0]))
-				ret = exec_builtin(tab, lst_env);
-			else
-				ret = exec_arg_1(tab, lst_env);
-		}
-		clean_tab(&tab);
+		ret = exec_builtin(tab, lst_env);
 	}
-	wait(&status);
+	else if (tab)
+	{
+		pid = fork();
+		if (pid == 0)
+			ret = exec_arg_1(tab, lst_env);
+		wait(&status);
+	}
+	clean_tab(&tab);
 	return (ret);
 }
 
