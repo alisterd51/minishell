@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:54:07 by anclarma          #+#    #+#             */
-/*   Updated: 2021/11/29 18:15:25 by antoine          ###   ########.fr       */
+/*   Updated: 2021/12/15 16:12:27 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,57 +20,33 @@
 #include <unistd.h>
 #include <signal.h>
 
-void	parse_quotes(char *line)
+static void	intern_exec(char *line, t_list *lst_env)
 {
-	size_t	single_quotes;
-	size_t	double_quotes;
-	size_t	i;
+	char	**tab;
+	t_ast	*ast;
 
-	single_quotes = 0;
-	double_quotes = 0;
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] == '\'')
-		{
-			single_quotes++;
-		}
-		else if (line[i] == '\"')
-		{
-			double_quotes++;
-		}
-		write(1, line + i, 1);
-		if ((single_quotes > 0 || double_quotes > 0)
-			&& (single_quotes % 2 == 0 && double_quotes % 2 == 0))
-			write(1, "\n", 1);
-		i++;
-	}
+	tab = line_to_tab(line);
+	ast = init_ast(tabsize(tab), tab);
+	clean_tab(&tab);
+	print_ast(ast, 0);
+	exec_ast(ast, &lst_env);
+	clean_ast(&ast);
 }
 
 int	main(int ac, char **av, char **env)
 {
 	char	*line;
-	char	**tab;
-	t_ast	*ast;
 	t_list	*lst_env;
 
-	line = readline("minishell-beta-v0.1$ ");
-	tab = NULL;
-	ast = NULL;
+	line = readline("\033[1;34mminishell-beta \033[1;32mv0.1\033[0m$ ");
 	lst_env = init_env(env);
 	while (line)
 	{
 		add_history(line);
 		history_search(line, 1);
-		tab = line_to_tab(line);
-//		parse_quotes(line);
-		ast = init_ast(tabsize(tab), tab);
-		clean_tab(&tab);
-		print_ast(ast, 0);
-		exec_ast(ast, &lst_env);
-		clean_ast(&ast);
+		intern_exec(line, lst_env);
 		free(line);
-		line = readline("minishell-beta-v0.1$ ");
+		line = readline("\033[1;34mminishell-beta \033[1;32mv0.1\033[0m$ ");
 	}
 	clear_history();
 	clean_env(&lst_env);
