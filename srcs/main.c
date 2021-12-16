@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:54:07 by anclarma          #+#    #+#             */
-/*   Updated: 2021/12/15 16:12:27 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/12/16 11:31:12 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	intern_exec(char *line, t_list *lst_env)
 	ast = init_ast(tabsize(tab), tab);
 	clean_tab(&tab);
 	print_ast(ast, 0);
-	exec_ast(ast, &lst_env);
+	ft_set_status(exec_ast(ast, &lst_env));
 	clean_ast(&ast);
 }
 
@@ -46,11 +46,13 @@ int	main(int ac, char **av, char **env)
 		history_search(line, 1);
 		intern_exec(line, lst_env);
 		free(line);
-		line = readline("\033[1;34mminishell-beta \033[1;32mv0.1\033[0m$ ");
+		line = NULL;
+		if (ft_get_end() == 0)
+			line = readline("\033[1;34mminishell-beta \033[1;32mv0.1\033[0m$ ");
 	}
 	clear_history();
 	clean_env(&lst_env);
 	(void)ac;
 	(void)av;
-	return (0);
+	return (ft_get_status());
 }
