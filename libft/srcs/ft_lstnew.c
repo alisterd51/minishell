@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 05:34:27 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/16 05:42:21 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/12/18 22:23:58 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_list	*ft_lstnew(void *content)
 	new_lst = (t_list *)malloc(sizeof(t_list));
 	if (!new_lst)
 		return (NULL);
-	new_lst->content = content;
-	new_lst->next = NULL;
+	*new_lst = (t_list){.content = content,
+		.next = NULL};
 	return (new_lst);
 }
