@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2021/12/16 11:20:54 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/12/16 17:03:39 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@
 # define NONE		0
 # define PIPELINE	1
 # define COMMAND	2
-# define S_LEFT		3
-# define D_LEFT		4
-# define S_RIGHT	5
-# define D_RIGHT	6
+# define AND		3
+# define OR			4
+# define S_LEFT		5
+# define D_LEFT		6
+# define S_RIGHT	7
+# define D_RIGHT	8
 
 /*
 ** init_list.c
