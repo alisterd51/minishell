@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:04:52 by anclarma          #+#    #+#             */
-/*   Updated: 2021/11/24 20:19:36 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/12/18 23:13:19 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int	ft_pipe(t_ast *ast, t_list **lst_env)
 	int		fd[2];
 	int		ret;
 
-	pipe(fd);
+	if (pipe(fd) != 0)
+		return (-1);
 	pid1 = fork();
 	ret = 0;
 	if (pid1 == 0)

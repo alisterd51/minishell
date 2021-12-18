@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
-#    Updated: 2021/12/16 11:21:22 by anclarma         ###   ########.fr        #
+#    Updated: 2021/12/18 23:14:50 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,15 +40,11 @@ SRCS		= $(patsubst %, $(C_DIR)/%, $(C_FILES))
 O_FILES		= $(C_FILES:.c=.o)
 OBJS		= $(patsubst %, $(O_DIR)/%, $(O_FILES))
 CC			= gcc
-CXX			= g++
 CFLAGS		= -Wall -Wextra -Werror		\
 			  -Wconversion				\
 			  -Wpedantic				\
 			  -pedantic-errors			\
 			  -std=c99					\
-			  -MMD -MP
-CXXFLAGS	= -Wall -Wextra -Werror		\
-			  -std=c++98				\
 			  -MMD -MP
 LFLAGS		= -Wall -Wextra -Werror
 CINCLUDES	= -I ./includes				\
@@ -62,9 +58,6 @@ check:		all
 
 $(O_DIR)/%.o: $(C_DIR)/%.c
 			$(CC) $(CFLAGS) $(CINCLUDES) -c $< -o $@
-
-$(O_DIR)/%.o: $(C_DIR)/%.cpp
-			$(CXX) $(CXXFLAGS) $(CINCLUDES) -c $< -o $@
 
 $(O_DIR):
 			mkdir $(O_DIR)

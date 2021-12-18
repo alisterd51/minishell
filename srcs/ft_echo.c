@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 18:08:03 by anclarma          #+#    #+#             */
-/*   Updated: 2021/12/15 16:57:24 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/12/18 23:10:16 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ int	ft_echo(int ac, char **av)
 	}
 	while (ac > 0)
 	{
-		write(1, *av, ft_strlen(*av));
+		ft_putstr_fd(*av, 1);
 		if (ac > 1)
-			write(1, " ", 1);
+			ft_putchar_fd(' ', 1);
 		ac--;
 		av++;
 	}
 	if (newline)
-		write(1, "\n", 1);
+		ft_putchar_fd('\n', 1);
 	return (0);
 }
