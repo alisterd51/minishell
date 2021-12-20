@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
-#    Updated: 2021/12/18 23:14:50 by anclarma         ###   ########.fr        #
+#    Updated: 2021/12/20 12:54:39 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,16 @@ CLIBS		= -L ./libft -lft -lreadline
 
 all:		$(NAME)
 
+debug:		CFLAGS += -fsanitize=address	\
+				-fsanitize=undefined		\
+				-fsanitize=leak				\
+				-g3
+debug:		LFLAGS += -fsanitize=address	\
+				-fsanitize=undefined		\
+				-fsanitize=leak				\
+				-g3
+debug:		$(NAME)
+
 check:		all
 			@test/run_tests.sh
 
@@ -80,4 +90,4 @@ re:			fclean all
 
 -include	$(OBJS:.o=.d)
 
-.PHONY:		all check clean fclean re
+.PHONY:		all debug check clean fclean re
