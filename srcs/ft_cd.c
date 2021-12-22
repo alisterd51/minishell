@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 03:52:18 by anclarma          #+#    #+#             */
-/*   Updated: 2021/12/21 23:32:18 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/12/22 17:29:23 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,22 @@
 #include "libft.h"
 
 /*
+** t_cd
+*/
+typedef struct s_cd	t_cd;
+struct	s_cd
+{
+	char	*curpath;
+	char	*operand;
+	char	*new_pwd;
+	t_list	**env;
+	int		ret;
+};
+
+/*
 ** test_home
 */
-static int	test_home(t_list *env)
+static int	test_home(t_list **env)
 {
 	(void)env;
 	return (1);
@@ -134,125 +147,135 @@ static void	ft_setenv(char *key, char *value)
 	(void)value;
 }
 
+int	step0(t_cd *cd_arg)
+{
+	if (cd_arg->operand == NULL && !test_home(cd_arg->env))
+		return (10);
+	return (1);
+}
+
+int	step1(t_cd *cd_arg)
+{
+	if (cd_arg->operand == NULL && test_home(cd_arg->env))
+		cd_arg->operand = ft_getenv("HOME");
+	return (2);
+}
+
+int	step2(t_cd *cd_arg)
+{
+	if (cd_arg->operand[0] == '/')
+	{
+		cd_arg->curpath = cd_arg->operand;
+		return (6);
+	}
+	return (3);
+}
+
+int	step3(t_cd *cd_arg)
+{
+	if (test_dot(cd_arg->operand) || test_dotdot(cd_arg->operand))
+		return (5);
+	return (4);
+}
+
+int	step4(t_cd *cd_arg)
+{
+	char	*subcdpath;
+	char	*cdpath;
+	char	*concatenation;
+
+	cdpath = ft_getenv("CDPATH");
+	if (cdpath == NULL)
+		cdpath = "";
+	subcdpath = get_subcdpath(cdpath);
+	while (subcdpath != NULL)
+	{
+		concatenation = ft_concatenation(subcdpath, "/", cd_arg->operand);
+		if (test_directory(concatenation))
+		{
+			cd_arg->curpath = concatenation;
+			return (6);
+		}
+		subcdpath = get_subcdpath(cdpath);
+	}
+	return (5);
+}
+
+int	step5(t_cd *cd_arg)
+{
+	cd_arg->curpath = cd_arg->operand;
+	return (6);
+}
+
+int	step6(t_cd *cd_arg)
+{
+	char	*pwd;
+
+	pwd = NULL;
+	if (test_option("-P"))
+		return (9);
+	if (cd_arg->curpath[0] != '/')
+	{
+		pwd = ft_getenv("PWD");
+		if (pwd[ft_strlen(pwd) - 1] == '/')
+			cd_arg->curpath = ft_concatenation(pwd , "", cd_arg->curpath);
+		else
+			cd_arg->curpath = ft_concatenation(pwd , "/", cd_arg->curpath);
+	}
+	return (7);
+}
+
+int	step7(t_cd *cd_arg)
+{
+	cd_arg->curpath = clean_a(cd_arg->curpath);
+	cd_arg->curpath = clean_b(cd_arg->curpath);
+	cd_arg->curpath = clean_c(cd_arg->curpath);
+	return (8);
+}
+
+int	step8(t_cd *cd_arg)
+{
+	cd_arg->new_pwd = cd_arg->curpath;
+	if (ft_strlen(cd_arg->curpath) + 1 > PATH_MAX
+			&& ft_strlen(cd_arg->operand) + 1 < PATH_MAX)
+		cd_arg->curpath = to_relative(cd_arg->curpath, cd_arg->operand);
+	//incompler mais bon a priori
+	return (9);
+}
+
+int	step9(t_cd *cd_arg)
+{
+	cd_arg->ret = chdir(cd_arg->curpath);
+	//si erreur affichage message d'erreur et fin
+	if (!test_option("-P"))
+		ft_setenv("PWD", cd_arg->new_pwd);
+	else
+	{
+		//la variable d'environnement PWD doit être définie sur la chaîne qui serait sortie par pwd -P.
+	}
+	//S'il n'y a pas suffisamment d'autorisations sur le nouveau répertoire, ou sur l'un des parents de ce répertoire, pour déterminer le répertoire de travail actuel, la valeur de la variable d'environnement PWD n'est pas spécifiée.
+	return (10);
+}
+
 /*
 ** ft_cd
 ** https://pubs.opengroup.org/onlinepubs/9699919799/utilities/cd.html
 */
 int	ft_cd(int ac, char **av, t_list **env)
 {
-	char	*curpath;
-	char	*operand;
-	char	*new_pwd;
-	int		ret;
 	int		step;
+	t_cd	cd_var;
+	int		(*fonc_step[10]) (t_cd *) = {step0, step1, step2, step3, step4,
+		step5, step6, step7, step8, step9};
 
-	curpath = NULL;
-	ret = 0;
-	step = 1;
+	cd_var = (t_cd){.env = env};
 	if (ac >= 2)
-		operand = ft_strdup(av[1]);
-	if (step == 1)
+		cd_var.operand = ft_strdup(av[1]);
 	{
-		step = 2;
-		if (ac == 1 && !test_home(*env))
-			step = 11;
-	}
-	if (step == 2)
-	{
-		step = 3;
-		if (ac == 1 && test_home(*env))
-			operand = ft_getenv("HOME");
-	}
-	if (step == 3)
-	{
-		step = 4;
-		if (operand[0] == '/')
-		{
-			curpath = operand;
-			step = 7;
-		}
-	}
-	if (step == 4)
-	{
-		step = 5;
-		if (test_dot(operand) || test_dotdot(operand))
-			step = 6;
-	}
-	if (step == 5)
-	{
-		step = 6;
-		char	*subcdpath;
-		char	*cdpath;
-
-		cdpath = ft_getenv("CDPATH");
-		if (cdpath == NULL)
-			cdpath = "";
-		subcdpath = get_subcdpath(cdpath);
-		while (step == 6 && subcdpath != NULL)
-		{
-			char	*concatenation;
-
-			concatenation = ft_concatenation(subcdpath, "/", operand);
-			if (test_directory(concatenation))
-			{
-				curpath = concatenation;
-				step = 7;
-			}
-			subcdpath = get_subcdpath(cdpath);
-		}
-	}
-	if (step == 6)
-	{
-		step = 7;
-		curpath = operand;
-	}
-	if (step == 7)
-	{
-		step = 8;
-		if (test_option("-P"))
-			step = 10;
-		else
-		{
-			if (curpath[0] != '/')
-			{
-				char	*pwd;
-
-				pwd = ft_getenv("PWD");
-				if (pwd[ft_strlen(pwd) - 1] == '/')
-					curpath = ft_concatenation(pwd , "", curpath);
-				else
-					curpath = ft_concatenation(pwd , "/", curpath);
-			}
-		}
-	}
-	if (step == 8)
-	{
-		step = 9;
-		curpath = clean_a(curpath);
-		curpath = clean_b(curpath);
-		curpath = clean_c(curpath);
-	}
-	if (step == 9)
-	{
-		new_pwd = curpath;
-		step = 10;
-		if (ft_strlen(curpath) + 1 > PATH_MAX && ft_strlen(operand) + 1 < PATH_MAX)
-			curpath = to_relative(curpath, operand);
-		//incompler mais bon a priori
-	}
-	if (step == 10)
-	{
-		step = 11;
-		ret = chdir(curpath);
-		//si erreur affichage message d'erreur et fin
-		if (!test_option("-P"))
-			ft_setenv("PWD", new_pwd);
-		else
-		{
-			//la variable d'environnement PWD doit être définie sur la chaîne qui serait sortie par pwd -P.
-		}
-		//S'il n'y a pas suffisamment d'autorisations sur le nouveau répertoire, ou sur l'un des parents de ce répertoire, pour déterminer le répertoire de travail actuel, la valeur de la variable d'environnement PWD n'est pas spécifiée.
+		step = 0;
+		while (step < 10)
+			step = (fonc_step[step])(&cd_var);
 	}
 	//Si, pendant l'exécution des étapes ci-dessus, la variable d'environnement PWD est définie, la variable d'environnement OLDPWD doit également être définie sur la valeur de l'ancien répertoire de travail (c'est-à-dire le répertoire de travail actuel immédiatement avant l'appel à cd ).
-	return (ret);
+	return (cd_var.ret);
 }

@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2021/12/15 16:52:19 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/12/22 21:50:42 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ static int	exec_arg(t_arg *arg, t_list **lst_env)
 
 	tab = arg_to_tab(arg);
 	ret = 0;
-	if (tab && is_builtin(tab[0]))
+	if (tab && tab[0] && is_builtin(tab[0]))
 		ret = exec_builtin(tab, lst_env);
-	else if (tab)
+	else if (tab && tab[0])
 		ret = exec_arg_1(tab, lst_env);
 	clean_tab(&tab);
 	return (ret);
