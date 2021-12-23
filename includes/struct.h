@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2021/09/28 19:53:06 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/12/23 17:09:00 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,16 @@ struct	s_redir
 	int		type;
 	char	*file;
 	t_redir	*next;
+};
+
+typedef struct s_cd		t_cd;
+struct	s_cd
+{
+	char	*curpath;
+	char	*operand;
+	char	*new_pwd;
+	t_list	**env;
+	int		ret;
 };
 
 #endif

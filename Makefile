@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
-#    Updated: 2021/12/20 12:54:39 by anclarma         ###   ########.fr        #
+#    Updated: 2021/12/23 17:07:37 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,9 @@ C_DIR		= srcs
 O_DIR		= objs
 C_FILES		= main.c					\
 			  ft_cd.c					\
+			  ft_cd_step1.c				\
+			  ft_cd_step2.c				\
+			  ft_cd_utils1.c			\
 			  ft_echo.c					\
 			  ft_pwd.c					\
 			  ft_exit.c					\

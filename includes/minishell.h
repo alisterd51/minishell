@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2021/12/16 17:03:39 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/12/23 17:04:05 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,41 @@ void	ft_set_status(int status);
 */
 int		ft_get_end(void);
 void	ft_set_end(int status);
+
+/*
+** ft_cd_step1.c
+*/
+int		step0(t_cd *cd_arg);
+int		step1(t_cd *cd_arg);
+int		step2(t_cd *cd_arg);
+int		step3(t_cd *cd_arg);
+int		step4(t_cd *cd_arg);
+
+/*
+** ft_cd_step2.c
+*/
+int		step5(t_cd *cd_arg);
+int		step6(t_cd *cd_arg);
+int		step7(t_cd *cd_arg);
+int		step8(t_cd *cd_arg);
+int		step9(t_cd *cd_arg);
+
+/*
+** ft_cd_utils1.c
+*/
+int		test_home(t_list **env);
+int		test_dot(char *operand);
+int		test_dotdot(char *operand);
+char	*get_subcdpath(char *cdpath);
+char	*ft_concatenation(char *str1, char *str2, char *str3);
+int		test_directory(char *path_dir);
+int		test_option(char *option);
+char	*clean_a(char *curpath);
+char	*clean_b(char *curpath);
+char	*clean_c(char *curpath);
+char	*to_relative(char *curpath, char *operand);
+char	*ft_getenv(char *key);
+void	ft_setenv(char *key, char *value);
+char	*pwd_p(void);
 
 #endif
