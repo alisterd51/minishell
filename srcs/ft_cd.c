@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 03:52:18 by anclarma          #+#    #+#             */
-/*   Updated: 2021/12/23 16:48:16 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/12/23 21:31:09 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,9 @@ int	ft_cd(int ac, char **av, t_list **env)
 	cd_var = (t_cd){.env = env};
 	if (ac >= 2)
 		cd_var.operand = ft_strdup(av[1]);
-	{
-		step = 0;
-		while (step < 10)
-			step = (fonc_step[step])(&cd_var);
-	}
+	step = 0;
+	while (step < 10)
+		step = (fonc_step[step])(&cd_var);
 	//Si, pendant l'exécution des étapes ci-dessus,
 	//la variable d'environnement PWD est définie,
 	//la variable d'environnement OLDPWD doit également

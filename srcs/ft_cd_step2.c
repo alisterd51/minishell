@@ -6,13 +6,18 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 03:52:18 by anclarma          #+#    #+#             */
-/*   Updated: 2021/12/23 17:05:40 by anclarma         ###   ########.fr       */
+/*   Updated: 2021/12/23 21:15:03 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <linux/limits.h>
 #include <unistd.h>
 #include "minishell.h"
+
+#include <limits.h>
+#include <stdlib.h>
+
+#include <stdio.h>
 
 int	step5(t_cd *cd_arg)
 {
@@ -40,9 +45,16 @@ int	step6(t_cd *cd_arg)
 
 int	step7(t_cd *cd_arg)
 {
+	char	resolved_path[PATH_MAX] = {0};
+
 	cd_arg->curpath = clean_a(cd_arg->curpath);
 	cd_arg->curpath = clean_b(cd_arg->curpath);
 	cd_arg->curpath = clean_c(cd_arg->curpath);
+	//equivalent a realpath
+	//NOTA: faire un ft_realpath
+	realpath(cd_arg->curpath, resolved_path);
+	printf("%s -> %s\n", cd_arg->curpath, resolved_path);
+	cd_arg->curpath = ft_strdup(resolved_path);
 	return (8);
 }
 
