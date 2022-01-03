@@ -1,67 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cd_utils1.c                                     :+:      :+:    :+:   */
+/*   ft_cd_utils3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 03:52:18 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/03 03:43:27 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/03 03:45:13 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-** test_home
+** to_relative
 */
-int	test_home(t_list *env)
+char	*to_relative(char *curpath, char *operand)
 {
-	while (env)
-	{
-		if (!ft_strncmp("HOME=", env->content, ft_strlen("HOME=")))
-			return (1);
-		env = env->next;
-	}
-	return (0);
+	(void)curpath;
+	(void)operand;
+	return (curpath);
 }
 
 /*
-** test_dot
+** ft_getenv
 */
-int	test_dot(char *operand)
+char	*ft_getenv(char *key)
 {
-	if (!ft_strcmp(".", operand))
-		return (1);
-	return (0);
+	(void)key;
+	return (ft_strdup(""));
 }
 
 /*
-** test_dotdot
+** ft_setenv
 */
-int	test_dotdot(char *operand)
+void	ft_setenv(char *key, char *value)
 {
-	if (!ft_strcmp("..", operand))
-		return (1);
-	return (0);
+	(void)key;
+	(void)value;
 }
 
-/*
-** get_subcdpath
-*/
-char	*get_subcdpath(char *cdpath)
+char	*pwd_p(void)
 {
-	(void)cdpath;
-	return (cdpath);
-}
-
-/*
-** ft_concatenation
-*/
-char	*ft_concatenation(char *str1, char *str2, char *str3)
-{
-	(void)str1;
-	(void)str2;
-	(void)str3;
-	return (str1);
+	return (NULL);
 }

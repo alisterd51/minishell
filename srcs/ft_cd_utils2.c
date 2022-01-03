@@ -1,67 +1,58 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cd_utils1.c                                     :+:      :+:    :+:   */
+/*   ft_cd_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 03:52:18 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/03 03:43:27 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/03 03:44:40 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-** test_home
+** test_directory
 */
-int	test_home(t_list *env)
+int	test_directory(char *path_dir)
 {
-	while (env)
-	{
-		if (!ft_strncmp("HOME=", env->content, ft_strlen("HOME=")))
-			return (1);
-		env = env->next;
-	}
-	return (0);
+	(void)path_dir;
+	return (1);
 }
 
 /*
-** test_dot
+** test_option
 */
-int	test_dot(char *operand)
+int	test_option(char *option)
 {
-	if (!ft_strcmp(".", operand))
-		return (1);
-	return (0);
+	(void)option;
+	return (1);
 }
 
 /*
-** test_dotdot
+** clean_a
 */
-int	test_dotdot(char *operand)
+char	*clean_a(char *curpath)
 {
-	if (!ft_strcmp("..", operand))
-		return (1);
-	return (0);
+	(void)curpath;
+	return (curpath);
 }
 
 /*
-** get_subcdpath
+** clean_b
 */
-char	*get_subcdpath(char *cdpath)
+char	*clean_b(char *curpath)
 {
-	(void)cdpath;
-	return (cdpath);
+	(void)curpath;
+	return (curpath);
 }
 
 /*
-** ft_concatenation
+** clean_c
 */
-char	*ft_concatenation(char *str1, char *str2, char *str3)
+char	*clean_c(char *curpath)
 {
-	(void)str1;
-	(void)str2;
-	(void)str3;
-	return (str1);
+	(void)curpath;
+	return (curpath);
 }
