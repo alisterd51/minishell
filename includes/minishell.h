@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2021/12/23 17:04:05 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/03 02:12:37 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int		step9(t_cd *cd_arg);
 /*
 ** ft_cd_utils1.c
 */
-int		test_home(t_list **env);
+int		test_home(t_list *env);
 int		test_dot(char *operand);
 int		test_dotdot(char *operand);
 char	*get_subcdpath(char *cdpath);

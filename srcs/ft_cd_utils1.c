@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 03:52:18 by anclarma          #+#    #+#             */
-/*   Updated: 2021/12/23 17:07:08 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/03 02:40:00 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,15 @@
 /*
 ** test_home
 */
-int	test_home(t_list **env)
+int	test_home(t_list *env)
 {
-	(void)env;
-	return (1);
+	while (env)
+	{
+		if (!ft_strncmp("HOME=", env->content, ft_strlen("HOME=")))
+			return (1);
+		env = env->next;
+	}
+	return (0);
 }
 
 /*
@@ -26,8 +31,9 @@ int	test_home(t_list **env)
 */
 int	test_dot(char *operand)
 {
-	(void)operand;
-	return (1);
+	if (!ft_strcmp(".", operand))
+		return (1);
+	return (0);
 }
 
 /*
@@ -35,8 +41,9 @@ int	test_dot(char *operand)
 */
 int	test_dotdot(char *operand)
 {
-	(void)operand;
-	return (1);
+	if (!ft_strcmp("..", operand))
+		return (1);
+	return (0);
 }
 
 /*

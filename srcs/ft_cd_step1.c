@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 03:52:18 by anclarma          #+#    #+#             */
-/*   Updated: 2021/12/23 16:55:01 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/03 02:13:43 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	step0(t_cd *cd_arg)
 {
-	if (cd_arg->operand == NULL && !test_home(cd_arg->env))
+	if (cd_arg->operand == NULL && !test_home(*(cd_arg->env)))
 		return (10);
 	return (1);
 }
 
 int	step1(t_cd *cd_arg)
 {
-	if (cd_arg->operand == NULL && test_home(cd_arg->env))
+	if (cd_arg->operand == NULL && test_home(*(cd_arg->env)))
 		cd_arg->operand = ft_getenv("HOME");
 	return (2);
 }
