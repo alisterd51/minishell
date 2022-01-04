@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 03:52:18 by anclarma          #+#    #+#             */
-/*   Updated: 2021/12/23 21:15:03 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/04 08:27:26 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	step6(t_cd *cd_arg)
 		return (9);
 	if (cd_arg->curpath[0] != '/')
 	{
-		pwd = ft_getenv("PWD");
+		pwd = ft_getenv("PWD=", *cd_arg->env);
 		if (pwd[ft_strlen(pwd) - 1] == '/')
 			cd_arg->curpath = ft_concatenation(pwd, "", cd_arg->curpath);
 		else
@@ -45,8 +45,9 @@ int	step6(t_cd *cd_arg)
 
 int	step7(t_cd *cd_arg)
 {
-	char	resolved_path[PATH_MAX] = {0};
+	char	*resolved_path;
 
+	resolved_path = (char [PATH_MAX]){0};
 	cd_arg->curpath = clean_a(cd_arg->curpath);
 	cd_arg->curpath = clean_b(cd_arg->curpath);
 	cd_arg->curpath = clean_c(cd_arg->curpath);
@@ -71,11 +72,17 @@ int	step8(t_cd *cd_arg)
 //si erreur affichage message d'erreur et fin
 int	step9(t_cd *cd_arg)
 {
+	char	*pwd;
+
 	cd_arg->ret = chdir(cd_arg->curpath);
 	if (!test_option("-P"))
-		ft_setenv("PWD", cd_arg->new_pwd);
+		ft_setenv("PWD", cd_arg->new_pwd, cd_arg->env);
 	else
-		ft_setenv("PWD", pwd_p());
+	{
+		pwd = pwd_p();
+		ft_setenv("PWD", pwd, cd_arg->env);
+		free(pwd);
+	}
 	//S'il n'y a pas suffisamment d'autorisations sur le nouveau répertoire,
 	//ou sur l'un des parents de ce répertoire,
 	//pour déterminer le répertoire de travail actuel,

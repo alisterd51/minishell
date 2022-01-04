@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 03:52:18 by anclarma          #+#    #+#             */
-/*   Updated: 2021/12/23 21:31:09 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/04 08:17:00 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include <unistd.h>
 #include "minishell.h"
 #include "libft.h"
+
+#include <stdlib.h>
 
 /*
 ** ft_cd
@@ -38,5 +40,8 @@ int	ft_cd(int ac, char **av, t_list **env)
 	//être définie sur la valeur de l'ancien répertoire de travail
 	//(c'est-à-dire le répertoire de travail actuel
 	//immédiatement avant l'appel à cd ).
+	free(cd_var.curpath);
+	free(cd_var.operand);
+	free(cd_var.new_pwd);
 	return (cd_var.ret);
 }

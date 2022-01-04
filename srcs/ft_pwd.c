@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 18:08:03 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/15 02:58:58 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/03 16:53:29 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	valid_option(const char *option, char *arg)
 	return (1);
 }
 
-static char	*alloc_pwd(void)
+char	*alloc_pwd(void)
 {
 	char	*buf;
 	size_t	size;

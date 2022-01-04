@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/03 02:12:37 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/04 08:02:45 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,8 @@ char	*clean_a(char *curpath);
 char	*clean_b(char *curpath);
 char	*clean_c(char *curpath);
 char	*to_relative(char *curpath, char *operand);
-char	*ft_getenv(char *key);
-void	ft_setenv(char *key, char *value);
+char	*ft_getenv(char *key, t_list *lst_env);
+void	ft_setenv(char *key, char *value, t_list **lst_env);
 char	*pwd_p(void);
 
 #endif
