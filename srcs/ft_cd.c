@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 03:52:18 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/04 08:17:00 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/04 11:50:24 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "libft.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 
 /*
 ** ft_cd

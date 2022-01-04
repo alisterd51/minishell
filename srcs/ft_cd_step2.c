@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 03:52:18 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/04 08:27:26 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/04 11:50:20 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@
 
 int	step5(t_cd *cd_arg)
 {
-	cd_arg->curpath = cd_arg->operand;
+	free(cd_arg->curpath);
+	cd_arg->curpath = ft_strdup(cd_arg->operand);
 	return (6);
 }
 
 int	step6(t_cd *cd_arg)
 {
 	char	*pwd;
+	char	*concat;
 
 	pwd = NULL;
 	if (test_option("-P"))
@@ -36,9 +38,11 @@ int	step6(t_cd *cd_arg)
 	{
 		pwd = ft_getenv("PWD=", *cd_arg->env);
 		if (pwd[ft_strlen(pwd) - 1] == '/')
-			cd_arg->curpath = ft_concatenation(pwd, "", cd_arg->curpath);
+			concat = ft_concatenation(pwd, "", cd_arg->curpath);
 		else
-			cd_arg->curpath = ft_concatenation(pwd, "/", cd_arg->curpath);
+			concat = ft_concatenation(pwd, "/", cd_arg->curpath);
+		free(cd_arg->curpath);
+		cd_arg->curpath = concat;
 	}
 	return (7);
 }
@@ -62,10 +66,12 @@ int	step7(t_cd *cd_arg)
 //incomplet mais bon a priori
 int	step8(t_cd *cd_arg)
 {
-	cd_arg->new_pwd = cd_arg->curpath;
+	cd_arg->new_pwd = ft_strdup(cd_arg->curpath);
 	if (ft_strlen(cd_arg->curpath) + 1 > PATH_MAX
 		&& ft_strlen(cd_arg->operand) + 1 < PATH_MAX)
+	{
 		cd_arg->curpath = to_relative(cd_arg->curpath, cd_arg->operand);
+	}
 	return (9);
 }
 
