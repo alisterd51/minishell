@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 03:52:18 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/04 11:50:20 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/04 16:34:09 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 int	step5(t_cd *cd_arg)
 {
+	printf("5 %s\n", cd_arg->curpath);
 	free(cd_arg->curpath);
 	cd_arg->curpath = ft_strdup(cd_arg->operand);
 	return (6);
@@ -31,6 +32,7 @@ int	step6(t_cd *cd_arg)
 	char	*pwd;
 	char	*concat;
 
+	printf("6 %s\n", cd_arg->curpath);
 	pwd = NULL;
 	if (test_option("-P"))
 		return (9);
@@ -51,6 +53,7 @@ int	step7(t_cd *cd_arg)
 {
 	char	*resolved_path;
 
+	printf("7 %s\n", cd_arg->curpath);
 	resolved_path = (char [PATH_MAX]){0};
 	cd_arg->curpath = clean_a(cd_arg->curpath);
 	cd_arg->curpath = clean_b(cd_arg->curpath);
@@ -66,6 +69,7 @@ int	step7(t_cd *cd_arg)
 //incomplet mais bon a priori
 int	step8(t_cd *cd_arg)
 {
+	printf("8 %s\n", cd_arg->curpath);
 	cd_arg->new_pwd = ft_strdup(cd_arg->curpath);
 	if (ft_strlen(cd_arg->curpath) + 1 > PATH_MAX
 		&& ft_strlen(cd_arg->operand) + 1 < PATH_MAX)
@@ -79,14 +83,18 @@ int	step8(t_cd *cd_arg)
 int	step9(t_cd *cd_arg)
 {
 	char	*pwd;
+	char	oldpwd[1024];
 
+	printf("9 %s\n", cd_arg->curpath);
+	printf("2 %s\n", cd_arg->new_pwd);
+	ft_setenv("OLDPWD=", getcwd(oldpwd, 1024), cd_arg->env);
 	cd_arg->ret = chdir(cd_arg->curpath);
 	if (!test_option("-P"))
-		ft_setenv("PWD", cd_arg->new_pwd, cd_arg->env);
+		ft_setenv("PWD=", cd_arg->new_pwd, cd_arg->env);
 	else
 	{
 		pwd = pwd_p();
-		ft_setenv("PWD", pwd, cd_arg->env);
+		ft_setenv("PWD=", pwd, cd_arg->env);
 		free(pwd);
 	}
 	//S'il n'y a pas suffisamment d'autorisations sur le nouveau répertoire,

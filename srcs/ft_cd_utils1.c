@@ -6,10 +6,11 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 03:52:18 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/03 03:43:27 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/04 16:05:10 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "minishell.h"
 
 /*
@@ -51,8 +52,37 @@ int	test_dotdot(char *operand)
 */
 char	*get_subcdpath(char *cdpath)
 {
-	(void)cdpath;
-	return (cdpath);
+	static char	*subpath = NULL;
+	char		*subcdpath;
+	size_t		i;
+
+	if (subpath == NULL)
+		subpath = cdpath;
+	if (subpath[0] == '\0')
+	{
+		subpath = NULL;
+		return (NULL);
+	}
+	i = 0;
+	while (subpath[i] && subpath[i] != ':')
+		i++;
+	if (i == 0)
+	{
+		subcdpath = ft_strdup(".");
+		if (subcdpath == NULL)
+			return (NULL);
+	}
+	else
+	{
+		subcdpath = (char *)malloc(sizeof(char) * (i + 1));
+		if (subcdpath == NULL)
+			return (NULL);
+		ft_strlcpy(subcdpath, subpath, i + 1);
+	}
+	subpath += i;
+	if (subpath[0] == ':')
+		subpath++;
+	return (subcdpath);
 }
 
 /*
@@ -60,8 +90,24 @@ char	*get_subcdpath(char *cdpath)
 */
 char	*ft_concatenation(char *str1, char *str2, char *str3)
 {
-	(void)str1;
-	(void)str2;
-	(void)str3;
-	return (str1);
+	char	*str;
+	int		i;
+	int		j;
+
+	str = (char *)malloc(sizeof(char)
+			* (ft_strlen(str1) + ft_strlen(str2) + ft_strlen(str3) + 1));
+	if (str == NULL)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (str1[j])
+		str[i++] = str1[j++];
+	j = 0;
+	while (str2[j])
+		str[i++] = str2[j++];
+	j = 0;
+	while (str3[j])
+		str[i++] = str3[j++];
+	str[i] = '\0';
+	return (str);
 }

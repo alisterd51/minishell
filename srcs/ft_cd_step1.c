@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 03:52:18 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/04 11:50:00 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/04 14:17:47 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 int	step0(t_cd *cd_arg)
 {
+	printf("0 %s\n", cd_arg->curpath);
 	if (cd_arg->operand == NULL && !test_home(*cd_arg->env))
 		return (10);
 	return (1);
@@ -24,6 +25,7 @@ int	step0(t_cd *cd_arg)
 
 int	step1(t_cd *cd_arg)
 {
+	printf("1 %s\n", cd_arg->curpath);
 	if (cd_arg->operand == NULL && test_home(*cd_arg->env))
 		cd_arg->operand = ft_getenv("HOME=", *cd_arg->env);
 	return (2);
@@ -31,6 +33,7 @@ int	step1(t_cd *cd_arg)
 
 int	step2(t_cd *cd_arg)
 {
+	printf("2 %s\n", cd_arg->curpath);
 	if (cd_arg->operand[0] == '/')
 	{
 		cd_arg->curpath = ft_strdup(cd_arg->operand);
@@ -41,6 +44,7 @@ int	step2(t_cd *cd_arg)
 
 int	step3(t_cd *cd_arg)
 {
+	printf("3 %s\n", cd_arg->curpath);
 	if (test_dot(cd_arg->operand) || test_dotdot(cd_arg->operand))
 		return (5);
 	return (4);
@@ -52,6 +56,7 @@ int	step4(t_cd *cd_arg)
 	char	*cdpath;
 	char	*concatenation;
 
+	printf("4 %s\n", cd_arg->curpath);
 	cdpath = ft_getenv("CDPATH=", *cd_arg->env);
 	if (cdpath == NULL)
 		cdpath = "";
@@ -61,10 +66,12 @@ int	step4(t_cd *cd_arg)
 		concatenation = ft_concatenation(subcdpath, "/", cd_arg->operand);
 		if (test_directory(concatenation))
 		{
+			free(concatenation);
 			free(cd_arg->curpath);
 			cd_arg->curpath = ft_strdup(concatenation);
 			return (6);
 		}
+		free(concatenation);
 		subcdpath = get_subcdpath(cdpath);
 	}
 	return (5);
