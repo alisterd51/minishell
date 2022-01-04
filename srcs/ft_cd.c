@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 03:52:18 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/04 11:50:24 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/04 22:28:18 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,6 @@ int	ft_cd(int ac, char **av, t_list **env)
 	step = 0;
 	while (step < 10)
 		step = (fonc_step[step])(&cd_var);
-	//Si, pendant l'exécution des étapes ci-dessus,
-	//la variable d'environnement PWD est définie,
-	//la variable d'environnement OLDPWD doit également
-	//être définie sur la valeur de l'ancien répertoire de travail
-	//(c'est-à-dire le répertoire de travail actuel
-	//immédiatement avant l'appel à cd ).
 	free(cd_var.curpath);
 	free(cd_var.operand);
 	free(cd_var.new_pwd);

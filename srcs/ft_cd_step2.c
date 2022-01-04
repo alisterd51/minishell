@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 03:52:18 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/04 17:46:04 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/04 22:32:43 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,12 @@ int	step6(t_cd *cd_arg)
 	return (7);
 }
 
+//NOTA: faire un ft_realpath
 int	step7(t_cd *cd_arg)
 {
 	char	*resolved_path;
 
 	resolved_path = (char [PATH_MAX]){0};
-	cd_arg->curpath = clean_a(cd_arg->curpath);
-	cd_arg->curpath = clean_b(cd_arg->curpath);
-	cd_arg->curpath = clean_c(cd_arg->curpath);
-	//equivalent a realpath
-	//NOTA: faire un ft_realpath
 	realpath(cd_arg->curpath, resolved_path);
 	printf("%s -> %s\n", cd_arg->curpath, resolved_path);
 	cd_arg->curpath = ft_strdup(resolved_path);
@@ -74,6 +70,10 @@ int	step8(t_cd *cd_arg)
 }
 
 //si erreur affichage message d'erreur et fin
+//S'il n'y a pas suffisamment d'autorisations sur le nouveau répertoire,
+//ou sur l'un des parents de ce répertoire,
+//pour déterminer le répertoire de travail actuel,
+//la valeur de la variable d'environnement PWD n'est pas spécifiée.
 int	step9(t_cd *cd_arg)
 {
 	char	*pwd;
@@ -89,9 +89,5 @@ int	step9(t_cd *cd_arg)
 		ft_setenv("PWD=", pwd, cd_arg->env);
 		free(pwd);
 	}
-	//S'il n'y a pas suffisamment d'autorisations sur le nouveau répertoire,
-	//ou sur l'un des parents de ce répertoire,
-	//pour déterminer le répertoire de travail actuel,
-	//la valeur de la variable d'environnement PWD n'est pas spécifiée.
 	return (10);
 }
