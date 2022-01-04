@@ -6,12 +6,14 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 03:52:18 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/04 16:05:10 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/04 22:08:31 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "minishell.h"
+
+#include <string.h>
 
 /*
 ** test_home
@@ -67,18 +69,11 @@ char	*get_subcdpath(char *cdpath)
 	while (subpath[i] && subpath[i] != ':')
 		i++;
 	if (i == 0)
-	{
 		subcdpath = ft_strdup(".");
-		if (subcdpath == NULL)
-			return (NULL);
-	}
 	else
-	{
-		subcdpath = (char *)malloc(sizeof(char) * (i + 1));
-		if (subcdpath == NULL)
-			return (NULL);
-		ft_strlcpy(subcdpath, subpath, i + 1);
-	}
+		subcdpath = ft_strndup(subpath, i);
+	if (subcdpath == NULL)
+		return (NULL);
 	subpath += i;
 	if (subpath[0] == ':')
 		subpath++;

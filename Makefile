@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
-#    Updated: 2022/01/03 03:47:45 by anclarma         ###   ########.fr        #
+#    Updated: 2022/01/04 22:09:45 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,8 @@ CFLAGS		= -Wall -Wextra -Werror		\
 			  -pedantic-errors			\
 			  -std=c99					\
 			  -MMD -MP					\
-			  -D_XOPEN_SOURCE -D_XOPEN_SOURCE_EXTENDED
+			  -D_XOPEN_SOURCE			\
+			  -D_XOPEN_SOURCE_EXTENDED
 LFLAGS		= -Wall -Wextra -Werror
 CINCLUDES	= -I ./includes				\
 			  -I ./libft/includes

@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 20:14:19 by anclarma          #+#    #+#              #
-#    Updated: 2021/11/19 21:11:42 by anclarma         ###   ########.fr        #
+#    Updated: 2022/01/04 22:05:25 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ C_FILES		= ft_lstadd_back.c			\
 			  ft_strcmp.c				\
 			  ft_strncmp.c				\
 			  ft_strdup.c				\
+			  ft_strndup.c				\
 			  ft_strjoin.c				\
 			  ft_strlcat.c				\
 			  ft_strlcpy.c				\
