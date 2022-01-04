@@ -6,11 +6,10 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 03:52:18 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/04 22:28:18 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/04 22:52:20 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <linux/limits.h>
 #include <unistd.h>
 #include "minishell.h"
 #include "libft.h"
