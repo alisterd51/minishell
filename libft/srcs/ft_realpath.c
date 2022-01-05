@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 00:33:06 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/05 21:08:36 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/05 23:01:29 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,57 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "libft.h"
+
+static void	del_dot(char *path)
+{
+	char	*new_path;
+	size_t	i;
+	size_t	j;
+
+	new_path = (char [PATH_MAX]){0};
+	i = 0;
+	j = 0;
+	while (j < PATH_MAX && path[i])
+	{
+		if (i == 0 && path[i] == '/')
+			new_path[j++] = path[i++];
+		else if (path[i] == '/')
+		{
+			new_path[j++] = path[i++];
+			while (path[i] == '/')
+				i++;
+		}
+		else if (!ft_strncmp("./", path + i, 2)
+			|| !ft_strcmp(".", path + i))
+			i++;
+		else
+			while (path[i] && path[i] != '/')
+				new_path[j++] = path[i++];
+	}
+	ft_strlcpy(path, new_path, PATH_MAX);
+}
+
+static void	del_dotdot(char *path)
+{
+	size_t	j;
+
+	j = 0;
+	while (path[j])
+	{
+		if (!ft_strncmp("../", path + j, 3)
+			|| !ft_strcmp("..", path + j))
+		{
+			path[j] = '/';
+			path[j + 1] = '/';
+			while (j > 0 && path[j] == '/')
+				j--;
+			while (j > 0 && path[j] != '/')
+				path[j--] = '/';
+		}
+		else
+			j++;
+	}
+}
 
 static void	del_double_slash(char *path)
 {
@@ -33,7 +84,7 @@ static void	del_double_slash(char *path)
 			i++;
 	}
 }
-/*
+
 static void	del_end_slash(char *path)
 {
 	size_t	i;
@@ -42,75 +93,28 @@ static void	del_end_slash(char *path)
 	while (path[i])
 		i++;
 	i--;
-
+	while (i > 0 && path[i] == '/')
+		path[i--] = '\0';
 }
-*/
+
 char	*ft_realpath(const char *path, char *resolved_path)
 {
-	size_t	i;
-	size_t	j;
 	char	*new_path;
-	char	*tmp_path;
 	char	*pwd;
 
 	new_path = (char [PATH_MAX]){0};
-	tmp_path = (char [PATH_MAX]){0};
 	pwd = (char [1024]){0};
 	if (path[0] != '/')
 	{
 		getcwd(pwd, 1024);
-		ft_strlcpy(tmp_path, pwd, PATH_MAX);
-		ft_strlcat(tmp_path, "/", PATH_MAX);
+		ft_strlcpy(new_path, pwd, PATH_MAX);
+		ft_strlcat(new_path, "/", PATH_MAX);
 	}
-	ft_strlcat(tmp_path, path, PATH_MAX);
-	i = 0;
-	j = 0;
-	while (j < PATH_MAX && tmp_path[i])
-	{
-		if (i == 0 && tmp_path[i] == '/')
-			new_path[j++] = tmp_path[i++];
-		else if (tmp_path[i] == '/')
-		{
-			new_path[j++] = tmp_path[i++];
-			while (tmp_path[i] == '/')
-				i++;
-		}
-		else if (!ft_strncmp("./", tmp_path + i, 2)
-			|| !ft_strcmp(".", tmp_path + i))
-			i++;
-		else
-			while (tmp_path[i] && tmp_path[i] != '/')
-				new_path[j++] = tmp_path[i++];
-	}
-	j = 0;
-	while (new_path[j])
-	{
-		if (!ft_strncmp("../", new_path + j, 3)
-			|| !ft_strcmp("..", new_path + j))
-		{
-			new_path[j] = '/';
-			new_path[j + 1] = '/';
-			while (j > 0 && new_path[j] == '/')
-				j--;
-			while (j > 0 && new_path[j] != '/')
-			{
-				new_path[j] = '/';
-				j--;
-			}
-		}
-		else
-			j++;
-	}
+	ft_strlcat(new_path, path, PATH_MAX);
+	del_dot(new_path);
+	del_dotdot(new_path);
 	del_double_slash(new_path);
-	j = 1;
-	while (new_path[j])
-		j++;
-	j--;
-	while (j > 0 && new_path[j] == '/')
-	{
-		new_path[j] = '\0';
-		j--;
-	}
+	del_end_slash(new_path);
 	ft_strlcpy(resolved_path, new_path, PATH_MAX);
 	return (resolved_path);
 }

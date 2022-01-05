@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:54:07 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/03 17:34:43 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/05 22:15:03 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int	main(int ac, char **av, char **env)
 
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-	line = readline("\033[1;34mminishell-beta \033[1;32mv0.1\033[0m$ ");
 	lst_env = init_env(env);
+	line = readline("\033[1;34mminishell-beta \033[1;32mv0.1\033[0m$ ");
 	while (line)
 	{
 		add_history(line);
