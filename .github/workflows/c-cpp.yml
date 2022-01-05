@@ -2,9 +2,9 @@ name: C/C++ CI
 
 on:
   push:
-    branches: [ anclarma_dev, main ]
+    branches: [ anclarma_dev, lzaccome, main ]
   pull_request:
-    branches: [ anclarma_dev, main ]
+    branches: [ anclarma_dev, lzaccome, main ]
 
 jobs:
   build:
