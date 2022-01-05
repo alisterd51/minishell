@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 03:52:18 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/05 01:48:30 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/05 18:41:37 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,31 +30,28 @@ int	step6(t_cd *cd_arg)
 	char	*pwd;
 	char	*concat;
 
-	pwd = NULL;
+	pwd = (char [1024]){0};
 	if (test_option("-P"))
 		return (9);
 	if (cd_arg->curpath[0] != '/')
 	{
-		pwd = ft_getenv("PWD=", *cd_arg->env);
+		getcwd(pwd, 1024);
 		if (pwd[ft_strlen(pwd) - 1] == '/')
 			concat = ft_concatenation(pwd, "", cd_arg->curpath);
 		else
 			concat = ft_concatenation(pwd, "/", cd_arg->curpath);
-		free(pwd);
 		free(cd_arg->curpath);
 		cd_arg->curpath = concat;
 	}
 	return (7);
 }
 
-//NOTA: faire un ft_realpath
 int	step7(t_cd *cd_arg)
 {
 	char	*resolved_path;
 
 	resolved_path = (char [PATH_MAX]){0};
-	realpath(cd_arg->curpath, resolved_path);
-	printf("%s -> %s\n", cd_arg->curpath, resolved_path);
+	ft_realpath(cd_arg->curpath, resolved_path);
 	free(cd_arg->curpath);
 	cd_arg->curpath = ft_strdup(resolved_path);
 	return (8);

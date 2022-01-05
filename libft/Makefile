@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 20:14:19 by anclarma          #+#    #+#              #
-#    Updated: 2022/01/04 22:05:25 by anclarma         ###   ########.fr        #
+#    Updated: 2022/01/05 15:47:36 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,8 @@ C_FILES		= ft_lstadd_back.c			\
 			  ft_bzero.c				\
 			  ft_atoi.c					\
 			  ft_calloc.c				\
-			  ft_realloc.c
+			  ft_realloc.c				\
+			  ft_realpath.c
 SRCS		= $(patsubst %, $(C_DIR)/%, $(C_FILES))
 O_FILES		= $(C_FILES:.c=.o)
 OBJS		= $(patsubst %, $(O_DIR)/%, $(O_FILES))
@@ -67,6 +68,7 @@ CFLAGS		= -Wall -Wextra -Werror		\
 			  -Wpedantic				\
 			  -pedantic-errors			\
 			  -std=c99					\
+			  -D_POSIX_C_SOURCE			\
 			  -MMD -MP
 CXXFLAGS	= -Wall -Wextra -Werror		\
 			  -std=c++98				\

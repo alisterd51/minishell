@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 18:01:55 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/04 22:06:16 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/05 00:25:03 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,6 @@ void	ft_bzero(void *s, size_t n);
 int		ft_atoi(const char *str);
 void	*ft_calloc(size_t count, size_t size);
 void	*ft_realloc(void *ptr, size_t size);
+char	*ft_realpath(const char *path, char *resolved_path);
 
 #endif
