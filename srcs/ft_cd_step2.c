@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 03:52:18 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/04 22:54:51 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/05 01:48:30 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	step6(t_cd *cd_arg)
 			concat = ft_concatenation(pwd, "", cd_arg->curpath);
 		else
 			concat = ft_concatenation(pwd, "/", cd_arg->curpath);
+		free(pwd);
 		free(cd_arg->curpath);
 		cd_arg->curpath = concat;
 	}
@@ -54,6 +55,7 @@ int	step7(t_cd *cd_arg)
 	resolved_path = (char [PATH_MAX]){0};
 	realpath(cd_arg->curpath, resolved_path);
 	printf("%s -> %s\n", cd_arg->curpath, resolved_path);
+	free(cd_arg->curpath);
 	cd_arg->curpath = ft_strdup(resolved_path);
 	return (8);
 }
@@ -64,7 +66,10 @@ int	step8(t_cd *cd_arg)
 	cd_arg->new_pwd = ft_strdup(cd_arg->curpath);
 	if (ft_strlen(cd_arg->curpath) + 1 > PATH_MAX
 		&& ft_strlen(cd_arg->operand) + 1 < PATH_MAX)
+	{
+		free(cd_arg->curpath);
 		cd_arg->curpath = to_relative(cd_arg->curpath, cd_arg->operand);
+	}
 	return (9);
 }
 

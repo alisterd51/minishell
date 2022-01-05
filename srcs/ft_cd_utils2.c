@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 03:52:18 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/03 03:44:40 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/05 01:30:53 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	test_directory(char *path_dir)
 int	test_option(char *option)
 {
 	(void)option;
-	return (1);
+	return (0);
 }
 
 /*
