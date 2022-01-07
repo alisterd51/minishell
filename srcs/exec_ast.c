@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2021/12/22 21:50:42 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/07 15:49:25 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,10 @@ static int	exec_arg_1(char **tab, t_list **lst_env)
 			ret = execve(cpath, tab, env);
 			clean_tab(&env);
 		}
-		wait(&status);
+		else
+		{
+			waitpid(pid, &status, 0);
+		}
 	}
 	free(cpath);
 	return (ret);
@@ -88,6 +91,53 @@ static int	exec_arg(t_arg *arg, t_list **lst_env)
 	return (ret);
 }
 
+void	exe_cmd(t_ast *ast, t_list **lst_env, int *status)
+{
+	if (ast == NULL)
+		return;
+	if (ast->type == PIPELINE)
+		ft_pipe(ast, lst_env, status);
+	else if (ast->type == COMMAND)
+		*status =  exec_arg(ast->paw1, lst_env);
+}
+
+void	exe_pipe(t_ast *ast, t_list **lst_env, int *status)
+{
+	int		fd[2];
+	pid_t	pid;
+
+	pipe(fd);//
+	pid = fork();//
+	if (pid == 0)
+	{
+		close(fd[0]);
+		dup2(fd[1], STDOUT_FILENO);//
+		exe_cmd(ast->paw1, lst_env, status);
+		close(fd[1]);
+	}
+	else
+	{
+		close(fd[1]);
+		dup2(fd[0], STDIN_FILENO);//
+		exe_cmd(ast->paw2, lst_env, status);
+		close(fd[0]);
+		waitpid(pid, status, 0);
+	}
+	exit(*status);
+}
+
+int	ft_pipe(t_ast *ast, t_list **lst_env, int *status)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == 0)
+		exe_pipe(ast, lst_env, status);
+	else
+		waitpid(pid, status, 0);
+	return (*status);
+}
+
 int	exec_ast(t_ast *ast, t_list **lst_env)
 {
 	int	ret;
@@ -95,7 +145,7 @@ int	exec_ast(t_ast *ast, t_list **lst_env)
 	if (ast == NULL)
 		return (0);
 	if (ast->type == PIPELINE)
-		ret = ft_pipe(ast, lst_env);
+		ret = ft_pipe(ast, lst_env, &ret);
 	else
 		ret = exec_arg(ast->paw1, lst_env);
 	return (ret);

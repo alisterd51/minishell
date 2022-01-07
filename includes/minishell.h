@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/04 08:02:45 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/07 15:38:35 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,9 @@ int		tablen(char **tab);
 /*
 ** ft_pipe.c
 */
-int		ft_pipe(t_ast *ast, t_list **lst_env);
+//int		ft_pipe(t_ast *ast, t_list **lst_env);
+
+int		ft_pipe(t_ast *ast, t_list **lst_env, int *status);
 
 /*
 ** solve_path.c

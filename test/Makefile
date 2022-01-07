@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:41:40 by anclarma          #+#    #+#              #
-#    Updated: 2022/01/03 03:48:23 by anclarma         ###   ########.fr        #
+#    Updated: 2022/01/07 15:55:59 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,6 @@ C_FILES		= ft_cd.c						\
 			  ft_env.c						\
 			  ft_export.c					\
 			  ft_unset.c					\
-			  ft_pipe.c						\
 			  init_ast.c					\
 			  print_ast.c					\
 			  clean_ast.c					\
