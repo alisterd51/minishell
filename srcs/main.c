@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:54:07 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/05 22:15:03 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/07 16:29:06 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,15 @@ static void	intern_exec(char *line, t_list *lst_env)
 {
 	char	**tab;
 	t_ast	*ast;
+	int		status;
 
 	tab = line_to_tab(line);
 	ast = init_ast(tabsize(tab), tab);
 	clean_tab(&tab);
 	print_ast(ast, 0);
 	(void)lst_env;
-	ft_set_status(exec_ast(ast, &lst_env));
+	exec_ast(ast, &lst_env, &status);
+	ft_set_status(status);
 	clean_ast(&ast);
 }
 
