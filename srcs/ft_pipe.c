@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/07 16:49:09 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/12 23:15:46 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static void	exe_pipe(t_ast *ast, t_list **lst_env, int *status)
 		close(fd[0]);
 		waitpid(pid, status, 0);
 	}
+	clean_colector();
+	clean_env(lst_env);
 	exit(*status);
 }
 

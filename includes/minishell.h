@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/07 16:47:39 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/12 23:01:53 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,5 +135,11 @@ char	*to_relative(char *curpath, char *operand);
 char	*ft_getenv(char *key, t_list *lst_env);
 void	ft_setenv(char *key, char *value, t_list **lst_env);
 char	*pwd_p(void);
+
+/*
+** colector.c
+*/
+void	clean_colector(void);
+void	to_clean_colector(t_ast **ast);
 
 #endif
