@@ -6,7 +6,7 @@
 /*   By: antoine <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 22:50:52 by antoine           #+#    #+#             */
-/*   Updated: 2022/01/12 23:02:57 by antoine          ###   ########.fr       */
+/*   Updated: 2022/01/13 00:52:36 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	intern_colector(int mode, t_ast **ast)
 {
-	static t_ast **save_ast = NULL;
+	static t_ast	**save_ast = NULL;
 
 	if (mode == 1)
 		save_ast = ast;

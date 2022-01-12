@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/12 23:15:46 by antoine          ###   ########.fr       */
+/*   Updated: 2022/01/13 00:45:34 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	exe_pipe(t_ast *ast, t_list **lst_env, int *status)
 		dup2(fd[1], STDOUT_FILENO);
 		exec_ast(ast->paw1, lst_env, status);
 		close(fd[1]);
+		close(STDOUT_FILENO);
 	}
 	else
 	{
@@ -36,6 +37,7 @@ static void	exe_pipe(t_ast *ast, t_list **lst_env, int *status)
 		dup2(fd[0], STDIN_FILENO);
 		exec_ast(ast->paw2, lst_env, status);
 		close(fd[0]);
+		close(STDIN_FILENO);
 		waitpid(pid, status, 0);
 	}
 	clean_colector();
