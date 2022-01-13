@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:41:40 by anclarma          #+#    #+#              #
-#    Updated: 2022/01/07 16:48:29 by anclarma         ###   ########.fr        #
+#    Updated: 2022/01/13 00:59:55 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,8 @@ C_FILES		= ft_cd.c						\
 			  clean_list.c					\
 			  solve_path.c					\
 			  ret_status.c					\
-			  end_status.c
+			  end_status.c					\
+			  colector.c
 SRCS		= $(patsubst %, $(C_DIR)/%, $(C_FILES))
 SRCS1		= main_ast.c
 SRCS2		= main_ft_echo.c
