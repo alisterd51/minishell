@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <sys/wait.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -19,29 +20,35 @@
 static void	exe_pipe(t_ast *ast, t_list **lst_env, int *status)
 {
 	int		fd[2];
+	int		ret_pipe;
 	pid_t	pid;
 
-	pipe(fd);
-	pid = fork();
-	if (pid == 0)
+	ret_pipe = pipe(fd);
+	if (ret_pipe == 0)
 	{
-		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
-		exec_ast(ast->paw1, lst_env, status);
-		close(fd[1]);
-		close(STDOUT_FILENO);
+		pid = fork();
+		if (pid == 0)
+		{
+			close(fd[0]);
+			dup2(fd[1], STDOUT_FILENO);
+			exec_ast(ast->paw1, lst_env, status);
+			close(fd[1]);
+			close(STDOUT_FILENO);
+		}
+		else
+		{
+			close(fd[1]);
+			dup2(fd[0], STDIN_FILENO);
+			exec_ast(ast->paw2, lst_env, status);
+			close(fd[0]);
+			close(STDIN_FILENO);
+			waitpid(pid, status, 0);
+		}
+		clean_colector();
+		clean_env(lst_env);
 	}
 	else
-	{
-		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
-		exec_ast(ast->paw2, lst_env, status);
-		close(fd[0]);
-		close(STDIN_FILENO);
-		waitpid(pid, status, 0);
-	}
-	clean_colector();
-	clean_env(lst_env);
+		perror("minishell");
 	exit(*status);
 }
 

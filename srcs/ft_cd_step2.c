@@ -33,7 +33,7 @@ int	step6(t_cd *cd_arg)
 	pwd = (char [1024]){0};
 	if (test_option("-P"))
 		return (9);
-	if (cd_arg->curpath[0] != '/')
+	if (cd_arg->curpath && cd_arg->curpath[0] != '/')
 	{
 		getcwd(pwd, 1024);
 		if (pwd[ft_strlen(pwd) - 1] == '/')
@@ -54,6 +54,8 @@ int	step7(t_cd *cd_arg)
 	ft_realpath(cd_arg->curpath, resolved_path);
 	free(cd_arg->curpath);
 	cd_arg->curpath = ft_strdup(resolved_path);
+	if (!cd_arg->curpath)
+		return (10);
 	return (8);
 }
 

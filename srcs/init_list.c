@@ -19,12 +19,18 @@
 ** SHLVL=
 ** _=
 */
+static void	minimal_env(t_list **list_env)
+{
+	ft_lstadd_back(list_env, ft_lstnew(ft_strdup("SHLVL=1")));
+}
 
 t_list	*init_env(char **env)
 {
 	t_list	*list_env;
 
 	list_env = NULL;
+	if (*env == NULL)
+		minimal_env(&list_env);
 	while (*env)
 	{
 		ft_lstadd_back(&list_env, ft_lstnew(ft_strdup(*env)));

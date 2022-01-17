@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
@@ -71,8 +72,7 @@ int	ft_pwd(int ac, char **av)
 	buf = alloc_pwd();
 	if (!buf)
 	{
-		ft_putstr_fd("pwd: ", 2);
-		ft_putendl_fd(strerror(errno), 2);
+		perror("minishell: pwd");
 		return (1);
 	}
 	ft_putendl_fd(buf, 1);

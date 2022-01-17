@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <errno.h>
+#include <string.h>
 #include <sys/wait.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -56,7 +58,10 @@ static int	exec_arg_1(char **tab, t_list **lst_env)
 	int		status;
 	pid_t	pid;
 
-	cpath = solve_path(getenv("PATH"), tab[0]);
+	char	*test;
+	test = ft_getenv("PATH=", *lst_env);
+	cpath = solve_path(test, tab[0]);
+	free(test);
 	ret = 0;
 	if (access(cpath, X_OK) == 0)
 	{
@@ -65,13 +70,19 @@ static int	exec_arg_1(char **tab, t_list **lst_env)
 		{
 			env = list_to_tab(*lst_env);
 			ret = execve(cpath, tab, env);
+			if (ret == -1)
+				perror(tab[0]);
 			clean_tab(&env);
+			free(cpath);
+			exit(ret);
 		}
 		else
 		{
 			waitpid(pid, &status, 0);
 		}
 	}
+	else
+		perror(tab[0]);
 	free(cpath);
 	return (ret);
 }
