@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/07 16:44:52 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/20 18:50:40 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static int	exec_arg_1(char **tab, t_list **lst_env)
 	return (ret);
 }
 
-static int	exec_arg(t_arg *arg, t_list **lst_env)
+int	exec_arg(t_arg *arg, t_list **lst_env)
 {
 	char	**tab;
 	int		ret;
@@ -102,12 +102,35 @@ static int	exec_arg(t_arg *arg, t_list **lst_env)
 	return (ret);
 }
 
+int	is_exit(t_arg *arg)
+{
+	return (!ft_strcmp(arg->arg, "exit"));
+}
+
 void	exec_ast(t_ast *ast, t_list **lst_env, int *status)
 {
 	if (ast == NULL)
 		return ;
-	if (ast->type == PIPELINE)
-		ft_pipe(ast, lst_env, status);
-	else if (ast->type == COMMAND)
+	pid_t   pid;
+
+	if (ast->type == COMMAND && is_exit(ast->paw1))
+	{
+		exec_redir(ast->paw2);
 		*status = exec_arg(ast->paw1, lst_env);
+		return ;
+	}
+	pid = fork();
+	if (pid == 0)
+	{
+		if (ast->type == PIPELINE)
+			ft_pipe(ast, lst_env, status);
+		else if (ast->type == COMMAND)
+		{
+			exec_redir(ast->paw2);
+			*status = exec_arg(ast->paw1, lst_env);
+		}
+		exit(*status);
+	}
+	else
+		waitpid(pid, status, 0);
 }

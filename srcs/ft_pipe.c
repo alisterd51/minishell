@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/13 00:45:34 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/20 18:44:44 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,5 @@ static void	exe_pipe(t_ast *ast, t_list **lst_env, int *status)
 
 void	ft_pipe(t_ast *ast, t_list **lst_env, int *status)
 {
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == 0)
-		exe_pipe(ast, lst_env, status);
-	else
-		waitpid(pid, status, 0);
+	exe_pipe(ast, lst_env, status);
 }

@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
-#    Updated: 2022/01/12 23:18:31 by antoine          ###   ########.fr        #
+#    Updated: 2022/01/19 02:10:04 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ C_FILES		= main.c					\
 			  utils_tab2.c				\
 			  utils_list.c				\
 			  exec_ast.c				\
+			  exec_redir.c				\
 			  ft_pipe.c					\
 			  init_list.c				\
 			  clean_list.c				\
@@ -52,7 +53,7 @@ CFLAGS		= -Wall -Wextra -Werror		\
 			  -pedantic-errors			\
 			  -std=c99					\
 			  -MMD -MP					\
-			  -D_POSIX_C_SOURCE	#		\
+			  -D_POSIX_C_SOURCE	-g3#	\
 			  -D_XOPEN_SOURCE			\
 			  -D_XOPEN_SOURCE_EXTENDED
 LFLAGS		= -Wall -Wextra -Werror

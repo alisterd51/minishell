@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:41:40 by anclarma          #+#    #+#              #
-#    Updated: 2022/01/13 00:59:55 by anclarma         ###   ########.fr        #
+#    Updated: 2022/01/19 00:12:31 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ C_FILES		= ft_cd.c						\
 			  utils_tab2.c					\
 			  utils_list.c					\
 			  exec_ast.c					\
+			  exec_redir.c					\
 			  ft_pipe.c						\
 			  init_list.c					\
 			  clean_list.c					\
