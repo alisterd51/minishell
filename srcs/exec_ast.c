@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/20 18:50:40 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/21 01:19:12 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ static int	exec_arg_1(char **tab, t_list **lst_env)
 	int		ret;
 	int		status;
 	pid_t	pid;
-
 	char	*test;
+
 	test = ft_getenv("PATH=", *lst_env);
 	cpath = solve_path(test, tab[0]);
 	free(test);
@@ -87,50 +87,52 @@ static int	exec_arg_1(char **tab, t_list **lst_env)
 	return (ret);
 }
 
-int	exec_arg(t_arg *arg, t_list **lst_env)
+int	exec_arg(t_ast *ast, t_list **lst_env)
 {
 	char	**tab;
 	int		ret;
 
-	tab = arg_to_tab(arg);
+		int	fd_save = dup(1);
+		exec_redir(ast->paw2);
+	tab = arg_to_tab(ast->paw1);
 	ret = 0;
 	if (tab && tab[0] && is_builtin(tab[0]))
 		ret = exec_builtin(tab, lst_env);
 	else if (tab && tab[0])
 		ret = exec_arg_1(tab, lst_env);
+	dup2(fd_save, 1);
 	clean_tab(&tab);
 	return (ret);
 }
 
-int	is_exit(t_arg *arg)
+int	is_special(t_arg *arg)
 {
-	return (!ft_strcmp(arg->arg, "exit"));
+	return (!ft_strcmp(arg->arg, "exit")
+			|| !ft_strcmp(arg->arg, "cd"));
 }
 
 void	exec_ast(t_ast *ast, t_list **lst_env, int *status)
 {
+	pid_t   pid;
+	t_arg	*test;
+
 	if (ast == NULL)
 		return ;
-	pid_t   pid;
-
-	if (ast->type == COMMAND && is_exit(ast->paw1))
-	{
-		exec_redir(ast->paw2);
-		*status = exec_arg(ast->paw1, lst_env);
-		return ;
-	}
-	pid = fork();
-	if (pid == 0)
-	{
-		if (ast->type == PIPELINE)
-			ft_pipe(ast, lst_env, status);
-		else if (ast->type == COMMAND)
-		{
-			exec_redir(ast->paw2);
-			*status = exec_arg(ast->paw1, lst_env);
-		}
-		exit(*status);
-	}
+	test = ast->paw1;
+	if (ast->type == COMMAND && is_builtin(test->arg))
+		*status = exec_arg(ast, lst_env);
 	else
-		waitpid(pid, status, 0);
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			if (ast->type == PIPELINE)
+				ft_pipe(ast, lst_env, status);
+			else if (ast->type == COMMAND)
+				*status = exec_arg(ast, lst_env);
+			exit(*status);
+		}
+		else
+			waitpid(pid, status, 0);
+	}
 }
