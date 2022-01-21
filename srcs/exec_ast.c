@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/21 19:18:49 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/21 20:55:44 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,10 @@ int	exec_arg(t_ast *ast, t_list **lst_env)
 {
 	char	**tab;
 	int		ret;
-	int		fd_save;
+	int		fd_save[2];
 
-	fd_save = dup(1);
+	fd_save[0] = dup(0);
+	fd_save[1] = dup(1);
 	exec_redir(ast->paw2);
 	tab = arg_to_tab(ast->paw1);
 	ret = 0;
@@ -92,7 +93,8 @@ int	exec_arg(t_ast *ast, t_list **lst_env)
 		ret = exec_builtin(tab, lst_env);
 	else if (tab && tab[0])
 		ret = exec_arg_1(tab, lst_env);
-	dup2(fd_save, 1);
+	dup2(fd_save[0], 0);
+	dup2(fd_save[1], 1);
 	clean_tab(&tab);
 	return (ret);
 }
