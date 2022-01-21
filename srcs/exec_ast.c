@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/21 01:19:12 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/21 02:58:20 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,10 @@ int	exec_arg(t_ast *ast, t_list **lst_env)
 {
 	char	**tab;
 	int		ret;
+	int		fd_save;
 
-		int	fd_save = dup(1);
-		exec_redir(ast->paw2);
+	fd_save = dup(1);
+	exec_redir(ast->paw2);
 	tab = arg_to_tab(ast->paw1);
 	ret = 0;
 	if (tab && tab[0] && is_builtin(tab[0]))
@@ -105,15 +106,9 @@ int	exec_arg(t_ast *ast, t_list **lst_env)
 	return (ret);
 }
 
-int	is_special(t_arg *arg)
-{
-	return (!ft_strcmp(arg->arg, "exit")
-			|| !ft_strcmp(arg->arg, "cd"));
-}
-
 void	exec_ast(t_ast *ast, t_list **lst_env, int *status)
 {
-	pid_t   pid;
+	pid_t	pid;
 	t_arg	*test;
 
 	if (ast == NULL)
