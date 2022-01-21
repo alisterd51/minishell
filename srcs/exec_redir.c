@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/20 18:49:11 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/21 18:17:26 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,16 @@ static void	redir_d_left(char *file)
 
 static int	redir_s_right(char *file)
 {
-	int new_fd;
+	int	new_fd;
 
-        new_fd = open(file , O_CREAT|O_WRONLY, 0666);
-		if (new_fd == -1)
-		{
-			perror(file);
-			return (-1);
-		}
-        dup2(new_fd, STDOUT_FILENO);
-        close(new_fd);
+	new_fd = open(file, O_CREAT | O_WRONLY, 0666);
+	if (new_fd == -1)
+	{
+		perror(file);
+		return (-1);
+	}
+	dup2(new_fd, STDOUT_FILENO);
+	close(new_fd);
 	return (0);
 }
 

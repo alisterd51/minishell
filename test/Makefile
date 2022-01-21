@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:41:40 by anclarma          #+#    #+#              #
-#    Updated: 2022/01/19 00:12:31 by anclarma         ###   ########.fr        #
+#    Updated: 2022/01/21 19:18:21 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ C_FILES		= ft_cd.c						\
 			  print_ast.c					\
 			  clean_ast.c					\
 			  utils_ast.c					\
+			  utils_builtin.c				\
 			  utils_tab.c					\
 			  utils_tab2.c					\
 			  utils_list.c					\

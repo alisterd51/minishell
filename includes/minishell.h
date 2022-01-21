@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/21 01:19:52 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/21 19:17:22 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,11 @@ char	**line_to_tab(char *line);
 */
 void	clean_tab(char ***tab);
 char	**line_to_tab(char *line);
+
+/*
+** utils_builtin.c
+*/
+int		is_builtin(char *path);
 
 /*
 ** utils_list.c

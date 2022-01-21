@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/21 02:58:20 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/21 19:18:49 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,9 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "minishell.h"
 #include "builtin.h"
-
-#include <stdio.h>
-
-static int	is_builtin(char *path)
-{
-	return (!ft_strcmp(path, "echo")
-		|| !ft_strcmp(path, "cd")
-		|| !ft_strcmp(path, "pwd")
-		|| !ft_strcmp(path, "export")
-		|| !ft_strcmp(path, "unset")
-		|| !ft_strcmp(path, "env")
-		|| !ft_strcmp(path, "exit"));
-}
 
 static int	exec_builtin(char **tab, t_list **lst_env)
 {
@@ -50,9 +38,22 @@ static int	exec_builtin(char **tab, t_list **lst_env)
 	return (0);
 }
 
-static int	exec_arg_1(char **tab, t_list **lst_env)
+static void	exec_arg_2(char **tab, t_list **lst_env, char *cpath)
 {
 	char	**env;
+	int		ret;
+
+	env = list_to_tab(*lst_env);
+	ret = execve(cpath, tab, env);
+	if (ret == -1)
+		perror(tab[0]);
+	clean_tab(&env);
+	free(cpath);
+	exit(ret);
+}
+
+static int	exec_arg_1(char **tab, t_list **lst_env)
+{
 	char	*cpath;
 	int		ret;
 	int		status;
@@ -67,19 +68,9 @@ static int	exec_arg_1(char **tab, t_list **lst_env)
 	{
 		pid = fork();
 		if (pid == 0)
-		{
-			env = list_to_tab(*lst_env);
-			ret = execve(cpath, tab, env);
-			if (ret == -1)
-				perror(tab[0]);
-			clean_tab(&env);
-			free(cpath);
-			exit(ret);
-		}
+			exec_arg_2(tab, lst_env, cpath);
 		else
-		{
 			waitpid(pid, &status, 0);
-		}
 	}
 	else
 		perror(tab[0]);
