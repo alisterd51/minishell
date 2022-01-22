@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/21 19:17:22 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/22 18:40:23 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	exec_ast(t_ast *ast, t_list **lst_env, int *status);
 /*
 ** exec_redir.c
 */
-void	exec_redir(t_redir *redir);
+int		exec_redir(t_redir *redir);
 
 /*
 ** ft_pipe.c

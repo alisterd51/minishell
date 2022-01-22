@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/21 22:31:10 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/22 18:40:04 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ static int	redir_s_left(char *file)
 	return (0);
 }
 
-static void	redir_d_left(char *file)
+static int	redir_d_left(char *file)
 {
 	(void)file;
+	return (0);
 }
 
 static int	redir_s_right(char *file)
@@ -74,18 +75,24 @@ static int	redir_d_right(char *file)
 	return (0);
 }
 
-void	exec_redir(t_redir *redir)
+int	exec_redir(t_redir *redir)
 {
+	int	ret;
+
+	ret = 0;
 	while (redir)
 	{
 		if (redir->type == S_LEFT)
-			redir_s_left(redir->file);
+			ret = redir_s_left(redir->file);
 		else if (redir->type == D_LEFT)
-			redir_d_left(redir->file);
+			ret = redir_d_left(redir->file);
 		else if (redir->type == S_RIGHT)
-			redir_s_right(redir->file);
+			ret = redir_s_right(redir->file);
 		else if (redir->type == D_RIGHT)
-			redir_d_right(redir->file);
+			ret = redir_d_right(redir->file);
+		if (ret != 0)
+			return (-1);
 		redir = redir->next;
 	}
+	return (0);
 }
