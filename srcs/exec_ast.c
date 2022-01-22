@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/21 20:55:44 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/22 16:56:54 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static void	exec_arg_2(char **tab, t_list **lst_env, char *cpath)
 	ret = execve(cpath, tab, env);
 	if (ret == -1)
 		perror(tab[0]);
+	clean_env(lst_env);
 	clean_tab(&env);
 	free(cpath);
 	exit(ret);
@@ -75,6 +76,7 @@ static int	exec_arg_1(char **tab, t_list **lst_env)
 	else
 		perror(tab[0]);
 	free(cpath);
+	clean_colector();
 	return (ret);
 }
 
@@ -95,6 +97,8 @@ int	exec_arg(t_ast *ast, t_list **lst_env)
 		ret = exec_arg_1(tab, lst_env);
 	dup2(fd_save[0], 0);
 	dup2(fd_save[1], 1);
+	close(fd_save[0]);
+	close(fd_save[1]);
 	clean_tab(&tab);
 	return (ret);
 }
@@ -118,6 +122,7 @@ void	exec_ast(t_ast *ast, t_list **lst_env, int *status)
 				ft_pipe(ast, lst_env, status);
 			else if (ast->type == COMMAND)
 				*status = exec_arg(ast, lst_env);
+			clean_env(lst_env);
 			exit(*status);
 		}
 		else
