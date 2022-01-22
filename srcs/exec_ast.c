@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/22 16:56:54 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/22 18:21:41 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	exec_ast(t_ast *ast, t_list **lst_env, int *status)
 	if (ast == NULL)
 		return ;
 	test = ast->paw1;
-	if (ast->type == COMMAND && is_builtin(test->arg))
+	if (ast->type == COMMAND && test && is_builtin(test->arg))
 		*status = exec_arg(ast, lst_env);
 	else
 	{
