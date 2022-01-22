@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/dash
 
 BOLD="\e[1m"
 RESET="\e[0m"
@@ -29,11 +29,27 @@ test_default_main()
 	./test_solve_path "cat"
 }
 
+test_minishell()
+{
+	cd ..
+	make fclean debug
+	printf "${LIGHT_CYAN}${BOLD}minishell < cmd1${RESET}\n"
+	./minishell < ./test/cmd1
+	printf "${LIGHT_CYAN}${BOLD}minishell < cmd2${RESET}\n"
+	./minishell < ./test/cmd2
+	printf "${LIGHT_CYAN}${BOLD}minishell < cmd3${RESET}\n"
+	./minishell < ./test/cmd3
+	printf "${LIGHT_CYAN}${BOLD}minishell < cmd4${RESET}\n"
+	./minishell < ./test/cmd4
+}
+
 main()
 {
 	cd $(dirname $0)
 
 	test_default_main
+	test_minishell
+	make fclean
 }
 
 main "$@"
