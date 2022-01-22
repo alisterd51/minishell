@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/22 17:02:12 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/22 17:37:33 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static void	intern_child(t_intern_pipe *intern_pipe)
 {
 	close(intern_pipe->fd[0]);
 	dup2(intern_pipe->fd[1], STDOUT_FILENO);
-	exec_ast(intern_pipe->ast->paw1, intern_pipe->lst_env, intern_pipe->status);
 	close(intern_pipe->fd[1]);
+	exec_ast(intern_pipe->ast->paw1, intern_pipe->lst_env, intern_pipe->status);
 	close(STDOUT_FILENO);
 }
 
@@ -30,8 +30,8 @@ static void	intern_parent(t_intern_pipe *intern_pipe)
 {
 	close(intern_pipe->fd[1]);
 	dup2(intern_pipe->fd[0], STDIN_FILENO);
-	exec_ast(intern_pipe->ast->paw2, intern_pipe->lst_env, intern_pipe->status);
 	close(intern_pipe->fd[0]);
+	exec_ast(intern_pipe->ast->paw2, intern_pipe->lst_env, intern_pipe->status);
 	close(STDIN_FILENO);
 	waitpid(intern_pipe->pid, intern_pipe->status, 0);
 }
