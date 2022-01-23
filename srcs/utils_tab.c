@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:45:24 by anclarma          #+#    #+#             */
-/*   Updated: 2021/11/10 21:32:22 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/23 05:30:33 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	clean_tab(char ***tab)
 	int	i;
 
 	i = 0;
+	if (*tab == NULL)
+		return ;
 	while ((*tab)[i])
 	{
 		free((*tab)[i]);

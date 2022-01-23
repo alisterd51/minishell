@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:45:24 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/23 05:14:17 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/23 05:41:46 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ char	**arg_to_tab(t_arg *arg)
 	while (i < size)
 	{
 		ret[i] = ft_strdup(arg->arg);
+		if (ret[i] == NULL)
+		{
+			clean_tab(&ret);
+			return (NULL);
+		}
 		arg = arg->next;
 		i++;
 	}
