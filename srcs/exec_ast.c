@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/22 18:41:35 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/23 01:56:15 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "minishell.h"
-#include "builtin.h"
-
-static int	exec_builtin(char **tab, t_list **lst_env)
-{
-	if (!ft_strcmp(*tab, "echo"))
-		return (ft_echo(tablen(tab), tab));
-	else if (!ft_strcmp(*tab, "cd"))
-		return (ft_cd(tablen(tab), tab, lst_env));
-	else if (!ft_strcmp(*tab, "pwd"))
-		return (ft_pwd(tablen(tab), tab));
-	else if (!ft_strcmp(*tab, "export"))
-		return (ft_export(tablen(tab), tab, lst_env));
-	else if (!ft_strcmp(*tab, "unset"))
-		return (ft_unset(tablen(tab), tab, lst_env));
-	else if (!ft_strcmp(*tab, "env"))
-		return (ft_env(*lst_env));
-	else if (!ft_strcmp(*tab, "exit"))
-		return (ft_exit(tablen(tab), tab, ft_get_status()));
-	return (0);
-}
 
 static void	exec_arg_2(char **tab, t_list **lst_env, char *cpath)
 {
@@ -53,17 +33,29 @@ static void	exec_arg_2(char **tab, t_list **lst_env, char *cpath)
 	exit(ret);
 }
 
+static char	*sub_solve_path(char **tab, t_list **lst_env)
+{
+	char	*cpath;
+	char	*path_value;
+
+	path_value = ft_getenv("PATH=", *lst_env);
+	cpath = solve_path(path_value, tab[0]);
+	free(path_value);
+	if (cpath == NULL)
+		perror("minishell: solve_path");
+	return (cpath);
+}
+
 static int	exec_arg_1(char **tab, t_list **lst_env)
 {
 	char	*cpath;
 	int		ret;
 	int		status;
 	pid_t	pid;
-	char	*test;
 
-	test = ft_getenv("PATH=", *lst_env);
-	cpath = solve_path(test, tab[0]);
-	free(test);
+	cpath = sub_solve_path(tab, lst_env);
+	if (cpath == NULL)
+		return (-1);
 	ret = 0;
 	if (access(cpath, X_OK) == 0)
 	{

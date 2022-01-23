@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/22 18:40:23 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/23 01:57:18 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,12 @@ void	clean_ast(t_ast **ast);
 /*
 ** exec_ast.c
 */
-//int		exec_arg(t_arg *arg, t_list **lst_env);
 void	exec_ast(t_ast *ast, t_list **lst_env, int *status);
+
+/*
+** exec_builtin.c
+*/
+int		exec_builtin(char **tab, t_list **lst_env);
 
 /*
 ** exec_redir.c
