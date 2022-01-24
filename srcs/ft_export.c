@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:26:01 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/24 22:27:12 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/24 23:31:52 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,24 @@ static int	is_special_param(char *param)
 	return (*param == '*' || *param == '*' || *param == '@' || *param == '#'
 		|| *param == '?' || *param == '-' || *param == '$' || *param == '!'
 		|| ft_isdigit(*param));
+}
+
+static int	dup_to_list(char **av, t_list **env)
+{
+	t_list	*new_node;
+	char	*new_content;
+
+	new_content = ft_strdup(*av);
+	new_node = ft_lstnew(new_content);
+	if (new_content == NULL || new_node == NULL)
+	{
+		free(new_content);
+		free(new_node);
+		perror("minishell: export");
+		return (1);
+	}
+	ft_lstadd_back(env, new_node);
+	return (0);
 }
 
 int	ft_export(int ac, char **av, t_list **env)
@@ -36,22 +54,8 @@ int	ft_export(int ac, char **av, t_list **env)
 			ft_putstr_fd(*av, 2);
 			ft_putendl_fd("': not a valid identifier", 2);
 		}
-		else
-		{
-			t_list	*new_node;
-			char	*new_content;
-
-			new_content = ft_strdup(*av);
-			new_node = ft_lstnew(new_content);
-			if (new_content == NULL || new_node == NULL)
-			{
-				free(new_content);
-				free(new_node);
-				perror("minishell: export");
-				return (1);
-			}
-			ft_lstadd_back(env, new_node);
-		}
+		else if (dup_to_list(av, env))
+			return (1);
 		av++;
 	}
 	return (0);
