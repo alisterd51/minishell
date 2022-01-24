@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/24 19:22:01 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/24 21:50:41 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ void	exec_ast(t_ast *ast, t_list **lst_env, int *status)
 			else if (ast->type == COMMAND)
 				*status = exec_arg(ast, lst_env);
 			clean_env(lst_env);
+			clean_colector();
 			exit(*status);
 		}
 		else
