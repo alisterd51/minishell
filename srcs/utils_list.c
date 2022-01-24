@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 18:36:10 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/04 06:59:47 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/24 19:55:52 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,13 @@ char	*ft_getenv(char *key, t_list *lst_env)
 void	ft_setenv(char *key, char *value, t_list **lst_env)
 {
 	t_list	*env;
+	t_list	*new_node;
 	char	*new_keyvalue;
 
 	env = *lst_env;
 	new_keyvalue = ft_strjoin(key, value);
+	if (new_keyvalue == NULL)
+		return ;
 	while (env)
 	{
 		if (!ft_strncmp(key, env->content, ft_strlen(key)))
@@ -59,6 +62,12 @@ void	ft_setenv(char *key, char *value, t_list **lst_env)
 			return ;
 		}
 		env = env->next;
+	}
+	new_node = ft_lstnew(new_keyvalue);
+	if (new_node == NULL)
+	{
+		free(new_keyvalue);
+		return ;
 	}
 	ft_lstadd_back(lst_env, ft_lstnew(new_keyvalue));
 }
