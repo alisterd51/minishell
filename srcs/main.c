@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:54:07 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/24 23:39:23 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/24 23:51:33 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ static void	intern_exec(char *line, t_list *lst_env)
 	clean_ast(&ast);
 }
 
-static int	intern_init(char **env)
+static int	intern_init(char **env, t_list **lst_env)
 {
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-	lst_env = init_env(env);
+	*lst_env = init_env(env);
 	if (lst_env == NULL)
 	{
 		perror("minishell: init_env");
@@ -59,7 +59,7 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-	if (intern_init(env))
+	if (intern_init(env, &lst_env))
 		return (1);
 	line = readline(PROMPT);
 	while (line)
