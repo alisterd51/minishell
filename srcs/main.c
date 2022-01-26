@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:54:07 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/26 12:39:04 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/26 14:09:24 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 #include <readline/history.h>
 #include "builtin.h"
 #include "minishell.h"
-#define PROMPT	"\033[1;34mminishell-beta \033[1;32mv0.1\033[0m$ "
+#define DEFAULT_PS1	"\033[1;34mminishell-beta \033[1;32mv0.1\033[0m$ "
+#define DEFAULT_PS2	"heredoc> "
 
 static void	intern_exec(char *line, t_list *lst_env)
 {
@@ -59,7 +60,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	if (intern_init(env, &lst_env))
 		return (1);
-	line = readline(PROMPT);
+	line = readline(DEFAULT_PS1);
 	while (line)
 	{
 		add_history(line);
@@ -68,7 +69,7 @@ int	main(int ac, char **av, char **env)
 		free(line);
 		line = NULL;
 		if (ft_get_end() == 0)
-			line = readline(PROMPT);
+			line = readline(DEFAULT_PS1);
 	}
 	if (ft_get_end() == 0)
 		ft_putendl_fd("exit", 1);

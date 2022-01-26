@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/22 18:40:04 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/26 14:12:17 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,13 @@ static int	redir_s_right(char *file)
 static int	redir_d_right(char *file)
 {
 	int		new_fd;
-	ssize_t	ret_read;
-	char	buf;
 
-	new_fd = open(file, O_CREAT | O_RDWR, 0666);
+	new_fd = open(file, O_CREAT | O_APPEND | O_WRONLY, 0666);
 	if (new_fd == -1)
 	{
 		perror(file);
 		return (-1);
 	}
-	ret_read = read(new_fd, &buf, 1);
-	while (ret_read > 0)
-		ret_read = read(new_fd, &buf, 1);
 	dup2(new_fd, STDOUT_FILENO);
 	close(new_fd);
 	return (0);
