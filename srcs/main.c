@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:54:07 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/24 23:51:33 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/26 12:39:04 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ static void	intern_exec(char *line, t_list *lst_env)
 
 	tab = line_to_tab(line);
 	ast = init_ast(tabsize(tab), tab);
-	if (ast == NULL)
-		perror("minishell: init_ast");
 	to_clean_colector(&ast);
 	clean_tab(&tab);
 	print_ast(ast, 0);
@@ -44,7 +42,7 @@ static int	intern_init(char **env, t_list **lst_env)
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	*lst_env = init_env(env);
-	if (lst_env == NULL)
+	if (*lst_env == NULL)
 	{
 		perror("minishell: init_env");
 		return (1);

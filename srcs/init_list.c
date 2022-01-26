@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 18:36:10 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/24 17:56:27 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/26 12:45:20 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	minimal_env(t_list **list_env)
 	char	*new_content;
 
 	new_content = ft_strdup("SHLVL=1");
-	if (new_content)
+	if (new_content == NULL)
 		return ;
 	new_node = ft_lstnew(new_content);
 	if (new_node == NULL)
