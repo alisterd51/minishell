@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/27 23:41:57 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/27 23:59:48 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,12 @@ static int	redir_d_left(char *file)
 	int		fd;
 	char	*line;
 
-	fd = open(".heredoc", O_CREAT | O_WRONLY, 0666);
+	fd = open("/tmp/.heredoc", O_CREAT | O_WRONLY, 0666);
+	if (fd == -1)
+	{
+		perror("/tmp/.heredoc");
+		return (-1);
+	}
 	line = NULL;
 	while (get_next_line(STDIN_FILENO, &line) > 0 && ft_strcmp(file, line))
 	{
@@ -50,10 +55,10 @@ static int	redir_d_left(char *file)
 		line = NULL;
 	}
 	close(fd);
-	fd = open(".heredoc", O_RDONLY);
+	fd = open("/tmp/.heredoc", O_RDONLY);
 	if (fd == -1)
 	{
-		perror(".heredoc");
+		perror("/tmp/.heredoc");
 		return (-1);
 	}
 	dup2(fd, STDIN_FILENO);
