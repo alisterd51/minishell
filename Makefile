@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
-#    Updated: 2022/01/23 01:57:42 by anclarma         ###   ########.fr        #
+#    Updated: 2022/01/28 01:01:31 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ C_FILES		= main.c					\
 			  exec_ast.c				\
 			  exec_builtin.c			\
 			  exec_redir.c				\
+			  ft_heredoc.c				\
 			  ft_pipe.c					\
 			  init_list.c				\
 			  clean_list.c				\

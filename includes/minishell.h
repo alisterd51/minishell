@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/23 05:15:14 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/28 01:02:55 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,11 @@ int		exec_builtin(char **tab, t_list **lst_env);
 ** exec_redir.c
 */
 int		exec_redir(t_redir *redir);
+
+/*
+** ft_heredoc.c
+*/
+int	ft_heredoc(int fd, char const *terminat);
 
 /*
 ** ft_pipe.c
