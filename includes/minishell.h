@@ -6,12 +6,16 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/28 01:09:56 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/28 23:34:40 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+/* DEBUG */
+# include <stdio.h>
+
 # include "libft.h"
 # include "struct.h"
 
@@ -24,6 +28,12 @@
 # define D_LEFT		6
 # define S_RIGHT	7
 # define D_RIGHT	8
+# define DEFAULT_PS1	"\033[1;34mminishell-beta \033[1;32mv0.1\033[0m$ "
+# define DEFAULT_PS2	"heredoc> "
+
+# ifndef PATH_MAX
+#  define PATH_MAX 4096
+# endif
 
 /*
 ** init_list.c
@@ -69,6 +79,11 @@ int		exec_redir(t_redir *redir);
 ** ft_heredoc.c
 */
 int		ft_heredoc(int fd, char const *terminat);
+
+/*
+** ft_handler.c
+*/
+void	handler_int(int sig);
 
 /*
 ** ft_pipe.c

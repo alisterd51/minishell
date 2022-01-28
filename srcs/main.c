@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:54:07 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/26 14:09:24 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/28 23:46:17 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,9 @@
 #include <signal.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include "libft.h"
 #include "builtin.h"
 #include "minishell.h"
-#define DEFAULT_PS1	"\033[1;34mminishell-beta \033[1;32mv0.1\033[0m$ "
-#define DEFAULT_PS2	"heredoc> "
 
 static void	intern_exec(char *line, t_list *lst_env)
 {
@@ -40,7 +39,7 @@ static void	intern_exec(char *line, t_list *lst_env)
 
 static int	intern_init(char **env, t_list **lst_env)
 {
-	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, handler_int);
 	signal(SIGQUIT, SIG_IGN);
 	*lst_env = init_env(env);
 	if (*lst_env == NULL)
@@ -64,7 +63,6 @@ int	main(int ac, char **av, char **env)
 	while (line)
 	{
 		add_history(line);
-		history_search(line, 1);
 		intern_exec(line, lst_env);
 		free(line);
 		line = NULL;

@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_list.c                                       :+:      :+:    :+:   */
+/*   ft_handler.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/30 23:18:49 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/29 00:24:59 by anclarma         ###   ########.fr       */
+/*   Created: 2021/08/12 04:54:07 by anclarma          #+#    #+#             */
+/*   Updated: 2022/01/29 00:27:25 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "libft.h"
+#include <unistd.h>
+#include <readline/readline.h>
+#include "minishell.h"
 
-void	clean_env(t_list **lst_env)
+void	handler_int(int sig)
 {
-	ft_lstclear(lst_env, free);
+	(void)sig;
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+	ft_set_status(130);
 }

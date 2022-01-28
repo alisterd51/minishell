@@ -6,13 +6,14 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/28 00:00:13 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/29 00:22:58 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <errno.h>
 #include <string.h>
 #include <sys/wait.h>
+#include <signal.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>

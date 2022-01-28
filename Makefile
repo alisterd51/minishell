@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
-#    Updated: 2022/01/28 01:01:31 by anclarma         ###   ########.fr        #
+#    Updated: 2022/01/28 23:39:04 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ C_FILES		= main.c					\
 			  exec_builtin.c			\
 			  exec_redir.c				\
 			  ft_heredoc.c				\
+			  ft_handler.c				\
 			  ft_pipe.c					\
 			  init_list.c				\
 			  clean_list.c				\
@@ -51,14 +52,7 @@ O_FILES		= $(C_FILES:.c=.o)
 OBJS		= $(patsubst %, $(O_DIR)/%, $(O_FILES))
 CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror		\
-			  -Wconversion				\
-			  -Wpedantic				\
-			  -pedantic-errors			\
-			  -std=c99					\
-			  -MMD -MP					\
-			  -D_POSIX_C_SOURCE	-g3#	\
-			  -D_XOPEN_SOURCE			\
-			  -D_XOPEN_SOURCE_EXTENDED
+			  -MMD -MP
 LFLAGS		= -Wall -Wextra -Werror
 CINCLUDES	= -I ./includes				\
 			  -I ./libft/includes
