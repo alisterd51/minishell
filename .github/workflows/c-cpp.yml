@@ -15,12 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: make
-      run: |
-        if [ "$RUNNER_OS" == "macOS" ]
-        then
-            brew install readline
-        fi
-        make
+      run: make
     - name: make check
       run: make check
     - name: norminette
