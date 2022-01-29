@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
-#    Updated: 2022/01/29 16:16:36 by anclarma         ###   ########.fr        #
+#    Updated: 2022/01/29 16:19:48 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,21 +51,12 @@ SRCS		= $(patsubst %, $(C_DIR)/%, $(C_FILES))
 O_FILES		= $(C_FILES:.c=.o)
 OBJS		= $(patsubst %, $(O_DIR)/%, $(O_FILES))
 CC			= gcc
-UNAME       = $(shell uname)
 CFLAGS		= -Wall -Wextra -Werror		\
 			  -MMD -MP
 LFLAGS		= -Wall -Wextra -Werror
 CINCLUDES	= -I ./includes				\
 			  -I ./libft/includes
 CLIBS		= -L ./libft -lft -lreadline
-
-ifeq ($(UNAME),Darwin)
-	CINCLUDES	= -I ./includes							\
-				  -I ./libft/includes					\
-				  -I .brew/opt/readline/include
-	CLIBS		= -L ./libft -lft						\
-				  -L .brew/opt/readline/lib -lreadline
-endif
 
 all:		$(NAME)
 
