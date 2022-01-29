@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 00:46:40 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/28 01:04:47 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/29 14:41:21 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,7 @@ int	ft_heredoc(int fd, char const *terminat)
 		free(line);
 		line = NULL;
 	}
+	free(line);
+	line = NULL;
 	return (0);
 }
