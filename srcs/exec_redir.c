@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/29 00:23:32 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/29 16:35:43 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -45,7 +46,9 @@ static int	redir_d_left(char *file)
 		perror("/tmp/.heredoc");
 		return (-1);
 	}
+	signal(SIGINT, handler_int_heredoc);
 	ft_heredoc(fd, file);
+	signal(SIGINT, handler_int);
 	close(fd);
 	fd = open("/tmp/.heredoc", O_RDONLY);
 	if (fd == -1)

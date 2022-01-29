@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/28 23:34:40 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/29 16:36:18 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int		ft_heredoc(int fd, char const *terminat);
 ** ft_handler.c
 */
 void	handler_int(int sig);
+void	handler_int_heredoc(int sig);
 
 /*
 ** ft_pipe.c
