@@ -6,12 +6,13 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:54:07 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/29 00:27:25 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/29 14:59:35 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <readline/readline.h>
+#include <readline/history.h>
 #include "minishell.h"
 
 void	handler_int(int sig)
