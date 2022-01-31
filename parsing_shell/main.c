@@ -6,10 +6,12 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 22:22:58 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/01/31 22:10:01 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/01/31 23:07:43 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <readline/readline.h>
+#include <readline/history.h>
 #include "test.h"
 
 int	ft_strclen(char *str, char c, int i)
@@ -78,7 +80,7 @@ t_cmd	*parsing_shell(char *str, char **envp)
 	cmd = get_cmd(str, envp);
 	return (cmd);
 }
-
+/*
 int	main(int ac, char **av, char **envp)
 {
 	t_cmd	*cmd;
@@ -97,5 +99,31 @@ int	main(int ac, char **av, char **envp)
 		cmd = cmd->next;
 	}
 	free_lst(&tmp);
+	return (0);
+}
+*/
+int	main(int ac, char **av, char **env)
+{
+	char	*line;
+	t_cmd	*cmd;
+	t_cmd	*tmp;
+
+	line = readline("\033[1;34mtest-parsing \033[1;32mv0.1\033[0m$ ");
+	while (line)
+	{
+		add_history(line);
+		cmd = parsing_shell(line, env);
+		printf("av : %s\n", line);
+		tmp = cmd;
+		while (cmd)
+		{
+			printf("token : %s, %d, %d\n", cmd->word, cmd->type, cmd->space);
+			cmd = cmd->next;
+		}
+		free(line);
+		line = readline("\033[1;34mtest-parsing \033[1;32mv0.1\033[0m$ ");
+	}
+	(void)ac;
+	(void)av;
 	return (0);
 }
