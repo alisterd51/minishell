@@ -8,4 +8,4 @@
 # @description : 
 ######################################################################
 
-cc -Wall -Wextra -Werror -fsanitize=address -fsanitize=leak -fsanitize=undefined -g3 *.c -lreadline
+gcc -Wall -Wextra -Werror -fsanitize=address -fsanitize=leak -fsanitize=undefined -g3 *.c -lreadline

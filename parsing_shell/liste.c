@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/01/21 19:54:54 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/01/31 23:40:28 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,8 @@ void	get_type(t_cmd *cmd)
 	while (tmp)
 	{
 		if (tmp && tmp->next && (tmp->type == REDIRECT_L
-				|| tmp->type == REDIRECT_R || tmp->type == REDIRECT_ADD))
+				|| tmp->type == REDIRECT_R || tmp->type == REDIRECT_ADD
+				|| tmp->type == PIPE))
 		{
 			if (tmp->next->type == REDIRECT_L || tmp->next->type == REDIRECT_R
 				|| tmp->next->type == REDIRECT_ADD
@@ -267,5 +268,5 @@ void	print_error(char *msg, t_cmd *cmd)
 {
 	free_lst(&cmd);
 	printf("%s", msg);
-	exit(EXIT_FAILURE);
+	return (2);
 }
