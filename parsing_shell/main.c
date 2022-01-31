@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 22:22:58 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/01/31 23:07:43 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/31 23:10:59 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ int	main(int ac, char **av, char **env)
 			printf("token : %s, %d, %d\n", cmd->word, cmd->type, cmd->space);
 			cmd = cmd->next;
 		}
+		free_lst(&tmp);
 		free(line);
 		line = readline("\033[1;34mtest-parsing \033[1;32mv0.1\033[0m$ ");
 	}
