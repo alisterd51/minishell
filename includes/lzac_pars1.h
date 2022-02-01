@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 18:51:26 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/01 21:31:11 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/01 21:56:20 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 enum e_type
 {
 
-	LZAC_NONE,			// default  0
+	LZAC_NONE,		// default  0
 	ARG,			// word     1
 	CMD,			// cmd      2
 	T_FILE,			// after < || > || << || >>  3
@@ -62,7 +62,7 @@ void	free_lst(t_cmd **cmd);
 void	get_type(t_cmd *cmd);
 int	ft_strarglen(char *str, int i);
 int	lzac_ft_lstsize(t_cmd *lst);
-int		print_error(char *msg, t_cmd *cmd);
+void		print_error(char *msg, t_cmd *cmd);
 void	get_error(t_cmd *cmd);
 void	ft_space(t_stuff *stuff, char *str);
 

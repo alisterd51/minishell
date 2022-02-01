@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/01 21:32:50 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/01 22:16:56 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,10 @@ void	ft_quote(t_stuff *stuff, char c, t_cmd **cmd)
 	if (stuff->str[stuff->i + 1])
 		stuff->i++;
 	else
-	{}
 		print_error("unclosed quote\n", *cmd);
 	j = ft_strclen(stuff->str, c, stuff->i);
+	if (j < 0)
+		print_error("unclosed quote\n", *cmd);
 	word = lzac_ft_strndup(stuff->str, j, stuff->i);
 	new = lzac_ft_lstnew(word, ARG, stuff->space);
 	lzac_ft_lstadd_back(cmd, new);
@@ -187,7 +188,7 @@ t_cmd	*get_cmd(char *str, char **envp)
 		else if (str[stuff.i] == '>')
 			ft_rdright(&stuff, &cmd);
 		else if (ft_isalnum(str[stuff.i]) || str[stuff.i] == '/'
-			|| str[stuff.i] == '-')
+			|| str[stuff.i] == '-' || str[stuff.i] == '.')
 			ft_alnum(&stuff, &cmd);
 		else if (str[stuff.i] == '|')
 			lzac_ft_pipe(&stuff, &cmd);
@@ -268,9 +269,9 @@ void	get_error(t_cmd *cmd)
 	return ;
 }
 
-int	print_error(char *msg, t_cmd *cmd)
+void	print_error(char *msg, t_cmd *cmd)
 {
 	free_lst(&cmd);
 	printf("%s", msg);
-	return (2);
+	exit(EXIT_FAILURE);
 }
