@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/01 04:14:56 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/01 21:27:42 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,13 @@ void	ft_quote(t_stuff *stuff, char c, t_cmd **cmd)
 	int		j;
 
 	j = 0;
-	stuff->i++;
+	if (stuff->str[stuff->i + 1])
+		stuff->i++;
+	else
+	{}
+		print_error("unclosed quote\n", *cmd);
 	j = ft_strclen(stuff->str, c, stuff->i);
-	word = ft_strndup(stuff->str + stuff->i, j);
+	word = lzac_ft_strndup(stuff->str, j, stuff->i);
 	new = lzac_ft_lstnew(word, ARG, stuff->space);
 	lzac_ft_lstadd_back(cmd, new);
 	stuff->i += j + 1;
@@ -102,7 +106,7 @@ void	ft_alnum(t_stuff *stuff, t_cmd **cmd)
 	j = 0;
 	stuff->type = ARG;
 	j = ft_strarglen(stuff->str, stuff->i);
-	word = ft_strndup(stuff->str + stuff->i, j);
+	word = lzac_ft_strndup(stuff->str, j, stuff->i);
 	new = lzac_ft_lstnew(word, stuff->type, stuff->space);
 	lzac_ft_lstadd_back(cmd, new);
 	stuff->i += j;
@@ -153,7 +157,7 @@ void	lzac_ft_pipe(t_stuff *stuff, t_cmd **cmd)
 }
 
 void	init_stuff(t_stuff *stuff, char *str)
-{	
+{
 	stuff->str = str;
 	stuff->i = 0;
 	stuff->space = 0;
@@ -202,13 +206,13 @@ void	get_type(t_cmd *cmd)
 {
 	t_cmd	*tmp;
 	t_cmd	*tmp2;
-	char	*save_str;
 
 	tmp = cmd;
 	while (tmp)
 	{
 		if (tmp && tmp->next && (tmp->type == REDIRECT_L
-				|| tmp->type == REDIRECT_R || tmp->type == REDIRECT_ADD))
+				|| tmp->type == REDIRECT_R || tmp->type == REDIRECT_ADD
+				|| tmp->type == PIPE))
 		{
 			if (tmp->next->type == REDIRECT_L || tmp->next->type == REDIRECT_R
 				|| tmp->next->type == REDIRECT_ADD
@@ -231,9 +235,7 @@ void	get_type(t_cmd *cmd)
 		if (tmp->next && tmp->next->space == 0 && tmp->type == 1
 			&& tmp->next->type == 1)
 		{
-			save_str = tmp->word;
 			tmp->word = ft_strjoin(tmp->word, tmp->next->word);
-			free(save_str);
 			tmp2 = tmp->next;
 			tmp->next = tmp->next->next;
 			free(tmp2->word);
@@ -266,9 +268,9 @@ void	get_error(t_cmd *cmd)
 	return ;
 }
 
-void	print_error(char *msg, t_cmd *cmd)
+int	print_error(char *msg, t_cmd *cmd)
 {
 	free_lst(&cmd);
 	printf("%s", msg);
-	exit(EXIT_FAILURE);
+	return (2);
 }

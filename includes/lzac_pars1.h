@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 18:51:26 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/01 04:27:02 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/01 21:22:34 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ struct s_stuff
 };
 
 t_cmd	*get_cmd(char *str, char **envp);
-int	ft_strclen(char *str, char c, int i);
+int		ft_strclen(char *str, char c, int i);
+char	*lzac_ft_strndup(char *str, int size, int i);
 t_cmd	*parsing_shell(char *str, char **envp);
 void	lzac_ft_lstadd_back(t_cmd **cmd, t_cmd *new);
 t_cmd	*lzac_ft_lstnew(char *word, enum e_type type, int space);
@@ -61,7 +62,7 @@ void	free_lst(t_cmd **cmd);
 void	get_type(t_cmd *cmd);
 int	ft_strarglen(char *str, int i);
 int	lzac_ft_lstsize(t_cmd *lst);
-void	print_error(char *msg, t_cmd *cmd);
+int		print_error(char *msg, t_cmd *cmd);
 void	get_error(t_cmd *cmd);
 void	ft_space(t_stuff *stuff, char *str);
 // void	init_stuff(t_stuff *stuff);
