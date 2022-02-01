@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 18:51:26 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/01/21 02:52:28 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/01 02:30:22 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@
 
 enum e_type
 {
-	NONE,			// default  0
-	ARG,			// word     1
-	CMD,			// cmd      2
-	T_FILE,			// after < || > || << || >>  3
-	DELIMITOR,		// after << 4
-	REDIRECT_L,		// <        5
-	REDIRECT_R,		// >        6
-	HEREDOC,		// <<       7
-	REDIRECT_ADD,	// >>       8
+	NONE,
+	ARG,
+	CMD,
+	T_FILE,
+	DELIMITOR,
+	REDIRECT_L,
+	REDIRECT_R,
+	HEREDOC,
+	REDIRECT_ADD,
 	PIPE
 };
 
@@ -38,7 +38,6 @@ struct s_cmd
 	char		*word;
 	enum e_type	type;
 	int			space;
-	// t_cmd		*prev;
 	t_cmd		*next;
 };
 
@@ -66,7 +65,7 @@ int		ft_isalnum(int c);
 void	get_type(t_cmd *cmd);
 int	ft_strarglen(char *str, int i);
 int	ft_lstsize(t_cmd *lst);
-void	print_error(char *msg, t_cmd *cmd);
+int	print_error(char *msg, t_cmd *cmd);
 void	get_error(t_cmd *cmd);
 void	ft_space(t_stuff *stuff, char *str);
 // void	init_stuff(t_stuff *stuff);

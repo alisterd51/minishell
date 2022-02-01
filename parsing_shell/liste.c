@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/01/31 23:40:28 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/01 04:58:30 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,11 @@ void	ft_quote(t_stuff *stuff, char c, t_cmd **cmd)
 	int		j;
 
 	j = 0;
-	stuff->i++;
+	if (stuff->str[stuff->i + 1])
+		stuff->i++;
+	else
+	{}
+		print_error("unclosed quote\n", *cmd);
 	j = ft_strclen(stuff->str, c, stuff->i);
 	word = ft_strndup(stuff->str, j, stuff->i);
 	new = ft_lstnew(word, ARG, stuff->space);
@@ -264,7 +268,7 @@ void	get_error(t_cmd *cmd)
 	return ;
 }
 
-void	print_error(char *msg, t_cmd *cmd)
+int	print_error(char *msg, t_cmd *cmd)
 {
 	free_lst(&cmd);
 	printf("%s", msg);
