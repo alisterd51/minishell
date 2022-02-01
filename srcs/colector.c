@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   end_status.c                                       :+:      :+:    :+:   */
+/*   colector.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: antoine <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/23 09:40:20 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/28 22:59:05 by anclarma         ###   ########.fr       */
+/*   Created: 2022/01/12 22:50:52 by antoine           #+#    #+#             */
+/*   Updated: 2022/01/28 22:58:52 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static int	ft_end(int mode, int end)
+#include "minishell.h"
+
+static void	intern_colector(int mode, t_ast **ast)
 {
-	static int	last_end = 0;
+	static t_ast	**save_ast = NULL;
 
 	if (mode == 1)
-		last_end = end;
-	return (last_end);
+		save_ast = ast;
+	else
+		clean_ast(save_ast);
 }
 
-int	ft_get_end(void)
+void	clean_colector(void)
 {
-	return (ft_end(0, 0));
+	intern_colector(0, NULL);
 }
 
-void	ft_set_end(int end)
+void	to_clean_colector(t_ast **ast)
 {
-	ft_end(1, end);
-	return ;
+	intern_colector(1, ast);
 }

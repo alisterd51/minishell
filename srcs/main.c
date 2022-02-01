@@ -6,32 +6,56 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:54:07 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/05 22:15:03 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/01 04:28:00 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <signal.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include "libft.h"
 #include "builtin.h"
 #include "minishell.h"
 
-#include <unistd.h>
-#include <signal.h>
+#include "lzac_pars1.h"
 
-static void	intern_exec(char *line, t_list *lst_env)
+static void	intern_exec(char *line, t_list *lst_env, char **env)
 {
-	char	**tab;
+//	char	**tab;
 	t_ast	*ast;
+	t_cmd	*lst_token;
+	int		status;
 
-	tab = line_to_tab(line);
-	ast = init_ast(tabsize(tab), tab);
-	clean_tab(&tab);
+//	tab = line_to_tab(line);
+//	ast = init_ast(tabsize(tab), tab);
+	lst_token = parsing_shell(line, env);
+	print_token(lst_token);
+	ast = token_to_ast(lst_token);
+	free_lst(&lst_token);
+	status = 0;
+	to_clean_colector(&ast);
+//	clean_tab(&tab);//
 	print_ast(ast, 0);
 	(void)lst_env;
-	ft_set_status(exec_ast(ast, &lst_env));
-	clean_ast(&ast);
+//	exec_ast(ast, &lst_env, &status);
+	ft_set_status(status);
+	clean_colector();
+}
+
+static int	intern_init(char **env, t_list **lst_env)
+{
+	signal(SIGINT, handler_int);
+	signal(SIGQUIT, SIG_IGN);
+	*lst_env = init_env(env);
+	if (*lst_env == NULL)
+	{
+		perror("minishell: init_env");
+		return (1);
+	}
+	return (0);
 }
 
 int	main(int ac, char **av, char **env)
@@ -39,25 +63,23 @@ int	main(int ac, char **av, char **env)
 	char	*line;
 	t_list	*lst_env;
 
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	lst_env = init_env(env);
-	line = readline("\033[1;34mminishell-beta \033[1;32mv0.1\033[0m$ ");
+	(void)ac;
+	(void)av;
+	if (intern_init(env, &lst_env))
+		return (1);
+	line = readline(DEFAULT_PS1);
 	while (line)
 	{
 		add_history(line);
-		history_search(line, 1);
-		intern_exec(line, lst_env);
+		intern_exec(line, lst_env, env);
 		free(line);
 		line = NULL;
 		if (ft_get_end() == 0)
-			line = readline("\033[1;34mminishell-beta \033[1;32mv0.1\033[0m$ ");
+			line = readline(DEFAULT_PS1);
 	}
 	if (ft_get_end() == 0)
 		ft_putendl_fd("exit", 1);
 	clear_history();
 	clean_env(&lst_env);
-	(void)ac;
-	(void)av;
 	return (ft_get_status());
 }

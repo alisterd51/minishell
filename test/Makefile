@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:41:40 by anclarma          #+#    #+#              #
-#    Updated: 2022/01/03 03:48:23 by anclarma         ###   ########.fr        #
+#    Updated: 2022/01/29 15:02:51 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,32 +22,39 @@ NAME9		= test_solve_path
 LIBFT		= ../libft/libft.a 
 C_DIR		= ../srcs
 O_DIR		= ../objs
-C_FILES		= ft_cd.c						\
-			  ft_cd_step1.c					\
-			  ft_cd_step2.c					\
-			  ft_cd_utils1.c				\
-			  ft_cd_utils2.c				\
-			  ft_cd_utils3.c				\
-			  ft_echo.c						\
-			  ft_pwd.c						\
-			  ft_exit.c						\
-			  ft_env.c						\
-			  ft_export.c					\
-			  ft_unset.c					\
-			  ft_pipe.c						\
-			  init_ast.c					\
-			  print_ast.c					\
-			  clean_ast.c					\
-			  utils_ast.c					\
-			  utils_tab.c					\
-			  utils_tab2.c					\
-			  utils_list.c					\
-			  exec_ast.c					\
-			  init_list.c					\
-			  clean_list.c					\
-			  solve_path.c					\
-			  ret_status.c					\
-			  end_status.c
+C_FILES		= main.c					\
+			  ft_cd.c					\
+			  ft_cd_step1.c				\
+			  ft_cd_step2.c				\
+			  ft_cd_utils1.c			\
+			  ft_cd_utils2.c			\
+			  ft_cd_utils3.c			\
+			  ft_echo.c					\
+			  ft_pwd.c					\
+			  ft_exit.c					\
+			  ft_env.c					\
+			  ft_export.c				\
+			  ft_unset.c				\
+			  init_ast.c				\
+			  print_ast.c				\
+			  clean_ast.c				\
+			  utils_ast.c				\
+			  utils_builtin.c			\
+			  utils_tab.c				\
+			  utils_tab2.c				\
+			  utils_list.c				\
+			  exec_ast.c				\
+			  exec_builtin.c			\
+			  exec_redir.c				\
+			  ft_heredoc.c				\
+			  ft_handler.c				\
+			  ft_pipe.c					\
+			  init_list.c				\
+			  clean_list.c				\
+			  solve_path.c				\
+			  ret_status.c				\
+			  end_status.c				\
+			  colector.c
 SRCS		= $(patsubst %, $(C_DIR)/%, $(C_FILES))
 SRCS1		= main_ast.c
 SRCS2		= main_ft_echo.c

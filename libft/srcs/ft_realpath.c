@@ -102,6 +102,8 @@ char	*ft_realpath(const char *path, char *resolved_path)
 	char	*new_path;
 	char	*pwd;
 
+	if (!path || !resolved_path)
+		return (NULL);
 	new_path = (char [PATH_MAX]){0};
 	pwd = (char [1024]){0};
 	if (path[0] != '/')

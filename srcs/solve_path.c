@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:49:00 by anclarma          #+#    #+#             */
-/*   Updated: 2021/12/15 17:29:46 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/23 01:44:20 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ static char	*subpath(char *path, size_t *j)
 	while (path[*j + i] && path[*j + i] != ':')
 		i++;
 	ret = (char *)malloc(sizeof(char) * (i + 2));
+	if (ret == NULL)
+		return (NULL);
 	ft_strlcpy(ret, path + *j, i + 1);
 	ret[i] = '/';
 	ret[i + 1] = '\0';
@@ -106,14 +108,13 @@ char	*solve_path(char *path, char *key)
 
 	spath = split_path(path);
 	tpath = NULL;
-	(void)buf;
 	i = 0;
 	if (spath == NULL)
 		return (NULL);
 	while (spath[i])
 	{
 		tpath = ft_strjoin(spath[i], key);
-		if (stat(tpath, &buf) == 0)
+		if (tpath == NULL || stat(tpath, &buf) == 0)
 		{
 			free_spath(&spath);
 			return (tpath);

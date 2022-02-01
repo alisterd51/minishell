@@ -1,19 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_list.c                                       :+:      :+:    :+:   */
+/*   utils_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/30 23:18:49 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/29 00:24:59 by anclarma         ###   ########.fr       */
+/*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
+/*   Updated: 2022/01/21 19:11:06 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "libft.h"
+#include "minishell.h"
 
-void	clean_env(t_list **lst_env)
+int	is_builtin(char *path)
 {
-	ft_lstclear(lst_env, free);
+	return (!ft_strcmp(path, "echo")
+		|| !ft_strcmp(path, "cd")
+		|| !ft_strcmp(path, "pwd")
+		|| !ft_strcmp(path, "export")
+		|| !ft_strcmp(path, "unset")
+		|| !ft_strcmp(path, "env")
+		|| !ft_strcmp(path, "exit"));
 }

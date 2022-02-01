@@ -6,12 +6,16 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/04 08:02:45 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/01/29 16:36:18 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+/* DEBUG */
+# include <stdio.h>
+
 # include "libft.h"
 # include "struct.h"
 
@@ -24,6 +28,12 @@
 # define D_LEFT		6
 # define S_RIGHT	7
 # define D_RIGHT	8
+# define DEFAULT_PS1	"\033[1;34mminishell-beta \033[1;32mv0.1\033[0m$ "
+# define DEFAULT_PS2	"heredoc> "
+
+# ifndef PATH_MAX
+#  define PATH_MAX 4096
+# endif
 
 /*
 ** init_list.c
@@ -53,7 +63,33 @@ void	clean_ast(t_ast **ast);
 /*
 ** exec_ast.c
 */
-int		exec_ast(t_ast *ast, t_list **lst_env);
+void	exec_ast(t_ast *ast, t_list **lst_env, int *status);
+
+/*
+** exec_builtin.c
+*/
+int		exec_builtin(char **tab, t_list **lst_env);
+
+/*
+** exec_redir.c
+*/
+int		exec_redir(t_redir *redir);
+
+/*
+** ft_heredoc.c
+*/
+int		ft_heredoc(int fd, char const *terminat);
+
+/*
+** ft_handler.c
+*/
+void	handler_int(int sig);
+void	handler_int_heredoc(int sig);
+
+/*
+** ft_pipe.c
+*/
+void	ft_pipe(t_ast *ast, t_list **lst_env, int *status);
 
 /*
 ** utils_ast.c
@@ -67,6 +103,12 @@ char	**line_to_tab(char *line);
 */
 void	clean_tab(char ***tab);
 char	**line_to_tab(char *line);
+int		is_redirect(char *str);
+
+/*
+** utils_builtin.c
+*/
+int		is_builtin(char *path);
 
 /*
 ** utils_list.c
@@ -77,11 +119,6 @@ char	**list_to_tab(t_list *lst_env);
 ** utils_list2.c
 */
 int		tablen(char **tab);
-
-/*
-** ft_pipe.c
-*/
-int		ft_pipe(t_ast *ast, t_list **lst_env);
 
 /*
 ** solve_path.c
@@ -135,5 +172,11 @@ char	*to_relative(char *curpath, char *operand);
 char	*ft_getenv(char *key, t_list *lst_env);
 void	ft_setenv(char *key, char *value, t_list **lst_env);
 char	*pwd_p(void);
+
+/*
+** colector.c
+*/
+void	clean_colector(void);
+void	to_clean_colector(t_ast **ast);
 
 #endif

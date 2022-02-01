@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
-#    Updated: 2022/01/05 16:30:13 by anclarma         ###   ########.fr        #
+#    Updated: 2022/02/01 02:40:41 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,33 +27,34 @@ C_FILES		= main.c					\
 			  ft_env.c					\
 			  ft_export.c				\
 			  ft_unset.c				\
-			  ft_pipe.c					\
 			  init_ast.c				\
 			  print_ast.c				\
 			  clean_ast.c				\
 			  utils_ast.c				\
+			  utils_builtin.c			\
 			  utils_tab.c				\
 			  utils_tab2.c				\
 			  utils_list.c				\
 			  exec_ast.c				\
+			  exec_builtin.c			\
+			  exec_redir.c				\
+			  ft_heredoc.c				\
+			  ft_handler.c				\
+			  ft_pipe.c					\
 			  init_list.c				\
 			  clean_list.c				\
 			  solve_path.c				\
 			  ret_status.c				\
-			  end_status.c
+			  end_status.c				\
+			  colector.c				\
+			  lzac_pars1.c				\
+			  lzac_pars2.c
 SRCS		= $(patsubst %, $(C_DIR)/%, $(C_FILES))
 O_FILES		= $(C_FILES:.c=.o)
 OBJS		= $(patsubst %, $(O_DIR)/%, $(O_FILES))
 CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror		\
-			  -Wconversion				\
-			  -Wpedantic				\
-			  -pedantic-errors			\
-			  -std=c99					\
-			  -MMD -MP					\
-			  -D_POSIX_C_SOURCE	#		\
-			  -D_XOPEN_SOURCE			\
-			  -D_XOPEN_SOURCE_EXTENDED
+			  -MMD -MP
 LFLAGS		= -Wall -Wextra -Werror
 CINCLUDES	= -I ./includes				\
 			  -I ./libft/includes

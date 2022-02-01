@@ -5,56 +5,62 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/15 12:04:52 by anclarma          #+#    #+#             */
-/*   Updated: 2021/12/18 23:13:19 by anclarma         ###   ########.fr       */
+/*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
+/*   Updated: 2022/01/22 17:37:33 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include "minishell.h"
+#include "builtin.h"
 
-#define OUTPUT_END	0
-#define INPUT_END	1
-
-static int	ft_pipe1(int *fd, t_ast *ast, t_list **lst_env)
+static void	intern_child(t_intern_pipe *intern_pipe)
 {
-	close(fd[INPUT_END]);
-	dup2(fd[OUTPUT_END], STDIN_FILENO);
-	close(fd[OUTPUT_END]);
-	return (exec_ast(ast->paw2, lst_env));
+	close(intern_pipe->fd[0]);
+	dup2(intern_pipe->fd[1], STDOUT_FILENO);
+	close(intern_pipe->fd[1]);
+	exec_ast(intern_pipe->ast->paw1, intern_pipe->lst_env, intern_pipe->status);
+	close(STDOUT_FILENO);
 }
 
-static int	ft_pipe2(int *fd, t_ast *ast, t_list **lst_env)
+static void	intern_parent(t_intern_pipe *intern_pipe)
 {
-	close(fd[OUTPUT_END]);
-	dup2(fd[INPUT_END], STDOUT_FILENO);
-	close(fd[INPUT_END]);
-	return (exec_ast(ast->paw1, lst_env));
+	close(intern_pipe->fd[1]);
+	dup2(intern_pipe->fd[0], STDIN_FILENO);
+	close(intern_pipe->fd[0]);
+	exec_ast(intern_pipe->ast->paw2, intern_pipe->lst_env, intern_pipe->status);
+	close(STDIN_FILENO);
+	waitpid(intern_pipe->pid, intern_pipe->status, 0);
 }
 
-int	ft_pipe(t_ast *ast, t_list **lst_env)
+static void	exe_pipe(t_ast *ast, t_list **lst_env, int *status)
 {
-	pid_t	pid1;
-	pid_t	pid2;
-	int		fd[2];
-	int		ret;
+	int				ret_pipe;
+	t_intern_pipe	intern_pipe;
 
-	if (pipe(fd) != 0)
-		return (-1);
-	pid1 = fork();
-	ret = 0;
-	if (pid1 == 0)
-		ret = ft_pipe1(fd, ast, lst_env);
-	else
+	intern_pipe.ast = ast;
+	intern_pipe.lst_env = lst_env;
+	intern_pipe.status = status;
+	ret_pipe = pipe(intern_pipe.fd);
+	if (ret_pipe == 0)
 	{
-		pid2 = fork();
-		if (pid2 == 0)
-			ret = ft_pipe2(fd, ast, lst_env);
-		close(fd[OUTPUT_END]);
-		close(fd[INPUT_END]);
-		waitpid(-1, NULL, 0);
-		waitpid(-1, NULL, 0);
+		intern_pipe.pid = fork();
+		if (intern_pipe.pid == 0)
+			intern_child(&intern_pipe);
+		else
+			intern_parent(&intern_pipe);
+		clean_colector();
+		clean_env(intern_pipe.lst_env);
 	}
-	return (ret);
+	else
+		perror("minishell");
+	exit(*intern_pipe.status);
+}
+
+void	ft_pipe(t_ast *ast, t_list **lst_env, int *status)
+{
+	exe_pipe(ast, lst_env, status);
 }

@@ -1,36 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_handler.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/14 00:48:54 by anclarma          #+#    #+#             */
-/*   Updated: 2021/08/14 00:57:52 by anclarma         ###   ########.fr       */
+/*   Created: 2021/08/12 04:54:07 by anclarma          #+#    #+#             */
+/*   Updated: 2022/01/29 16:31:08 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <unistd.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include "minishell.h"
 
-char	*ft_strdup(const char *s1)
+void	handler_int(int sig)
 {
-	char	*dst;
-	size_t	len;
+	(void)sig;
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+	ft_set_status(130);
+}
 
-	if (!s1)
-		return (NULL);
-	len = 0;
-	while (s1[len])
-		len++;
-	dst = (char *)malloc(sizeof(char) * (len + 1));
-	if (!dst)
-		return (NULL);
-	len = 0;
-	while (s1[len])
-	{
-		dst[len] = s1[len];
-		len++;
-	}
-	dst[len] = '\0';
-	return (dst);
+void	handler_int_heredoc(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+	close(STDIN_FILENO);
+	ft_set_status(130);
 }
