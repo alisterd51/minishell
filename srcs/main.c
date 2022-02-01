@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:54:07 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/29 16:35:51 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/01 04:28:00 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,29 @@
 #include "builtin.h"
 #include "minishell.h"
 
-static void	intern_exec(char *line, t_list *lst_env)
+#include "lzac_pars1.h"
+
+static void	intern_exec(char *line, t_list *lst_env, char **env)
 {
-	char	**tab;
+//	char	**tab;
 	t_ast	*ast;
+	t_cmd	*lst_token;
 	int		status;
 
-	tab = line_to_tab(line);
-	ast = init_ast(tabsize(tab), tab);
+//	tab = line_to_tab(line);
+//	ast = init_ast(tabsize(tab), tab);
+	lst_token = parsing_shell(line, env);
+	print_token(lst_token);
+	ast = token_to_ast(lst_token);
+	free_lst(&lst_token);
+	status = 0;
 	to_clean_colector(&ast);
-	clean_tab(&tab);
+//	clean_tab(&tab);//
 	print_ast(ast, 0);
 	(void)lst_env;
-	exec_ast(ast, &lst_env, &status);
+//	exec_ast(ast, &lst_env, &status);
 	ft_set_status(status);
-	clean_ast(&ast);
+	clean_colector();
 }
 
 static int	intern_init(char **env, t_list **lst_env)
@@ -63,7 +71,7 @@ int	main(int ac, char **av, char **env)
 	while (line)
 	{
 		add_history(line);
-		intern_exec(line, lst_env);
+		intern_exec(line, lst_env, env);
 		free(line);
 		line = NULL;
 		if (ft_get_end() == 0)

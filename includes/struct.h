@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/21 00:14:44 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/01 02:49:32 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define STRUCT_H
 
 # include <sys/types.h>
+# include "libft.h"
 
 typedef struct s_ast			t_ast;
 struct	s_ast

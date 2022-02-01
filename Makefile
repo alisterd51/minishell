@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
-#    Updated: 2022/01/29 16:19:48 by anclarma         ###   ########.fr        #
+#    Updated: 2022/02/01 02:40:41 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,9 @@ C_FILES		= main.c					\
 			  solve_path.c				\
 			  ret_status.c				\
 			  end_status.c				\
-			  colector.c
+			  colector.c				\
+			  lzac_pars1.c				\
+			  lzac_pars2.c
 SRCS		= $(patsubst %, $(C_DIR)/%, $(C_FILES))
 O_FILES		= $(C_FILES:.c=.o)
 OBJS		= $(patsubst %, $(O_DIR)/%, $(O_FILES))

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.h                                             :+:      :+:    :+:   */
+/*   lzac_pars1.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 18:51:26 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/01/21 02:52:28 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/01 04:27:02 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <fcntl.h>
+#include "struct.h"
 
 enum e_type
 {
-	NONE,			// default  0
+	LZAC_NONE,			// default  0
 	ARG,			// word     1
 	CMD,			// cmd      2
 	T_FILE,			// after < || > || << || >>  3
@@ -53,22 +54,19 @@ struct s_stuff
 
 t_cmd	*get_cmd(char *str, char **envp);
 int	ft_strclen(char *str, char c, int i);
-void	ft_bzero(void *s, size_t n);
-char *ft_strndup(char *str, int size, int i);
 t_cmd	*parsing_shell(char *str, char **envp);
-int	main(int ac, char **av, char **envp);
-void	ft_lstadd_back(t_cmd **cmd, t_cmd *new);
-t_cmd	*ft_lstnew(char *word, enum e_type type, int space);
+void	lzac_ft_lstadd_back(t_cmd **cmd, t_cmd *new);
+t_cmd	*lzac_ft_lstnew(char *word, enum e_type type, int space);
 void	free_lst(t_cmd **cmd);
-char	*ft_strjoin(char *s1, char *s2);
-int		ft_isspace(int c);
-int		ft_isalnum(int c);
 void	get_type(t_cmd *cmd);
 int	ft_strarglen(char *str, int i);
-int	ft_lstsize(t_cmd *lst);
+int	lzac_ft_lstsize(t_cmd *lst);
 void	print_error(char *msg, t_cmd *cmd);
 void	get_error(t_cmd *cmd);
 void	ft_space(t_stuff *stuff, char *str);
 // void	init_stuff(t_stuff *stuff);
+
+t_ast	*token_to_ast(t_cmd *lst_token);
+void	print_token(t_cmd *lst_token);
 
 #endif

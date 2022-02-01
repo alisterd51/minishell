@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   liste.c                                            :+:      :+:    :+:   */
+/*   lzac_pars2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/01/21 19:54:54 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/01 04:14:56 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
+#include "lzac_pars1.h"
 
 void	free_lst(t_cmd **cmd)
 {
@@ -29,7 +29,7 @@ void	free_lst(t_cmd **cmd)
 	}
 }
 
-t_cmd	*ft_lstnew(char *word, enum e_type type, int space)
+t_cmd	*lzac_ft_lstnew(char *word, enum e_type type, int space)
 {
 	t_cmd	*cmd;
 
@@ -43,7 +43,7 @@ t_cmd	*ft_lstnew(char *word, enum e_type type, int space)
 	return (cmd);
 }
 
-void	ft_lstadd_back(t_cmd **cmd, t_cmd *new)
+void	lzac_ft_lstadd_back(t_cmd **cmd, t_cmd *new)
 {
 	t_cmd	*begin;
 
@@ -58,7 +58,7 @@ void	ft_lstadd_back(t_cmd **cmd, t_cmd *new)
 	}
 }
 
-int	ft_lstsize(t_cmd *lst)
+int	lzac_ft_lstsize(t_cmd *lst)
 {
 	int	i;
 
@@ -87,9 +87,9 @@ void	ft_quote(t_stuff *stuff, char c, t_cmd **cmd)
 	j = 0;
 	stuff->i++;
 	j = ft_strclen(stuff->str, c, stuff->i);
-	word = ft_strndup(stuff->str, j, stuff->i);
-	new = ft_lstnew(word, ARG, stuff->space);
-	ft_lstadd_back(cmd, new);
+	word = ft_strndup(stuff->str + stuff->i, j);
+	new = lzac_ft_lstnew(word, ARG, stuff->space);
+	lzac_ft_lstadd_back(cmd, new);
 	stuff->i += j + 1;
 }
 
@@ -102,9 +102,9 @@ void	ft_alnum(t_stuff *stuff, t_cmd **cmd)
 	j = 0;
 	stuff->type = ARG;
 	j = ft_strarglen(stuff->str, stuff->i);
-	word = ft_strndup(stuff->str, j, stuff->i);
-	new = ft_lstnew(word, stuff->type, stuff->space);
-	ft_lstadd_back(cmd, new);
+	word = ft_strndup(stuff->str + stuff->i, j);
+	new = lzac_ft_lstnew(word, stuff->type, stuff->space);
+	lzac_ft_lstadd_back(cmd, new);
 	stuff->i += j;
 }
 
@@ -117,12 +117,12 @@ void	ft_rdleft(t_stuff *stuff, t_cmd **cmd)
 	if (stuff->str[stuff->i] && stuff->str[stuff->i] == '<')
 	{
 		stuff->type = HEREDOC;
-		new = ft_lstnew("<<", stuff->type, stuff->space);
+		new = lzac_ft_lstnew("<<", stuff->type, stuff->space);
 		stuff->i++;
 	}
 	else
-		new = ft_lstnew("<", stuff->type, stuff->space);
-	ft_lstadd_back(cmd, new);
+		new = lzac_ft_lstnew("<", stuff->type, stuff->space);
+	lzac_ft_lstadd_back(cmd, new);
 }
 
 void	ft_rdright(t_stuff *stuff, t_cmd **cmd)
@@ -134,21 +134,21 @@ void	ft_rdright(t_stuff *stuff, t_cmd **cmd)
 	if (stuff->str[stuff->i] && stuff->str[stuff->i] == '>')
 	{
 		stuff->type = REDIRECT_ADD;
-		new = ft_lstnew(">>", stuff->type, stuff->space);
+		new = lzac_ft_lstnew(">>", stuff->type, stuff->space);
 		stuff->i++;
 	}
 	else
-		new = ft_lstnew(">", stuff->type, stuff->space);
-	ft_lstadd_back(cmd, new);
+		new = lzac_ft_lstnew(">", stuff->type, stuff->space);
+	lzac_ft_lstadd_back(cmd, new);
 }
 
-void	ft_pipe(t_stuff *stuff, t_cmd **cmd)
+void	lzac_ft_pipe(t_stuff *stuff, t_cmd **cmd)
 {
 	t_cmd	*new;
 
 	stuff->type = PIPE;
-	new = ft_lstnew("|", stuff->type, stuff->space);
-	ft_lstadd_back(cmd, new);
+	new = lzac_ft_lstnew("|", stuff->type, stuff->space);
+	lzac_ft_lstadd_back(cmd, new);
 	stuff->i++;
 }
 
@@ -157,7 +157,7 @@ void	init_stuff(t_stuff *stuff, char *str)
 	stuff->str = str;
 	stuff->i = 0;
 	stuff->space = 0;
-	stuff->type = NONE;
+	stuff->type = LZAC_NONE;
 }
 
 t_cmd	*get_cmd(char *str, char **envp)
@@ -170,7 +170,7 @@ t_cmd	*get_cmd(char *str, char **envp)
 	init_stuff(&stuff, str);
 	while (str[stuff.i])
 	{
-		stuff.type = NONE;
+		stuff.type = LZAC_NONE;
 		stuff.space = 0;
 		if (ft_isspace(str[stuff.i]))
 			ft_space(&stuff, str);
@@ -186,7 +186,7 @@ t_cmd	*get_cmd(char *str, char **envp)
 			|| str[stuff.i] == '-')
 			ft_alnum(&stuff, &cmd);
 		else if (str[stuff.i] == '|')
-			ft_pipe(&stuff, &cmd);
+			lzac_ft_pipe(&stuff, &cmd);
 		else
 		{
 			if (stuff.space != 1)
@@ -202,6 +202,7 @@ void	get_type(t_cmd *cmd)
 {
 	t_cmd	*tmp;
 	t_cmd	*tmp2;
+	char	*save_str;
 
 	tmp = cmd;
 	while (tmp)
@@ -230,7 +231,9 @@ void	get_type(t_cmd *cmd)
 		if (tmp->next && tmp->next->space == 0 && tmp->type == 1
 			&& tmp->next->type == 1)
 		{
+			save_str = tmp->word;
 			tmp->word = ft_strjoin(tmp->word, tmp->next->word);
+			free(save_str);
 			tmp2 = tmp->next;
 			tmp->next = tmp->next->next;
 			free(tmp2->word);
@@ -248,7 +251,7 @@ void	get_error(t_cmd *cmd)
 	int		i;
 
 	tmp = cmd;
-	size = ft_lstsize(cmd);
+	size = lzac_ft_lstsize(cmd);
 	i = 1;
 	while (cmd)
 	{
