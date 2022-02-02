@@ -6,11 +6,12 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 22:22:58 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/02 06:06:55 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/02 23:28:50 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lzac_pars1.h"
+#include "minishell.h"
 
 int	ft_strclen(char *str, char c, int i)
 {
@@ -81,50 +82,67 @@ t_cmd	*parsing_shell(char *str, char **envp)
 	cmd = get_cmd(str, envp);
 	return (cmd);
 }
-/*
-//
-static t_arg	*init_arg(char **av)
-{
-	t_arg	*arg;
 
-	if (*av == NULL || is_redirect(*av) || **av == '|')
-		return (NULL);
-	arg = (t_arg *)malloc(sizeof(t_arg));
-	if (arg == NULL)
-	{
-		perror("minishell: init_arg");
-		return (NULL);
-	}
-	*arg = (t_arg){.arg = ft_strdup(*av),
-		.next = init_arg(av + 1)};
-	return (arg);
+int	lzac_is_redirect(int type)
+{
+	return (type == REDIRECT_L || type == REDIRECT_R
+			|| type == HEREDOC || type == REDIRECT_ADD);
 }
 
-static t_redir	*init_redirect(char **av)
+static t_arg	*init_arg(t_cmd *lst_token)
+{
+	t_arg   *arg;
+
+	while (lst_token && lst_token->type != PIPE)
+	{
+		if (lzac_is_redirect(lst_token->type))
+			lst_token = lst_token->next;
+		else
+		{
+			arg = (t_arg *)malloc(sizeof(t_arg));
+			if (arg == NULL)
+			{
+				perror("minishell: init_arg");
+				return (NULL);
+			}
+			*arg = (t_arg){0};
+			arg->arg = ft_strdup(lst_token->word);
+			arg->next = init_arg(lst_token->next);
+			return (arg);
+		}
+		lst_token = lst_token->next;
+	}
+	return (NULL);
+}
+
+static t_redir	*init_redirect(t_cmd *lst_token)
 {
 	t_redir	*redir;
 
-	while (*av && !is_redirect(*av) && ft_strcmp(*av, "|"))
-		av++;
-	if (*av == NULL || !is_redirect(*av))
-		return (NULL);
-	redir = (t_redir *)malloc(sizeof(t_redir));
-	if (redir == NULL)
+	while (lst_token && lst_token->type != PIPE)
 	{
-		perror("minishell: init_redirct");
-		return (NULL);
+		if (lzac_is_redirect(lst_token->type))
+		{
+			redir = (t_redir *)malloc(sizeof(t_redir));
+			if (redir == NULL)
+			{
+				perror("minishell: init_redirect");
+				return (NULL);
+			}
+			*redir = (t_redir){0};
+			redir->type = lst_token->type;
+			lst_token = lst_token->next;
+			redir->file = ft_strdup(lst_token->word);
+			redir->next = init_redirect(lst_token->next);
+			return (redir);
+		}
+		lst_token = lst_token->next;
 	}
-	*redir = (t_redir){0};
-	if (*av)
-		redir->type = is_redirect(*av++);
-	if (*av)
-		redir->file = ft_strdup(*av++);
-	if (*av)
-		redir->next = init_redirect(av);
-	return (redir);
+	return (NULL);
 }
 
-static t_ast	*init_command(char **av)
+
+static t_ast	*init_command(t_cmd *lst_token)
 {
 	t_ast	*node;
 
@@ -135,12 +153,12 @@ static t_ast	*init_command(char **av)
 		return (NULL);
 	}
 	*node = (t_ast){.type = COMMAND,
-		.paw1 = init_arg(av),
-		.paw2 = init_redirect(av)};
+		.paw1 = init_arg(lst_token),
+		.paw2 = init_redirect(lst_token)};
 	return (node);
 }
 
-static t_ast	*new_node(t_ast *node_command, int ac, char **av)
+static t_ast	*new_node(t_ast *node_command, t_cmd *lst_token)
 {
 	t_ast	*node;
 
@@ -153,28 +171,10 @@ static t_ast	*new_node(t_ast *node_command, int ac, char **av)
 	}
 	*node = (t_ast){.type = PIPELINE,
 		.paw1 = node_command,
-		.paw2 = init_ast(ac - 1, av + 1)};
+		.paw2 = token_to_ast(lst_token->next)};
 	return (node);
 }
 
-t_ast	*init_ast(int ac, char **av)
-{
-	t_ast	*node_command;
-
-	node_command = NULL;
-	if (ac == 0)
-		return (NULL);
-	node_command = init_command(av);
-	while (*av && **av != '|')
-	{
-		av++;
-		ac--;
-	}
-	if (*av)
-		return (new_node(node_command, ac, av));
-	return (node_command);
-}
-//en cours de construction
 t_ast	*token_to_ast(t_cmd *lst_token)
 {
 	t_ast	*node_command;
@@ -183,17 +183,11 @@ t_ast	*token_to_ast(t_cmd *lst_token)
 	if (lst_token == NULL)
 		return (NULL);
 	node_command = init_command(lst_token);
-	while (lst_token->type != PIPE)
+	while (lst_token && lst_token->type != PIPE)
 		lst_token = lst_token->next;
 	if (lst_token)
 		return (new_node(node_command, lst_token));
 	return (node_command);
-}
-*/
-t_ast	*token_to_ast(t_cmd *lst_token)
-{
-	(void)lst_token;
-	return (NULL);
 }
 
 void	print_token(t_cmd *lst_token)
