@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 22:22:58 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/02 02:33:07 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/02 06:06:55 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,115 @@ t_cmd	*parsing_shell(char *str, char **envp)
 	cmd = get_cmd(str, envp);
 	return (cmd);
 }
+/*
 //
+static t_arg	*init_arg(char **av)
+{
+	t_arg	*arg;
+
+	if (*av == NULL || is_redirect(*av) || **av == '|')
+		return (NULL);
+	arg = (t_arg *)malloc(sizeof(t_arg));
+	if (arg == NULL)
+	{
+		perror("minishell: init_arg");
+		return (NULL);
+	}
+	*arg = (t_arg){.arg = ft_strdup(*av),
+		.next = init_arg(av + 1)};
+	return (arg);
+}
+
+static t_redir	*init_redirect(char **av)
+{
+	t_redir	*redir;
+
+	while (*av && !is_redirect(*av) && ft_strcmp(*av, "|"))
+		av++;
+	if (*av == NULL || !is_redirect(*av))
+		return (NULL);
+	redir = (t_redir *)malloc(sizeof(t_redir));
+	if (redir == NULL)
+	{
+		perror("minishell: init_redirct");
+		return (NULL);
+	}
+	*redir = (t_redir){0};
+	if (*av)
+		redir->type = is_redirect(*av++);
+	if (*av)
+		redir->file = ft_strdup(*av++);
+	if (*av)
+		redir->next = init_redirect(av);
+	return (redir);
+}
+
+static t_ast	*init_command(char **av)
+{
+	t_ast	*node;
+
+	node = (t_ast *)malloc(sizeof(t_ast));
+	if (node == NULL)
+	{
+		perror("minishell: init_command");
+		return (NULL);
+	}
+	*node = (t_ast){.type = COMMAND,
+		.paw1 = init_arg(av),
+		.paw2 = init_redirect(av)};
+	return (node);
+}
+
+static t_ast	*new_node(t_ast *node_command, int ac, char **av)
+{
+	t_ast	*node;
+
+	node = (t_ast *)malloc(sizeof(t_ast));
+	if (node == NULL)
+	{
+		clean_ast(&node_command);
+		perror("minishell: init_ast");
+		return (NULL);
+	}
+	*node = (t_ast){.type = PIPELINE,
+		.paw1 = node_command,
+		.paw2 = init_ast(ac - 1, av + 1)};
+	return (node);
+}
+
+t_ast	*init_ast(int ac, char **av)
+{
+	t_ast	*node_command;
+
+	node_command = NULL;
+	if (ac == 0)
+		return (NULL);
+	node_command = init_command(av);
+	while (*av && **av != '|')
+	{
+		av++;
+		ac--;
+	}
+	if (*av)
+		return (new_node(node_command, ac, av));
+	return (node_command);
+}
+//en cours de construction
+t_ast	*token_to_ast(t_cmd *lst_token)
+{
+	t_ast	*node_command;
+
+	node_command = NULL;
+	if (lst_token == NULL)
+		return (NULL);
+	node_command = init_command(lst_token);
+	while (lst_token->type != PIPE)
+		lst_token = lst_token->next;
+	if (lst_token)
+		return (new_node(node_command, lst_token));
+	return (node_command);
+}
+*/
 t_ast	*token_to_ast(t_cmd *lst_token)
 {
 	(void)lst_token;

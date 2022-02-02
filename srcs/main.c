@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:54:07 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/02 03:04:14 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/02 05:07:04 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,27 @@
 
 #include "lzac_pars1.h"
 
-static void	intern_exec(char *line, t_list *lst_env, char **env)
+static void	intern_exec(char *line, t_list *lst_env)
 {
-//	char	**tab;
 	t_ast	*ast;
 	t_cmd	*lst_token;
-//	int		status;
+	char	**env;
+	int		status;
 
-//	tab = line_to_tab(line);
-//	ast = init_ast(tabsize(tab), tab);
+	env = list_to_tab(lst_env);
 	lst_token = parsing_shell(line, env);
+	clean_tab(&env);
 	print_token(lst_token);
 	ast = token_to_ast(lst_token);
 	free_lst(&lst_token);
-//	status = 0;
 	to_clean_colector(&ast);
-//	clean_tab(&tab);//
 	print_ast(ast, 0);
-	(void)lst_env;
-//	exec_ast(ast, &lst_env, &status);
-//	ft_set_status(status);
+	if (ast != NULL)
+	{
+		status = 0;
+		exec_ast(ast, &lst_env, &status);
+		ft_set_status(status);
+	}
 	clean_colector();
 }
 
@@ -71,7 +72,7 @@ int	main(int ac, char **av, char **env)
 	while (line)
 	{
 		add_history(line);
-		intern_exec(line, lst_env, env);
+		intern_exec(line, lst_env);
 		free(line);
 		line = NULL;
 		if (ft_get_end() == 0)
