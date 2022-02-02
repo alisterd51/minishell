@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:54:07 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/01 04:28:00 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/02 03:04:14 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	intern_exec(char *line, t_list *lst_env, char **env)
 //	char	**tab;
 	t_ast	*ast;
 	t_cmd	*lst_token;
-	int		status;
+//	int		status;
 
 //	tab = line_to_tab(line);
 //	ast = init_ast(tabsize(tab), tab);
@@ -35,13 +35,13 @@ static void	intern_exec(char *line, t_list *lst_env, char **env)
 	print_token(lst_token);
 	ast = token_to_ast(lst_token);
 	free_lst(&lst_token);
-	status = 0;
+//	status = 0;
 	to_clean_colector(&ast);
 //	clean_tab(&tab);//
 	print_ast(ast, 0);
 	(void)lst_env;
 //	exec_ast(ast, &lst_env, &status);
-	ft_set_status(status);
+//	ft_set_status(status);
 	clean_colector();
 }
 
