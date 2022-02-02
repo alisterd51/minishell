@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/02 03:00:07 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/02 03:15:59 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ t_cmd	*get_cmd(char *str, char **envp)
 			ft_space(&stuff, str);
 		if (str[stuff.i] == '\'')
 		{
-			if (ft_quote(&stuff, '\"', &cmd) == 1)
+			if (ft_quote(&stuff, '\'', &cmd) == 1)
 				return (NULL);
 		}
 		else if (str[stuff.i] == '\"')
