@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/01 22:16:56 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/02 02:33:33 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,7 @@ void	get_type(t_cmd *cmd)
 		if (tmp->next && tmp->next->space == 0 && tmp->type == 1
 			&& tmp->next->type == 1)
 		{
-			tmp->word = ft_strjoin(tmp->word, tmp->next->word);
+			tmp->word = lzac_ft_strjoin(tmp->word, tmp->next->word);
 			tmp2 = tmp->next;
 			tmp->next = tmp->next->next;
 			free(tmp2->word);
