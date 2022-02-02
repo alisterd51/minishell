@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:54:07 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/02 23:29:28 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/03 00:31:03 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	intern_exec(char *line, t_list *lst_env)
 	t_ast	*ast;
 	t_cmd	*lst_token;
 	char	**env;
-//	int		status;
+	int		status;
 
 	env = list_to_tab(lst_env);
 	lst_token = parsing_shell(line, env);
@@ -39,9 +39,9 @@ static void	intern_exec(char *line, t_list *lst_env)
 	print_ast(ast, 0);
 	if (ast != NULL)
 	{
-//		status = 0;
-//		exec_ast(ast, &lst_env, &status);
-//		ft_set_status(status);
+		status = 0;
+		exec_ast(ast, &lst_env, &status);
+		ft_set_status(status);
 	}
 	clean_colector();
 }

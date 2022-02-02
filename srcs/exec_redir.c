@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/29 16:35:43 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/03 00:37:27 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ static int	redir_s_left(char *file)
 	return (0);
 }
 
-//manque l'expend
+/*
+** manque l'expend
+*/
 static int	redir_d_left(char *file)
 {
 	int		fd;
