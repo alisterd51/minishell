@@ -6,11 +6,12 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/02 02:33:33 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/02 03:00:07 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lzac_pars1.h"
+#include "minishell.h"
 
 void	free_lst(t_cmd **cmd)
 {
@@ -78,7 +79,7 @@ void	ft_space(t_stuff *stuff, char *str)
 	stuff->space = 1;
 }
 
-void	ft_quote(t_stuff *stuff, char c, t_cmd **cmd)
+int	ft_quote(t_stuff *stuff, char c, t_cmd **cmd)
 {
 	t_cmd	*new;
 	char	*word;
@@ -88,14 +89,21 @@ void	ft_quote(t_stuff *stuff, char c, t_cmd **cmd)
 	if (stuff->str[stuff->i + 1])
 		stuff->i++;
 	else
+	{
 		print_error("unclosed quote\n", *cmd);
+		return (1);
+	}
 	j = ft_strclen(stuff->str, c, stuff->i);
 	if (j < 0)
+	{
 		print_error("unclosed quote\n", *cmd);
+		return (1);
+	}
 	word = lzac_ft_strndup(stuff->str, j, stuff->i);
 	new = lzac_ft_lstnew(word, ARG, stuff->space);
 	lzac_ft_lstadd_back(cmd, new);
 	stuff->i += j + 1;
+	return (0);
 }
 
 void	ft_alnum(t_stuff *stuff, t_cmd **cmd)
@@ -180,9 +188,15 @@ t_cmd	*get_cmd(char *str, char **envp)
 		if (ft_isspace(str[stuff.i]))
 			ft_space(&stuff, str);
 		if (str[stuff.i] == '\'')
-			ft_quote(&stuff, '\'', &cmd);
+		{
+			if (ft_quote(&stuff, '\"', &cmd) == 1)
+				return (NULL);
+		}
 		else if (str[stuff.i] == '\"')
-			ft_quote(&stuff, '\"', &cmd);
+		{
+			if (ft_quote(&stuff, '\"', &cmd) == 1)
+				return (NULL);
+		}
 		else if (str[stuff.i] == '<')
 			ft_rdleft(&stuff, &cmd);
 		else if (str[stuff.i] == '>')
@@ -273,5 +287,5 @@ void	print_error(char *msg, t_cmd *cmd)
 {
 	free_lst(&cmd);
 	printf("%s", msg);
-	exit(EXIT_FAILURE);
+	ft_set_status(2);
 }
