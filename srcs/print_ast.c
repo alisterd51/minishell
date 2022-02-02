@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 19:24:23 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/02 23:39:54 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/02 23:42:48 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	print_redirect(t_redir *redir, int level)
 {
 	if (redir == NULL)
 		return ;
-	printf("%*s\n", level, "");
+	printf("%*s", level, "");
 	print_type(redir->type);
 	printf("\n");
 	printf("%*s%s\n", level, "", redir->file);
