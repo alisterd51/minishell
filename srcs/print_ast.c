@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 19:24:23 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/02 23:42:48 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/03 04:53:45 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ static void	print_type(int type)
 		printf("<");
 	else if (type == D_LEFT)
 		printf("<<");
+	else if (type == D_LEFT_EXP)
+		printf("<< + expand");
 	else if (type == S_RIGHT)
 		printf(">");
 	else if (type == D_RIGHT)

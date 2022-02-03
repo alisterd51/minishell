@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 22:22:58 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/03 04:38:47 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/03 04:52:59 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ t_cmd	*parsing_shell(char *str, char **envp)
 
 int	lzac_is_redirect(int type)
 {
-	return (type == S_LEFT || type == S_RIGHT
-			|| type == D_LEFT || type == D_RIGHT);
+	return (type == S_LEFT || type == S_RIGHT || type == D_LEFT
+			|| type == D_RIGHT || type == D_LEFT_EXP);
 }
 
 static t_arg	*init_arg(t_cmd *lst_token)
