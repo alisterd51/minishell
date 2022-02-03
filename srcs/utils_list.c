@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 18:36:10 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/24 19:55:52 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/03 03:04:30 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,5 @@ void	ft_setenv(char *key, char *value, t_list **lst_env)
 		free(new_keyvalue);
 		return ;
 	}
-	ft_lstadd_back(lst_env, ft_lstnew(new_keyvalue));
+	ft_lstadd_back(lst_env, new_node);
 }
