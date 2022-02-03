@@ -6,6 +6,8 @@ export A=p
 export B=w
 $A"$B"d
 "$A"'$B'd
+export AB=
+$A$AB"$B"d
 echo "ls -la <a | grep x > b"
 echo ok "" ok
 echo ok "" "" "" "" "" "" "" "" "" ok
