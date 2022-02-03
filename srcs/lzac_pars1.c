@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 22:22:58 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/02 02:33:07 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/03 02:22:13 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,19 @@ int	ft_strclen(char *str, char c, int i)
 		return (j);
 	else
 		return (-1);
+}
+
+int	ft_expstrclen(char *str, char c, int i)
+{
+	int	j;
+
+	j = 0;
+	while (str[i] && str[i] != c && str[i] != '|')
+	{
+		i++;
+		j++;
+	}
+	return (j);
 }
 
 int	ft_strarglen(char *str, int i)
