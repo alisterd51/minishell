@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 20:14:19 by anclarma          #+#    #+#              #
-#    Updated: 2022/01/29 14:52:34 by anclarma         ###   ########.fr        #
+#    Updated: 2022/02/03 00:32:36 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,7 @@ CC			= gcc
 CXX			= g++
 AR			= ar rc
 CFLAGS		= -Wall -Wextra -Werror		\
-			  -MMD -MP
+			  -MMD -MP -ansi
 CXXFLAGS	= -Wall -Wextra -Werror		\
 			  -std=c++98				\
 			  -MMD -MP

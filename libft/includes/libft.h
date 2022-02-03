@@ -6,13 +6,17 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 18:01:55 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/27 23:07:41 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/03 00:39:18 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 # include <stddef.h>
+
+# ifndef PATH_MAX
+#  define PATH_MAX 4096
+# endif
 
 /*
 ** ft_struct.h

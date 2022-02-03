@@ -6,41 +6,65 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:26:01 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/24 23:31:52 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/03 02:52:28 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
+#include "minishell.h"
 #include "builtin.h"
 
 static int	is_special_param(char *param)
 {
-	return (*param == '*' || *param == '*' || *param == '@' || *param == '#'
-		|| *param == '?' || *param == '-' || *param == '$' || *param == '!'
+	return (*param == '*' || *param == '@' || *param == '#' || *param == '?'
+		|| *param == '-' || *param == '$' || *param == '!' || *param == '='
 		|| ft_isdigit(*param));
 }
 
-static int	dup_to_list(char **av, t_list **env)
+static int	is_valid_export(char *param)
 {
-	t_list	*new_node;
-	char	*new_content;
+	int	i;
 
-	new_content = ft_strdup(*av);
-	new_node = ft_lstnew(new_content);
-	if (new_content == NULL || new_node == NULL)
-	{
-		free(new_content);
-		free(new_node);
-		perror("minishell: export");
+	i = 0;
+	while (param[i] && param[i] != '=')
+		i++;
+	if (param[i] == '=')
 		return (1);
-	}
-	ft_lstadd_back(env, new_node);
 	return (0);
+}
+
+static void	set_key_value(char *str, t_list **env)
+{
+	char	*key;
+	char	*value;
+	int		i;
+
+	i = 0;
+	while (str[i] && str[i] != '=')
+		i++;
+	key = ft_strndup(str, i + 1);
+	if (key == NULL)
+	{
+		perror("ft_export");
+		return ;
+	}
+	value = ft_strdup(str + i + 1);
+	if (key == NULL)
+	{
+		free(key);
+		perror("ft_export");
+		return ;
+	}
+	ft_setenv(key, value, env);
+	free(key);
+	free(value);
 }
 
 int	ft_export(int ac, char **av, t_list **env)
 {
+	ac--;
+	av++;
 	if (ac == 0)
 	{
 		ft_env(*env);
@@ -54,8 +78,8 @@ int	ft_export(int ac, char **av, t_list **env)
 			ft_putstr_fd(*av, 2);
 			ft_putendl_fd("': not a valid identifier", 2);
 		}
-		else if (dup_to_list(av, env))
-			return (1);
+		else if (is_valid_export(*av))
+			set_key_value(*av, env);
 		av++;
 	}
 	return (0);

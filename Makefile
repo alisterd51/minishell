@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
-#    Updated: 2022/02/01 22:03:11 by lzaccome         ###   ########.fr        #
+#    Updated: 2022/02/03 01:04:57 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ O_FILES		= $(C_FILES:.c=.o)
 OBJS		= $(patsubst %, $(O_DIR)/%, $(O_FILES))
 CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror		\
-			  -MMD -MP -g3
+			  -MMD -MP -ansi
 LFLAGS		= -Wall -Wextra -Werror
 CINCLUDES	= -I ./includes				\
 			  -I ./libft/includes

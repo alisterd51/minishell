@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 19:24:23 by anclarma          #+#    #+#             */
-/*   Updated: 2021/09/28 22:04:51 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/02 23:42:48 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,37 @@ static void	print_arg(t_arg *arg, int level)
 	print_arg(arg->next, level + 1);
 }
 
+static void	print_type(int type)
+{
+	if (type == NONE)
+		printf("NONE");
+	else if (type == PIPELINE)
+		printf("|");
+	else if (type == COMMAND)
+		printf("COMMAND");
+	else if (type == AND)
+		printf("&&");
+	else if (type == OR)
+		printf("||");
+	else if (type == S_LEFT)
+		printf("<");
+	else if (type == D_LEFT)
+		printf("<<");
+	else if (type == S_RIGHT)
+		printf(">");
+	else if (type == D_RIGHT)
+		printf(">>");
+	else
+		printf("unknown");
+}
+
 static void	print_redirect(t_redir *redir, int level)
 {
 	if (redir == NULL)
 		return ;
-	printf("%*s%d\n", level, "", redir->type);
+	printf("%*s", level, "");
+	print_type(redir->type);
+	printf("\n");
 	printf("%*s%s\n", level, "", redir->file);
 	print_redirect(redir->next, level + 1);
 }

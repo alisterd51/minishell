@@ -6,17 +6,14 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 03:52:18 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/05 18:41:37 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/03 00:36:53 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include "minishell.h"
-
 #include <limits.h>
 #include <stdlib.h>
-
-#include <stdio.h>
+#include "minishell.h"
 
 int	step5(t_cd *cd_arg)
 {
@@ -59,7 +56,6 @@ int	step7(t_cd *cd_arg)
 	return (8);
 }
 
-//incomplet mais bon a priori
 int	step8(t_cd *cd_arg)
 {
 	cd_arg->new_pwd = ft_strdup(cd_arg->curpath);
@@ -72,11 +68,6 @@ int	step8(t_cd *cd_arg)
 	return (9);
 }
 
-//si erreur affichage message d'erreur et fin
-//S'il n'y a pas suffisamment d'autorisations sur le nouveau répertoire,
-//ou sur l'un des parents de ce répertoire,
-//pour déterminer le répertoire de travail actuel,
-//la valeur de la variable d'environnement PWD n'est pas spécifiée.
 int	step9(t_cd *cd_arg)
 {
 	char	*pwd;
