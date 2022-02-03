@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 18:51:26 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/03 03:13:57 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/03 03:17:00 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ enum e_type
 	REDIRECT_R,
 	HEREDOC,
 	REDIRECT_ADD,
-	HEREDOC_EXP,	// 9
-	EXPEND,			// 10
-	DOLLAR,			// 11
+	HEREDOC_EXP,
+	EXPEND,
+	DOLLAR,
 	PIPE
 };
 

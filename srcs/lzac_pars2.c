@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/03 03:05:41 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/03 03:17:17 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,9 +193,6 @@ void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
 		word = lzac_ft_strndup(stuff->str, j, stuff->i);
 	new = lzac_ft_lstnew(word, stuff->type, stuff->space);
 	lzac_ft_lstadd_back(cmd, new);
-	// if (j == 0)
-	// 	stuff->i++;
-	// else
 		stuff->i += j;
 }
 
