@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:45:24 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/28 23:01:29 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/03 22:20:18 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,8 @@ int	tabsize(char **tab)
 	return (size);
 }
 
-int	is_redirect(char *str)
+int	is_redirect(int type)
 {
-	if (!ft_strcmp(str, "<"))
-		return (S_LEFT);
-	else if (!ft_strcmp(str, "<<"))
-		return (D_LEFT);
-	else if (!ft_strcmp(str, ">"))
-		return (S_RIGHT);
-	else if (!ft_strcmp(str, ">>"))
-		return (D_RIGHT);
-	else
-		return (NONE);
+	return (type == S_LEFT || type == S_RIGHT || type == D_LEFT
+		|| type == D_RIGHT || type == D_LEFT_EXP);
 }

@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
-#    Updated: 2022/02/03 01:04:57 by anclarma         ###   ########.fr        #
+#    Updated: 2022/02/03 22:49:25 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ C_FILES		= main.c					\
 			  ft_env.c					\
 			  ft_export.c				\
 			  ft_unset.c				\
-			  init_ast.c				\
+			  token_to_ast.c			\
 			  print_ast.c				\
 			  clean_ast.c				\
 			  utils_ast.c				\
@@ -72,7 +72,7 @@ debug:		LFLAGS += -fsanitize=address	\
 				-g3
 debug:		$(NAME)
 
-check:		all
+check:		fclean all
 			@test/run_tests.sh
 
 $(O_DIR)/%.o: $(C_DIR)/%.c

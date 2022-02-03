@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/01 02:49:32 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/03 22:18:03 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,15 @@ struct	s_intern_pipe
 	int		*status;
 	int		fd[2];
 	pid_t	pid;
+};
+
+typedef struct s_cmd			t_cmd;
+struct	s_cmd
+{
+	char	*word;
+	int		type;
+	int		space;
+	t_cmd	*next;
 };
 
 #endif

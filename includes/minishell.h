@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/03 05:38:34 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/03 22:19:32 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@
 t_list	*init_env(char **env);
 
 /*
-** init_ast.c
+** token_to_ast.c
 */
-t_ast	*init_ast(int ac, char **av);
+t_ast	*token_to_ast(t_cmd *lst_token);
 
 /*
 ** print_ast.c
@@ -106,7 +106,7 @@ char	**line_to_tab(char *line);
 */
 void	clean_tab(char ***tab);
 char	**line_to_tab(char *line);
-int		is_redirect(char *str);
+int		is_redirect(int type);
 
 /*
 ** utils_builtin.c

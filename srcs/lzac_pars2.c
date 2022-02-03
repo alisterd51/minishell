@@ -6,10 +6,9 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/03 08:24:47 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/03 22:50:55 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "lzac_pars1.h"
 #include "minishell.h"
