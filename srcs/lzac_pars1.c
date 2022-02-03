@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 22:22:58 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/03 04:38:47 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/03 08:07:37 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ t_cmd	*parsing_shell(char *str, char **envp)
 {
 	t_cmd	*cmd;
 
-	(void)envp;
 	cmd = get_cmd(str, envp);
 	return (cmd);
 }

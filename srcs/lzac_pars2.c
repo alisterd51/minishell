@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/03 04:49:35 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/03 08:10:37 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,31 @@ void	init_stuff(t_stuff *stuff, char *str)
 	stuff->type = NONE;
 }
 
+char	*search_env(char **envp, char *word)
+{
+	int		i;
+	char	*str;
+	char	*key;
+
+	i = 0;
+	str = NULL;
+	if (!envp)
+		return (NULL);
+	key = ft_strjoin(word, "=");
+	free(word);
+	while (envp[i] && ft_strncmp(envp[i], key, ft_strlen(key)) != 0)
+		i++;
+	if (envp[i] && (ft_strncmp(envp[i], key, ft_strlen(key)) == 0))
+	{
+		printf("%s\n", envp[i]);
+		str = envp[i];
+		str = str + ft_strlen(key);
+		free(key);
+		return (ft_strdup(str));
+	}
+	return (NULL);
+}
+
 void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
 {
 	t_cmd	*new;
@@ -190,7 +215,11 @@ void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
 		stuff->type = DOLLAR;
 	}
 	else
+	{
 		word = lzac_ft_strndup(stuff->str, j, stuff->i);
+		word = search_env(envp, word);
+		printf("%s\n", word);
+	}
 	new = lzac_ft_lstnew(word, stuff->type, stuff->space);
 	lzac_ft_lstadd_back(cmd, new);
 		stuff->i += j;
@@ -272,8 +301,8 @@ void	get_type(t_cmd *cmd)
 				print_error("syntax error near unexpected token `|'\n", cmd);
 			tmp->next->type = DELIMITOR;
 		}
-		if (tmp->next && tmp->next->space == 0 && tmp->type == 1
-			&& tmp->next->type == 1)
+		if (tmp->next && tmp->next->space == 0 && tmp->type == ARGUMENT
+			&& tmp->next->type == ARGUMENT)
 		{
 			tmp->word = lzac_ft_strjoin(tmp->word, tmp->next->word);
 			tmp2 = tmp->next;
