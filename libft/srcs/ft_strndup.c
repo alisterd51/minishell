@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 21:56:33 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/04 22:02:57 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/03 02:46:09 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ char	*ft_strndup(const char *s, size_t n)
 	ret = (char *)malloc(sizeof(char) * (len + 1));
 	if (ret == NULL)
 		return (NULL);
-	ft_strlcpy(ret, s, len);
+	ft_strlcpy(ret, s, len + 1);
 	return (ret);
 }

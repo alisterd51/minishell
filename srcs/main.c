@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:54:07 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/03 00:31:03 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/03 01:41:10 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ int	main(int ac, char **av, char **env)
 	line = readline(DEFAULT_PS1);
 	while (line)
 	{
-		add_history(line);
+		if (*line != '\0')
+			add_history(line);
 		intern_exec(line, lst_env);
 		free(line);
 		line = NULL;
