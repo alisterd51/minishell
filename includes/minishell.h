@@ -6,28 +6,26 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/02 23:27:02 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/03 04:28:52 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-/* DEBUG */
-# include <stdio.h>
-
 # include "libft.h"
 # include "struct.h"
 
-# define NONE		0
-# define PIPELINE	1
-# define COMMAND	2
-# define AND		3
-# define OR			4
-# define S_LEFT		5
-# define D_LEFT		6
-# define S_RIGHT	7
-# define D_RIGHT	8
+# define NONE			0
+# define PIPELINE		1
+# define COMMAND		2
+# define ARGUMENT		3
+# define AND			4
+# define OR				5
+# define S_LEFT			6
+# define D_LEFT			7
+# define S_RIGHT		8
+# define D_RIGHT		9
 # define DEFAULT_PS1	"\033[1;34mminishell-beta \033[1;32mv0.1\033[0m$ "
 # define DEFAULT_PS2	"heredoc> "
 
