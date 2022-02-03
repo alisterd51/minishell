@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 18:36:10 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/03 03:04:30 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/03 06:42:52 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ char	**list_to_tab(t_list *lst_env)
 	size_env = (size_t)ft_lstsize(lst_env);
 	i = 0;
 	env = (char **)malloc(sizeof(char *) * (size_env + 1));
+	if (env == NULL)
+		return (NULL);
 	while (i < size_env)
 	{
 		env[i] = ft_strdup((char *)lst_env->content);
