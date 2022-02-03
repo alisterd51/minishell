@@ -47,6 +47,8 @@ test_minishell()
 	./minishell < ./test/cmd6
 	printf "${LIGHT_CYAN}${BOLD}minishell < cmd7${RESET}\n"
 	./minishell < ./test/cmd7
+	printf "${LIGHT_CYAN}${BOLD}minishell < cmd8${RESET}\n"
+	./minishell < ./test/cmd8
 }
 
 main()
