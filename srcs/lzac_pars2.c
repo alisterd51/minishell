@@ -6,9 +6,10 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/03 08:10:37 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/03 08:24:47 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "lzac_pars1.h"
 #include "minishell.h"
@@ -37,26 +38,15 @@ t_cmd	*lzac_ft_lstnew(char *word, int type, int space)
 	cmd = malloc(sizeof(*cmd));
 	if (cmd == NULL)
 		return (NULL);
-	cmd->word = word;
-	cmd->type = type;
-	cmd->space = space;
-	cmd->next = NULL;
+	*cmd = (t_cmd){.word = word, .type = type, .space = space};
 	return (cmd);
 }
 
 void	lzac_ft_lstadd_back(t_cmd **cmd, t_cmd *new)
 {
-	t_cmd	*begin;
-
-	begin = (*cmd);
-	if (begin == NULL)
-		(*cmd) = new;
-	else
-	{
-		while (begin->next)
-			begin = begin->next;
-		begin->next = new;
-	}
+	while (*cmd)
+		cmd = &((*cmd)->next);
+	*cmd = new;
 }
 
 int	lzac_ft_lstsize(t_cmd *lst)
@@ -93,13 +83,13 @@ int	ft_quote(t_stuff *stuff, char c, t_cmd **cmd)
 		print_error("unclosed quote\n", *cmd);
 		return (1);
 	}
-	j = ft_strclen(stuff->str, c, stuff->i);
+	j = ft_strclen(stuff->str + stuff->i, c);
 	if (j < 0)
 	{
 		print_error("unclosed quote\n", *cmd);
 		return (1);
 	}
-	word = lzac_ft_strndup(stuff->str, j, stuff->i);
+	word = ft_strndup(stuff->str + stuff->i, j);
 	new = lzac_ft_lstnew(word, ARGUMENT, stuff->space);
 	lzac_ft_lstadd_back(cmd, new);
 	stuff->i += j + 1;
@@ -114,8 +104,8 @@ void	ft_alnum(t_stuff *stuff, t_cmd **cmd)
 
 	j = 0;
 	stuff->type = ARGUMENT;
-	j = ft_strarglen(stuff->str, stuff->i);
-	word = lzac_ft_strndup(stuff->str, j, stuff->i);
+	j = ft_strarglen(stuff->str + stuff->i);
+	word = ft_strndup(stuff->str + stuff->i, j);
 	new = lzac_ft_lstnew(word, stuff->type, stuff->space);
 	lzac_ft_lstadd_back(cmd, new);
 	stuff->i += j;
@@ -165,14 +155,6 @@ void	lzac_ft_pipe(t_stuff *stuff, t_cmd **cmd)
 	stuff->i++;
 }
 
-void	init_stuff(t_stuff *stuff, char *str)
-{
-	stuff->str = str;
-	stuff->i = 0;
-	stuff->space = 0;
-	stuff->type = NONE;
-}
-
 char	*search_env(char **envp, char *word)
 {
 	int		i;
@@ -208,7 +190,7 @@ void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
 	j = 0;
 	stuff->i++;
 	stuff->type = EXPEND;
-	j = ft_expstrclen(stuff->str, ' ', stuff->i);
+	j = ft_expstrclen(stuff->str + stuff->i, ' ');
 	if (j == 0)
 	{
 		word = "$";
@@ -216,7 +198,7 @@ void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
 	}
 	else
 	{
-		word = lzac_ft_strndup(stuff->str, j, stuff->i);
+		word = ft_strndup(stuff->str + stuff->i, j);
 		word = search_env(envp, word);
 		printf("%s\n", word);
 	}
@@ -230,9 +212,8 @@ t_cmd	*get_cmd(char *str, char **envp)
 	t_cmd		*cmd;
 	t_stuff		stuff;
 
-	(void)envp;
 	cmd = NULL;
-	init_stuff(&stuff, str);
+	stuff = (t_stuff){.str = str, .type = NONE};
 	while (str[stuff.i])
 	{
 		stuff.type = NONE;
@@ -276,6 +257,7 @@ void	get_type(t_cmd *cmd)
 {
 	t_cmd	*tmp;
 	t_cmd	*tmp2;
+	char	*tmp3;
 
 	tmp = cmd;
 	while (tmp)
@@ -304,7 +286,9 @@ void	get_type(t_cmd *cmd)
 		if (tmp->next && tmp->next->space == 0 && tmp->type == ARGUMENT
 			&& tmp->next->type == ARGUMENT)
 		{
-			tmp->word = lzac_ft_strjoin(tmp->word, tmp->next->word);
+			tmp3 = tmp->word;
+			tmp->word = ft_strjoin(tmp->word, tmp->next->word);
+			free(tmp3);
 			tmp2 = tmp->next;
 			tmp->next = tmp->next->next;
 			free(tmp2->word);
@@ -351,6 +335,6 @@ int	get_error(t_cmd *cmd)
 void	print_error(char *msg, t_cmd *cmd)
 {
 	free_lst(&cmd);
-	printf("%s", msg);
+	ft_putstr_fd(msg, 2);
 	ft_set_status(2);
 }

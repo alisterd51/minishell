@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/03 00:37:27 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/03 04:57:15 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,11 @@ static int	redir_s_left(char *file)
 /*
 ** manque l'expend
 */
-static int	redir_d_left(char *file)
+static int	redir_d_left(char *file, int expend)
 {
 	int		fd;
 
+	(void)expend;
 	fd = open("/tmp/.heredoc", O_CREAT | O_WRONLY, 0666);
 	if (fd == -1)
 	{
@@ -103,7 +104,9 @@ int	exec_redir(t_redir *redir)
 		if (redir->type == S_LEFT)
 			ret = redir_s_left(redir->file);
 		else if (redir->type == D_LEFT)
-			ret = redir_d_left(redir->file);
+			ret = redir_d_left(redir->file, 0);
+		else if (redir->type == D_LEFT_EXP)
+			ret = redir_d_left(redir->file, 1);
 		else if (redir->type == S_RIGHT)
 			ret = redir_s_right(redir->file);
 		else if (redir->type == D_RIGHT)

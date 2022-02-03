@@ -1,23 +1,26 @@
-"
-""
-"""
-" 
-" "
-" " "
-'
-''
-'''
-' 
-' '
-' ' '
- '
-echo "a"
-echo 'a'
-echo a
-""echo a
-''echo a
-ec''ho a
-ec""ho a
-echo "a a"
-echo 'a a'
-echo a a
+pwd
+cd ..
+pwd
+cd cmd6_dir
+pwd
+cd /bin
+pwd
+cd /sdfsdgfugdfj
+pwd
+cd
+pwd
+cd ..
+pwd
+cd .
+pwd
+cd ././././././././.
+pwd
+cd /
+pwd
+cd ..
+unset A
+env | grep A
+export A
+env | grep A
+export A=a
+env | grep A

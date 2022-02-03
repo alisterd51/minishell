@@ -17,29 +17,3 @@ echo -nnnn -nnnnn -nnnna a
 echo -nnnn -nnnnn a
 echo -nnnn a -nnnnn
 echo a -nnnn -nnnnn
-pwd
-cd ..
-pwd
-cd cmd6_dir
-pwd
-cd /bin
-pwd
-cd /sdfsdgfugdfj
-pwd
-cd
-pwd
-cd ..
-pwd
-cd .
-pwd
-cd ././././././././.
-pwd
-cd /
-pwd
-cd ..
-unset A
-env | grep A
-export A
-env | grep A
-export A=a
-env | grep A
