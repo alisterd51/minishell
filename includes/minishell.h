@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/03 04:28:52 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/03 04:34:01 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,13 @@
 # define OR				5
 # define S_LEFT			6
 # define D_LEFT			7
-# define S_RIGHT		8
-# define D_RIGHT		9
+# define D_LEFT_EXP		8
+# define S_RIGHT		9
+# define D_RIGHT		10
+# define T_FILE			11
+# define DELIMITOR		12
+# define EXPEND			13
+# define DOLLAR			14
 # define DEFAULT_PS1	"\033[1;34mminishell-beta \033[1;32mv0.1\033[0m$ "
 # define DEFAULT_PS2	"heredoc> "
 

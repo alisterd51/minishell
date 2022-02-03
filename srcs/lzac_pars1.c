@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 22:22:58 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/03 03:14:12 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/03 04:38:47 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,15 +98,15 @@ t_cmd	*parsing_shell(char *str, char **envp)
 
 int	lzac_is_redirect(int type)
 {
-	return (type == REDIRECT_L || type == REDIRECT_R
-			|| type == HEREDOC || type == REDIRECT_ADD);
+	return (type == S_LEFT || type == S_RIGHT
+			|| type == D_LEFT || type == D_RIGHT);
 }
 
 static t_arg	*init_arg(t_cmd *lst_token)
 {
 	t_arg   *arg;
 
-	while (lst_token && lst_token->type != PIPE)
+	while (lst_token && lst_token->type != PIPELINE)
 	{
 		if (lzac_is_redirect(lst_token->type))
 			lst_token = lst_token->next;
@@ -132,7 +132,7 @@ static t_redir	*init_redirect(t_cmd *lst_token)
 {
 	t_redir	*redir;
 
-	while (lst_token && lst_token->type != PIPE)
+	while (lst_token && lst_token->type != PIPELINE)
 	{
 		if (lzac_is_redirect(lst_token->type))
 		{
@@ -196,7 +196,7 @@ t_ast	*token_to_ast(t_cmd *lst_token)
 	if (lst_token == NULL)
 		return (NULL);
 	node_command = init_command(lst_token);
-	while (lst_token && lst_token->type != PIPE)
+	while (lst_token && lst_token->type != PIPELINE)
 		lst_token = lst_token->next;
 	if (lst_token)
 		return (new_node(node_command, lst_token));
