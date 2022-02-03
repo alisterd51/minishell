@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/03 04:46:13 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/03 04:49:35 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ void	free_lst(t_cmd **cmd)
 	{
 		*cmd = tmp;
 		tmp = tmp->next;
-		if ((*cmd)->type != REDIRECT_L && (*cmd)->type != REDIRECT_R
-			&& (*cmd)->type != REDIRECT_ADD && (*cmd)->type != HEREDOC
-			&& (*cmd)->type != PIPE && (*cmd)->type != DOLLAR)
+		if ((*cmd)->type != S_LEFT && (*cmd)->type != S_RIGHT
+			&& (*cmd)->type != D_RIGHT && (*cmd)->type != D_LEFT
+			&& (*cmd)->type != PIPELINE && (*cmd)->type != DOLLAR)
 			free((*cmd)->word);
 		free(*cmd);
 	}
 }
 
-t_cmd	*lzac_ft_lstnew(char *word, enum e_type type, int space)
+t_cmd	*lzac_ft_lstnew(char *word, int type, int space)
 {
 	t_cmd	*cmd;
 
@@ -100,7 +100,7 @@ int	ft_quote(t_stuff *stuff, char c, t_cmd **cmd)
 		return (1);
 	}
 	word = lzac_ft_strndup(stuff->str, j, stuff->i);
-	new = lzac_ft_lstnew(word, ARG, stuff->space);
+	new = lzac_ft_lstnew(word, ARGUMENT, stuff->space);
 	lzac_ft_lstadd_back(cmd, new);
 	stuff->i += j + 1;
 	return (0);
@@ -113,7 +113,7 @@ void	ft_alnum(t_stuff *stuff, t_cmd **cmd)
 	t_cmd	*new;
 
 	j = 0;
-	stuff->type = ARG;
+	stuff->type = ARGUMENT;
 	j = ft_strarglen(stuff->str, stuff->i);
 	word = lzac_ft_strndup(stuff->str, j, stuff->i);
 	new = lzac_ft_lstnew(word, stuff->type, stuff->space);
@@ -126,10 +126,10 @@ void	ft_rdleft(t_stuff *stuff, t_cmd **cmd)
 	t_cmd	*new;
 
 	stuff->i++;
-	stuff->type = REDIRECT_L;
+	stuff->type = S_LEFT;
 	if (stuff->str[stuff->i] && stuff->str[stuff->i] == '<')
 	{
-		stuff->type = HEREDOC;
+		stuff->type = D_LEFT;
 		new = lzac_ft_lstnew("<<", stuff->type, stuff->space);
 		stuff->i++;
 	}
@@ -143,10 +143,10 @@ void	ft_rdright(t_stuff *stuff, t_cmd **cmd)
 	t_cmd	*new;
 
 	stuff->i++;
-	stuff->type = REDIRECT_R;
+	stuff->type = S_RIGHT;
 	if (stuff->str[stuff->i] && stuff->str[stuff->i] == '>')
 	{
-		stuff->type = REDIRECT_ADD;
+		stuff->type = D_RIGHT;
 		new = lzac_ft_lstnew(">>", stuff->type, stuff->space);
 		stuff->i++;
 	}
@@ -159,7 +159,7 @@ void	lzac_ft_pipe(t_stuff *stuff, t_cmd **cmd)
 {
 	t_cmd	*new;
 
-	stuff->type = PIPE;
+	stuff->type = PIPELINE;
 	new = lzac_ft_lstnew("|", stuff->type, stuff->space);
 	lzac_ft_lstadd_back(cmd, new);
 	stuff->i++;
@@ -170,7 +170,7 @@ void	init_stuff(t_stuff *stuff, char *str)
 	stuff->str = str;
 	stuff->i = 0;
 	stuff->space = 0;
-	stuff->type = LZAC_NONE;
+	stuff->type = NONE;
 }
 
 void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
@@ -206,7 +206,7 @@ t_cmd	*get_cmd(char *str, char **envp)
 	init_stuff(&stuff, str);
 	while (str[stuff.i])
 	{
-		stuff.type = LZAC_NONE;
+		stuff.type = NONE;
 		stuff.space = 0;
 		if (ft_isspace(str[stuff.i]))
 			ft_space(&stuff, str);
@@ -251,24 +251,24 @@ void	get_type(t_cmd *cmd)
 	tmp = cmd;
 	while (tmp)
 	{
-		if (tmp && tmp->next && (tmp->type == REDIRECT_L
-				|| tmp->type == REDIRECT_R || tmp->type == REDIRECT_ADD))
+		if (tmp && tmp->next && (tmp->type == S_LEFT
+				|| tmp->type == S_RIGHT || tmp->type == D_RIGHT))
 		{
-			if (tmp->next->type == REDIRECT_L || tmp->next->type == REDIRECT_R
-				|| tmp->next->type == REDIRECT_ADD
-				|| tmp->next->type == HEREDOC)
+			if (tmp->next->type == S_LEFT || tmp->next->type == S_RIGHT
+				|| tmp->next->type == D_RIGHT
+				|| tmp->next->type == D_LEFT)
 				print_error("syntax error near unexpected token redirection\n", cmd);
-			else if (tmp->next->type == PIPE)
+			else if (tmp->next->type == PIPELINE)
 				print_error("syntax error near unexpected token `|'\n", cmd);
 			tmp->next->type = T_FILE;
 		}
-		if (tmp && tmp->next && tmp->type == HEREDOC)
+		if (tmp && tmp->next && tmp->type == D_LEFT)
 		{
-			if (tmp->next->type == REDIRECT_L || tmp->next->type == REDIRECT_R
-				|| tmp->next->type == REDIRECT_ADD
-				|| tmp->next->type == HEREDOC)
+			if (tmp->next->type == S_LEFT || tmp->next->type == S_RIGHT
+				|| tmp->next->type == D_RIGHT
+				|| tmp->next->type == D_LEFT)
 				print_error("syntax error near unexpected token redirection\n", cmd);
-			else if (tmp->next->type == PIPE)
+			else if (tmp->next->type == PIPELINE)
 				print_error("syntax error near unexpected token `|'\n", cmd);
 			tmp->next->type = DELIMITOR;
 		}
@@ -297,18 +297,18 @@ int	get_error(t_cmd *cmd)
 	i = 1;
 	while (cmd)
 	{
-		if (cmd && cmd->next && cmd->type == PIPE && cmd->next->type == PIPE)
+		if (cmd && cmd->next && cmd->type == PIPELINE && cmd->next->type == PIPELINE)
 		{
 			print_error("syntax error near unexpected token `|'\n", tmp);
 			return (2);
 		}
-		if (i == 1 && cmd->type == PIPE)
+		if (i == 1 && cmd->type == PIPELINE)
 		{
 			print_error("syntax error near unexpected token `|'\n", tmp);
 			return (2);
 		}
-		if (i == size && (cmd->type == REDIRECT_L || cmd->type == REDIRECT_R
-				|| cmd->type == REDIRECT_ADD || cmd->type == HEREDOC || cmd->type == PIPE))
+		if (i == size && (cmd->type == S_LEFT || cmd->type == S_RIGHT
+				|| cmd->type == D_RIGHT || cmd->type == D_LEFT || cmd->type == PIPELINE))
 		{
 			print_error("syntax error near unexpected token `newline'\n", tmp);
 			return (2);
