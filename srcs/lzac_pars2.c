@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/03 08:24:47 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/03 10:10:59 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	ft_space(t_stuff *stuff, char *str)
 		stuff->i++;
 	stuff->space = 1;
 }
+
 
 int	ft_quote(t_stuff *stuff, char c, t_cmd **cmd)
 {
@@ -177,6 +178,7 @@ char	*search_env(char **envp, char *word)
 		free(key);
 		return (ft_strdup(str));
 	}
+	free(key);
 	return (NULL);
 }
 
@@ -200,12 +202,34 @@ void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
 	{
 		word = ft_strndup(stuff->str + stuff->i, j);
 		word = search_env(envp, word);
-		printf("%s\n", word);
+		if (word == NULL)
+		{
+			stuff->i++;
+			free(word);
+			return ;
+		}
 	}
 	new = lzac_ft_lstnew(word, stuff->type, stuff->space);
 	lzac_ft_lstadd_back(cmd, new);
 		stuff->i += j;
 }
+
+// void	expend_in_quote(t_stuff *stuff, char **envp, t_cmd **cmd)
+// {
+// 	t_cmd	*tmp;
+// 	int i;
+
+// 	i = 0;
+// 	tmp = *cmd;
+// 	while (tmp->next)
+// 		tmp = tmp->next;
+// 	while (tmp->word[i])
+// 	{
+// 		if (tmp->word[i] == '$')
+// 			ft_expend(stuff, envp, cmd);
+// 		i++;
+// 	}
+// }
 
 t_cmd	*get_cmd(char *str, char **envp)
 {
@@ -229,6 +253,7 @@ t_cmd	*get_cmd(char *str, char **envp)
 		{
 			if (ft_quote(&stuff, '\"', &cmd) == 1)
 				return (NULL);
+			// expend_in_quote(&stuff, envp, &cmd);
 		}
 		else if (str[stuff.i] == '<')
 			ft_rdleft(&stuff, &cmd);
