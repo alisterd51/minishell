@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:26:01 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/03 02:52:28 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/05 00:40:03 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	is_special_param(char *param)
 
 static int	is_valid_export(char *param)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (param[i] && param[i] != '=')
@@ -38,7 +38,7 @@ static void	set_key_value(char *str, t_list **env)
 {
 	char	*key;
 	char	*value;
-	int		i;
+	size_t	i;
 
 	i = 0;
 	while (str[i] && str[i] != '=')
