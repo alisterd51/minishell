@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:54:07 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/04 22:23:59 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/05 00:01:54 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void	intern_exec(char *line, t_list *lst_env)
 		return ;
 	}
 	lst_token = parsing_shell(line, env);
+	print_token(lst_token);
 	clean_tab(&env);
 	ast = token_to_ast(lst_token);
 	free_lst(&lst_token);
