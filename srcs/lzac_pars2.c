@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/03 10:10:59 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/04 01:02:41 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,6 @@ void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
 	char	*word;
 	int		j;
 
-	(void)envp;
 	j = 0;
 	stuff->i++;
 	stuff->type = EXPEND;
@@ -214,22 +213,57 @@ void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
 		stuff->i += j;
 }
 
-// void	expend_in_quote(t_stuff *stuff, char **envp, t_cmd **cmd)
-// {
-// 	t_cmd	*tmp;
-// 	int i;
+char	*ft_expend_quote(char *word, int *i, char **envp)
+{
+	int		j;
 
-// 	i = 0;
-// 	tmp = *cmd;
-// 	while (tmp->next)
-// 		tmp = tmp->next;
-// 	while (tmp->word[i])
-// 	{
-// 		if (tmp->word[i] == '$')
-// 			ft_expend(stuff, envp, cmd);
-// 		i++;
-// 	}
-// }
+	j = 0;
+	(*i)++;
+	j = ft_expstrclen(word + *i, ' ');
+	word = ft_strndup(word + *i, j);
+	word = search_env(envp, word);
+	if (word == NULL)
+	{
+		(*i)++;
+		free(word);
+		return (NULL);
+	}
+	(*i) += j; 
+	return (word);
+}
+
+void	expend_in_quote(char **envp, t_cmd **cmd)
+{
+	t_cmd	*tmp;
+	char	*first;
+	char	*sec;
+	char	*third;
+	int i;
+
+	i = 0;
+	tmp = *cmd;
+	while (tmp->next)
+		tmp = tmp->next;
+	while (tmp->word[i])
+	{
+		if (tmp->word[i] == '$' && (tmp->word[i + 1] != ' ' || tmp->word[i + 1] != '|'))
+		{
+			first = ft_strndup(tmp->word, i);
+			printf("first : %s\n", first);
+			sec = ft_expend_quote(tmp->word, &i, envp);
+			printf("sec : %s\n", sec);
+			third = ft_strjoin(first, sec);
+			free(first);
+			free(sec);
+			printf("third : %s\n", third);
+			printf("word : %s\n", tmp->word);
+			free(tmp->word);
+			tmp->word = third;
+			return ;
+		}
+		i++;
+	}
+}
 
 t_cmd	*get_cmd(char *str, char **envp)
 {
@@ -253,7 +287,7 @@ t_cmd	*get_cmd(char *str, char **envp)
 		{
 			if (ft_quote(&stuff, '\"', &cmd) == 1)
 				return (NULL);
-			// expend_in_quote(&stuff, envp, &cmd);
+			expend_in_quote(envp, &cmd);
 		}
 		else if (str[stuff.i] == '<')
 			ft_rdleft(&stuff, &cmd);
