@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/29 00:22:58 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 22:24:56 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,23 @@
 #include <stdio.h>
 #include "minishell.h"
 
-static void	exec_arg_2(char **tab, t_list **lst_env, char *cpath)
+static void	exec_arg_2(char **tab, t_list **lst_env, char *cpath, int *fd_save)
 {
 	char	**env;
 	int		ret;
 
+	dup2(fd_save[0], STDIN_FILENO);
+	dup2(fd_save[1], STDOUT_FILENO);
 	env = list_to_tab(*lst_env);
 	ret = execve(cpath, tab, env);
 	if (ret == -1)
 		perror(tab[0]);
 	clean_env(lst_env);
 	clean_tab(&env);
+	clean_tab(&tab);
 	free(cpath);
+	clean_colector();
+	clean_heredoc(2);
 	exit(ret);
 }
 
@@ -47,7 +52,7 @@ static char	*sub_solve_path(char **tab, t_list **lst_env)
 	return (cpath);
 }
 
-static int	exec_arg_1(char **tab, t_list **lst_env)
+static int	exec_arg_1(char **tab, t_list **lst_env, int *fd_save)
 {
 	char	*cpath;
 	int		ret;
@@ -62,7 +67,7 @@ static int	exec_arg_1(char **tab, t_list **lst_env)
 	{
 		pid = fork();
 		if (pid == 0)
-			exec_arg_2(tab, lst_env, cpath);
+			exec_arg_2(tab, lst_env, cpath, fd_save);
 		else
 			waitpid(pid, &status, 0);
 	}
@@ -79,9 +84,9 @@ int	exec_arg(t_ast *ast, t_list **lst_env)
 	int		ret;
 	int		fd_save[2];
 
-	fd_save[0] = dup(0);
-	fd_save[1] = dup(1);
-	if (exec_redir(ast->paw2) != 0)
+	fd_save[0] = 0;
+	fd_save[1] = 1;
+	if (exec_redir(ast->paw2, fd_save) != 0)
 		return (1);
 	tab = arg_to_tab(ast->paw1);
 	if (tab == NULL)
@@ -90,12 +95,11 @@ int	exec_arg(t_ast *ast, t_list **lst_env)
 	if (tab && tab[0] && is_builtin(tab[0]))
 		ret = exec_builtin(tab, lst_env);
 	else if (tab && tab[0])
-		ret = exec_arg_1(tab, lst_env);
-	unlink("/tmp/.heredoc");
-	dup2(fd_save[0], 0);
-	dup2(fd_save[1], 1);
-	close(fd_save[0]);
-	close(fd_save[1]);
+		ret = exec_arg_1(tab, lst_env, fd_save);
+	if (fd_save[0] != 0)
+		close(fd_save[0]);
+	if (fd_save[1] != 1)
+		close(fd_save[1]);
 	clean_tab(&tab);
 	return (ret);
 }
@@ -121,6 +125,7 @@ void	exec_ast(t_ast *ast, t_list **lst_env, int *status)
 				*status = exec_arg(ast, lst_env);
 			clean_env(lst_env);
 			clean_colector();
+			clean_heredoc(2);
 			exit(*status);
 		}
 		else

@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/22 17:37:33 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 21:14:58 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static void	exe_pipe(t_ast *ast, t_list **lst_env, int *status)
 	}
 	else
 		perror("minishell");
+	clean_heredoc(2);
 	exit(*intern_pipe.status);
 }
 

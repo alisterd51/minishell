@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "lzac_pars1.h"
 #include "minishell.h"
 
@@ -68,7 +67,6 @@ void	ft_space(t_stuff *stuff, char *str)
 		stuff->i++;
 	stuff->space = 1;
 }
-
 
 int	ft_quote(t_stuff *stuff, char c, t_cmd **cmd)
 {
@@ -229,7 +227,7 @@ char	*ft_expend_quote(char *word, int *i, char **envp)
 		(*i) += j - 1;
 		return (NULL);
 	}
-	(*i) += j; 
+	(*i) += j;
 	return (word);
 }
 

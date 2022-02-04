@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 18:51:26 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/04 09:43:21 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/04 21:55:25 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,6 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include "struct.h"
-
-typedef struct s_cmd	t_cmd;
-struct	s_cmd
-{
-	char	*word;
-	int		type;
-	int		space;
-	t_cmd	*next;
-};
 
 typedef struct s_stuff	t_stuff;
 struct	s_stuff
@@ -49,7 +40,6 @@ int		lzac_ft_lstsize(t_cmd *lst);
 void	print_error(char *msg, t_cmd *cmd);
 int		get_error(t_cmd *cmd);
 void	ft_space(t_stuff *stuff, char *str);
-t_ast	*token_to_ast(t_cmd *lst_token);
 void	print_token(t_cmd *lst_token);
 int		ft_expstrclen(char *str, char c);
 char	*ft_strndup_exp(char *word, int i, int j);

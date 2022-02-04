@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
-#    Updated: 2022/02/03 01:04:57 by anclarma         ###   ########.fr        #
+#    Updated: 2022/02/04 19:30:22 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ C_FILES		= main.c					\
 			  ft_env.c					\
 			  ft_export.c				\
 			  ft_unset.c				\
-			  init_ast.c				\
+			  token_to_ast.c			\
 			  print_ast.c				\
 			  clean_ast.c				\
 			  utils_ast.c				\
@@ -35,6 +35,7 @@ C_FILES		= main.c					\
 			  utils_tab.c				\
 			  utils_tab2.c				\
 			  utils_list.c				\
+			  utils_heredoc.c			\
 			  exec_ast.c				\
 			  exec_builtin.c			\
 			  exec_redir.c				\
@@ -42,6 +43,7 @@ C_FILES		= main.c					\
 			  ft_handler.c				\
 			  ft_pipe.c					\
 			  init_list.c				\
+			  init_command.c			\
 			  clean_list.c				\
 			  solve_path.c				\
 			  ret_status.c				\
@@ -52,9 +54,9 @@ C_FILES		= main.c					\
 SRCS		= $(patsubst %, $(C_DIR)/%, $(C_FILES))
 O_FILES		= $(C_FILES:.c=.o)
 OBJS		= $(patsubst %, $(O_DIR)/%, $(O_FILES))
-CC			= gcc
+CC			= clang
 CFLAGS		= -Wall -Wextra -Werror		\
-			  -MMD -MP -ansi
+			  -MMD -MP -g3
 LFLAGS		= -Wall -Wextra -Werror
 CINCLUDES	= -I ./includes				\
 			  -I ./libft/includes
@@ -72,7 +74,7 @@ debug:		LFLAGS += -fsanitize=address	\
 				-g3
 debug:		$(NAME)
 
-check:		all
+check:		fclean all
 			@test/run_tests.sh
 
 $(O_DIR)/%.o: $(C_DIR)/%.c
@@ -83,6 +85,9 @@ $(O_DIR):
 
 $(NAME):	$(LIBFT) $(O_DIR) $(OBJS)
 			$(CC) $(OBJS) $(LFLAGS) $(CLIBS) -o $@
+
+malloc_test: $(LIBFT) $(O_DIR) $(OBJS)
+	$(CC) $(LFLAGS) -fsanitize=undefined -rdynamic -o $@ ${OBJS} $(CLIBS) -L. -lmallocator
 
 $(LIBFT):
 			make -C libft all

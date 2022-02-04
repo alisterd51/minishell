@@ -6,13 +6,14 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 03:52:18 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/03 00:36:53 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 03:21:19 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <limits.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "minishell.h"
 
 int	step5(t_cd *cd_arg)
@@ -33,6 +34,11 @@ int	step6(t_cd *cd_arg)
 	if (cd_arg->curpath && cd_arg->curpath[0] != '/')
 	{
 		getcwd(pwd, 1024);
+		if (ft_strlen(pwd) == 0)
+		{
+			perror("minishell: cd: error retrieving current directory");
+			return (10);
+		}
 		if (pwd[ft_strlen(pwd) - 1] == '/')
 			concat = ft_concatenation(pwd, "", cd_arg->curpath);
 		else

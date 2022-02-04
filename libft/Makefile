@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 20:14:19 by anclarma          #+#    #+#              #
-#    Updated: 2022/02/03 00:32:36 by anclarma         ###   ########.fr        #
+#    Updated: 2022/02/04 20:39:36 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ C_FILES		= ft_lstadd_back.c			\
 			  ft_strnstr.c				\
 			  ft_bzero.c				\
 			  ft_atoi.c					\
+			  ft_itoa.c					\
 			  ft_calloc.c				\
 			  ft_realloc.c				\
 			  ft_realpath.c				\
@@ -61,11 +62,11 @@ C_FILES		= ft_lstadd_back.c			\
 SRCS		= $(patsubst %, $(C_DIR)/%, $(C_FILES))
 O_FILES		= $(C_FILES:.c=.o)
 OBJS		= $(patsubst %, $(O_DIR)/%, $(O_FILES))
-CC			= gcc
+CC			= clang
 CXX			= g++
 AR			= ar rc
 CFLAGS		= -Wall -Wextra -Werror		\
-			  -MMD -MP -ansi
+			  -MMD -MP -g3
 CXXFLAGS	= -Wall -Wextra -Werror		\
 			  -std=c++98				\
 			  -MMD -MP

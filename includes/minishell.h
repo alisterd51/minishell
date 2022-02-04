@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/03 05:38:34 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/04 21:44:38 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,16 @@
 t_list	*init_env(char **env);
 
 /*
-** init_ast.c
+** init_command.c
 */
-t_ast	*init_ast(int ac, char **av);
+t_arg	*init_arg(t_cmd *lst_token);
+t_redir	*init_redirect(t_cmd *lst_token);
+t_ast	*init_command(t_cmd *lst_token);
+
+/*
+** token_to_ast.c
+*/
+t_ast	*token_to_ast(t_cmd *lst_token);
 
 /*
 ** print_ast.c
@@ -76,12 +83,12 @@ int		exec_builtin(char **tab, t_list **lst_env);
 /*
 ** exec_redir.c
 */
-int		exec_redir(t_redir *redir);
+int		exec_redir(t_redir *redir, int *fd_save);
 
 /*
 ** ft_heredoc.c
 */
-int		ft_heredoc(int fd, char const *terminat);
+int		fd_heredoc(char *file, int expend);
 
 /*
 ** ft_handler.c
@@ -106,7 +113,7 @@ char	**line_to_tab(char *line);
 */
 void	clean_tab(char ***tab);
 char	**line_to_tab(char *line);
-int		is_redirect(char *str);
+int		is_redirect(int type);
 
 /*
 ** utils_builtin.c
@@ -181,5 +188,12 @@ char	*pwd_p(void);
 */
 void	clean_colector(void);
 void	to_clean_colector(t_ast **ast);
+void	to_fd_colector(int fd);
+
+/*
+** utils_heredoc.c
+*/
+void	clean_heredoc(int mode);
+char	*new_heredoc(void);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:41:40 by anclarma          #+#    #+#              #
-#    Updated: 2022/01/29 15:02:51 by anclarma         ###   ########.fr        #
+#    Updated: 2022/02/04 18:27:26 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ C_FILES		= main.c					\
 			  ft_env.c					\
 			  ft_export.c				\
 			  ft_unset.c				\
-			  init_ast.c				\
+			  token_to_ast.c			\
 			  print_ast.c				\
 			  clean_ast.c				\
 			  utils_ast.c				\
@@ -43,6 +43,7 @@ C_FILES		= main.c					\
 			  utils_tab.c				\
 			  utils_tab2.c				\
 			  utils_list.c				\
+			  utils_heredoc.c			\
 			  exec_ast.c				\
 			  exec_builtin.c			\
 			  exec_redir.c				\
@@ -54,7 +55,9 @@ C_FILES		= main.c					\
 			  solve_path.c				\
 			  ret_status.c				\
 			  end_status.c				\
-			  colector.c
+			  colector.c				\
+			  lzac_pars1.c				\
+			  lzac_pars2.c
 SRCS		= $(patsubst %, $(C_DIR)/%, $(C_FILES))
 SRCS1		= main_ast.c
 SRCS2		= main_ft_echo.c
