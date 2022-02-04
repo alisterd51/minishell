@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/04 01:23:10 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 03:02:58 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,6 @@ void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
 	char	*word;
 	int		j;
 
-	(void)envp;
 	j = 0;
 	stuff->i++;
 	stuff->type = EXPEND;
@@ -212,22 +211,57 @@ void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
 		stuff->i += j;
 }
 
-// void	expend_in_quote(t_stuff *stuff, char **envp, t_cmd **cmd)
-// {
-// 	t_cmd	*tmp;
-// 	int i;
+char	*ft_expend_quote(char *word, int *i, char **envp)
+{
+	int		j;
 
-// 	i = 0;
-// 	tmp = *cmd;
-// 	while (tmp->next)
-// 		tmp = tmp->next;
-// 	while (tmp->word[i])
-// 	{
-// 		if (tmp->word[i] == '$')
-// 			ft_expend(stuff, envp, cmd);
-// 		i++;
-// 	}
-// }
+	j = 0;
+	(*i)++;
+	j = ft_expstrclen(word + *i, ' ');
+	word = ft_strndup(word + *i, j);
+	word = search_env(envp, word);
+	if (word == NULL)
+	{
+		(*i)++;
+		free(word);
+		return (NULL);
+	}
+	(*i) += j; 
+	return (word);
+}
+
+void	expend_in_quote(char **envp, t_cmd **cmd)
+{
+	t_cmd	*tmp;
+	char	*first;
+	char	*sec;
+	char	*third;
+	int i;
+
+	i = 0;
+	tmp = *cmd;
+	while (tmp->next)
+		tmp = tmp->next;
+	while (tmp->word[i])
+	{
+		if (tmp->word[i] == '$' && (tmp->word[i + 1] != ' ' || tmp->word[i + 1] != '|'))
+		{
+			first = ft_strndup(tmp->word, i);
+			printf("first : %s\n", first);
+			sec = ft_expend_quote(tmp->word, &i, envp);
+			printf("sec : %s\n", sec);
+			third = ft_strjoin(first, sec);
+			free(first);
+			free(sec);
+			printf("third : %s\n", third);
+			printf("word : %s\n", tmp->word);
+			free(tmp->word);
+			tmp->word = third;
+			return ;
+		}
+		i++;
+	}
+}
 
 t_cmd	*get_cmd(char *str, char **envp)
 {
@@ -251,7 +285,7 @@ t_cmd	*get_cmd(char *str, char **envp)
 		{
 			if (ft_quote(&stuff, '\"', &cmd) == 1)
 				return (NULL);
-			// expend_in_quote(&stuff, envp, &cmd);
+			expend_in_quote(envp, &cmd);
 		}
 		else if (str[stuff.i] == '<')
 			ft_rdleft(&stuff, &cmd);
@@ -270,13 +304,14 @@ t_cmd	*get_cmd(char *str, char **envp)
 				stuff.i++;
 		}
 	}
-	get_type(cmd);
+	if (get_type(cmd) == 2)
+		return (NULL);
 	if (get_error(cmd) == 2)
 		return (NULL);
 	return (cmd);
 }
 
-void	get_type(t_cmd *cmd)
+int	get_type(t_cmd *cmd)
 {
 	t_cmd	*tmp;
 	t_cmd	*tmp2;
@@ -291,9 +326,15 @@ void	get_type(t_cmd *cmd)
 			if (tmp->next->type == S_LEFT || tmp->next->type == S_RIGHT
 				|| tmp->next->type == D_RIGHT
 				|| tmp->next->type == D_LEFT)
-				print_error("syntax error near unexpected token redirection\n", cmd);
+				{
+					print_error("syntax error near unexpected token redirection\n", cmd);
+					return (2);
+				}
 			else if (tmp->next->type == PIPELINE)
+			{
 				print_error("syntax error near unexpected token `|'\n", cmd);
+				return (2);
+			}
 			tmp->next->type = T_FILE;
 		}
 		if (tmp && tmp->next && tmp->type == D_LEFT)
@@ -301,9 +342,15 @@ void	get_type(t_cmd *cmd)
 			if (tmp->next->type == S_LEFT || tmp->next->type == S_RIGHT
 				|| tmp->next->type == D_RIGHT
 				|| tmp->next->type == D_LEFT)
-				print_error("syntax error near unexpected token redirection\n", cmd);
+				{
+					print_error("syntax error near unexpected token redirection\n", cmd);
+					return (2);
+				}
 			else if (tmp->next->type == PIPELINE)
+			{
 				print_error("syntax error near unexpected token `|'\n", cmd);
+				return (2);
+			}
 			tmp->next->type = DELIMITOR;
 		}
 		if (tmp->next && tmp->next->space == 0 && tmp->type == ARGUMENT
@@ -320,6 +367,7 @@ void	get_type(t_cmd *cmd)
 		else
 			tmp = tmp->next;
 	}
+	return (0);
 }
 
 int	get_error(t_cmd *cmd)
