@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/04 01:09:43 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 02:22:38 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ static void	exec_arg_2(char **tab, t_list **lst_env, char *cpath, int *fd_save)
 	clean_tab(&tab);
 	free(cpath);
 	clean_colector();
-	close(fd_save[0]);
-	close(fd_save[1]);
+	(void)fd_save;
 	exit(ret);
 }
 
