@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/03 04:57:15 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 05:55:20 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static int	redir_s_left(char *file)
 /*
 ** manque l'expend
 */
+
 static int	redir_d_left(char *file, int expend)
 {
 	int		fd;
@@ -61,6 +62,7 @@ static int	redir_d_left(char *file, int expend)
 	}
 	dup2(fd, STDIN_FILENO);
 	close(fd);
+	unlink("/tmp/.heredoc");
 	return (0);
 }
 
@@ -68,7 +70,7 @@ static int	redir_s_right(char *file)
 {
 	int	new_fd;
 
-	new_fd = open(file, O_CREAT | O_WRONLY, 0666);
+	new_fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
 	if (new_fd == -1)
 	{
 		perror(file);

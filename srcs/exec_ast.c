@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/04 02:22:38 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 06:01:26 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ int	exec_arg(t_ast *ast, t_list **lst_env)
 		ret = exec_builtin(tab, lst_env);
 	else if (tab && tab[0])
 		ret = exec_arg_1(tab, lst_env, fd_save);
-	unlink("/tmp/.heredoc");
 	dup2(fd_save[0], 0);
 	dup2(fd_save[1], 1);
 	close(fd_save[0]);
