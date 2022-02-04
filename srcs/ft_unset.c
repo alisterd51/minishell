@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 00:49:44 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/04 23:14:39 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/05 00:17:18 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 static void	intern_unset(char *key, t_list **env)
 {
 	t_list	*node_env;
-	t_list  *prev_env;
-	t_list  *next_env;
+	t_list	*prev_env;
+	t_list	*next_env;
 
 	node_env = *env;
 	prev_env = NULL;

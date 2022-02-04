@@ -7,3 +7,4 @@ end
 end
 cat a
 cat b
+rm a b

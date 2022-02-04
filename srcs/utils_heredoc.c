@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 22:22:58 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/04 21:01:49 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/05 00:19:30 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,6 @@ static void	free_heredoc_1(void *cpath)
 	free(cpath);
 }
 
-static void	free_heredoc_2(void *cpath)
-{
-	free(cpath);
-}
-
 static char	*intern_herdoc(int mode)
 {
 	static t_list	*list_heredoc = NULL;
@@ -80,7 +75,7 @@ static char	*intern_herdoc(int mode)
 	else if (mode == 1)
 		ft_lstclear(&list_heredoc, free_heredoc_1);
 	else if (mode == 2)
-		ft_lstclear(&list_heredoc, free_heredoc_2);
+		ft_lstclear(&list_heredoc, free);
 	return (NULL);
 }
 
