@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/04 22:42:54 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/04 23:20:01 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,7 +283,10 @@ void	expend_in_quote(char **envp, t_cmd **cmd)
 			}
 			else
 				free(first);
-			sec = ft_expend_quote(word, &i, envp);
+			if (sec == '?')
+				sec = ft_itoa(ft_get_status());
+			else
+				sec = ft_expend_quote(word, &i, envp);
 			printf("sec : %s\n", sec);
 			if (sec != NULL)
 			{
