@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/04 21:49:08 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/04 21:52:17 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -446,17 +446,3 @@ void	print_error(char *msg, t_cmd *cmd)
 	ft_putstr_fd(msg, 2);
 	ft_set_status(2);
 }
-
-// char	*str_to_expend(char **env, const char **str)
-// {
-// 	char	*expend;
-// 	int		count;
-// 	int		i;
-	
-// 	while (str[i])
-// 	{
-// 		if (str[i] == '$' && (str[i + 1] != ' ' || str[i + 1] != '|'))
-			
-// 		i++;
-// 	}
-// }
