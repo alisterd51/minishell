@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 00:46:40 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/04 21:43:58 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 22:31:27 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static int	read_heredoc(int fd, char const *terminat, int expend)
 		free(line);
 		line = readline(DEFAULT_PS2);
 	}
+	free(line);
 	return (0);
 }
 
