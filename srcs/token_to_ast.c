@@ -6,136 +6,13 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 22:22:58 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/04 18:21:54 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 18:57:02 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <signal.h>
-#include <unistd.h>
-#include <limits.h>
 #include "minishell.h"
-
-static t_arg	*init_arg(t_cmd *lst_token)
-{
-	t_arg	*arg;
-
-	while (lst_token && lst_token->type != PIPELINE)
-	{
-		if (is_redirect(lst_token->type))
-			lst_token = lst_token->next;
-		else
-		{
-			arg = (t_arg *)malloc(sizeof(t_arg));
-			if (arg == NULL)
-			{
-				perror("minishell: init_arg");
-				return (NULL);
-			}
-			*arg = (t_arg){0};
-			arg->arg = ft_strdup(lst_token->word);
-			arg->next = init_arg(lst_token->next);
-			return (arg);
-		}
-		lst_token = lst_token->next;
-	}
-	return (NULL);
-}
-
-static int	fd_heredoc(char *file, int expend)
-{
-	int		fd;
-	char	*heredoc;
-
-	heredoc = new_heredoc();
-	(void)expend;
-	fd = open(heredoc, O_WRONLY | O_TRUNC);
-	if (fd == -1)
-	{
-		perror(heredoc);
-		return (-1);
-	}
-	signal(SIGINT, handler_int_heredoc);
-	ft_heredoc(fd, file);
-	signal(SIGINT, handler_int);
-	close(fd);
-	fd = open(heredoc, O_RDONLY);
-	if (fd == -1)
-	{
-		perror(heredoc);
-		return (-1);
-	}
-	return (fd);
-}
-
-static t_redir	*init_redirect(t_cmd *lst_token);
-
-static void	sub_init_redirect1(t_redir *redir, t_cmd *lst_token)
-{
-				redir->type = lst_token->type;
-				lst_token = lst_token->next;
-				redir->file = ft_strdup(lst_token->word);
-				redir->next = init_redirect(lst_token->next);
-}
-
-static void	sub_init_redirect2(t_redir *redir, t_cmd *lst_token)
-{
-				int	type_heredoc;
-
-				if (lst_token->type == D_LEFT)
-					type_heredoc = 0;
-				else
-					type_heredoc = 1;
-				redir->type = lst_token->type;
-				lst_token = lst_token->next;
-				redir->file = ft_itoa(fd_heredoc(lst_token->word, type_heredoc));
-				redir->next = init_redirect(lst_token->next);
-}
-
-static t_redir	*init_redirect(t_cmd *lst_token)
-{
-	t_redir	*redir;
-
-	while (lst_token && lst_token->type != PIPELINE)
-	{
-		if (is_redirect(lst_token->type))
-		{
-			redir = (t_redir *)malloc(sizeof(t_redir));
-			if (redir == NULL)
-			{
-				perror("minishell: init_redirect");
-				return (NULL);
-			}
-			*redir = (t_redir){0};
-			if (lst_token->type != D_LEFT && lst_token->type != D_LEFT_EXP)
-				sub_init_redirect1(redir, lst_token);
-			else
-				sub_init_redirect2(redir, lst_token);
-			return (redir);
-		}
-		lst_token = lst_token->next;
-	}
-	return (NULL);
-}
-
-static t_ast	*init_command(t_cmd *lst_token)
-{
-	t_ast	*node;
-
-	node = (t_ast *)malloc(sizeof(t_ast));
-	if (node == NULL)
-	{
-		perror("minishell: init_command");
-		return (NULL);
-	}
-	*node = (t_ast){.type = COMMAND,
-		.paw1 = init_arg(lst_token),
-		.paw2 = init_redirect(lst_token)};
-	return (node);
-}
 
 static t_ast	*new_node(t_ast *node_command, t_cmd *lst_token)
 {

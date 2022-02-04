@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
-#    Updated: 2022/02/04 18:23:38 by anclarma         ###   ########.fr        #
+#    Updated: 2022/02/04 18:46:49 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ C_FILES		= main.c					\
 			  ft_handler.c				\
 			  ft_pipe.c					\
 			  init_list.c				\
+			  init_command.c			\
 			  clean_list.c				\
 			  solve_path.c				\
 			  ret_status.c				\

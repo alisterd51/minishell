@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/04 10:15:57 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 19:00:45 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,7 @@ int	exec_redir(t_redir *redir, int *fd_save)
 	{
 		if (redir->type == S_LEFT)
 			ret = redir_s_left(redir->file, fd_save);
-		else if (redir->type == D_LEFT)
-			ret = redir_d_left(redir->file, fd_save);
-		else if (redir->type == D_LEFT_EXP)
+		else if (redir->type == D_LEFT || redir->type == D_LEFT_EXP)
 			ret = redir_d_left(redir->file, fd_save);
 		else if (redir->type == S_RIGHT)
 			ret = redir_s_right(redir->file, fd_save);

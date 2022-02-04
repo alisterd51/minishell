@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/04 18:23:06 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 19:03:09 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,13 @@
 ** init_list.c
 */
 t_list	*init_env(char **env);
+
+/*
+** init_command.c
+*/
+t_arg	*init_arg(t_cmd *lst_token);
+t_redir	*init_redirect(t_cmd *lst_token);
+t_ast	*init_command(t_cmd *lst_token);
 
 /*
 ** token_to_ast.c
@@ -81,7 +88,7 @@ int		exec_redir(t_redir *redir, int *fd_save);
 /*
 ** ft_heredoc.c
 */
-int		ft_heredoc(int fd, char const *terminat);
+int		fd_heredoc(char *file, int expend);
 
 /*
 ** ft_handler.c
