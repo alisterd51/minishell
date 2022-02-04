@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/04 21:54:38 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 22:42:54 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,7 @@ char	*ft_expend_quote(char *word, int *i, char **envp)
 		(*i) += j - 1;
 		return (NULL);
 	}
-	(*i) += j; 
+	(*i) += j;
 	return (word);
 }
 
@@ -250,8 +250,11 @@ void	expend_in_quote(char **envp, t_cmd **cmd)
 	tmp_del = *cmd;
 	while (tmp->next)
 		tmp = tmp->next;
-	while (tmp_del->next->next)
-		tmp_del = tmp_del->next;
+	if (tmp_del->next != NULL)
+	{
+		while (tmp_del->next->next)
+			tmp_del = tmp_del->next;
+	}
 	while (tmp->word[i])
 	{
 		if (tmp->word[i] == '$' && (tmp->word[i + 1] != ' ' || tmp->word[i + 1] != '|'))
