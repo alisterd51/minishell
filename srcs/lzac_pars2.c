@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/04 22:42:54 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/05 00:30:53 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,7 +231,7 @@ char	*ft_expend_quote(char *word, int *i, char **envp)
 	return (word);
 }
 
-void	expend_in_quote(char **envp, t_cmd **cmd)
+void	expend_in_quote(char **envp, t_cmd **cmd, t_stuff *stuff)
 {
 	t_cmd	*tmp;
 	t_cmd	*tmp_del;
@@ -241,9 +241,9 @@ void	expend_in_quote(char **envp, t_cmd **cmd)
 	int		i;
 	int		j;
 	char	*word;
-	int		space;
+	// int		space;
 
-	space = 1;
+	// space = 1;/
 	i = 0;
 	j = 0;
 	tmp = *cmd;
@@ -272,21 +272,26 @@ void	expend_in_quote(char **envp, t_cmd **cmd)
 		{
  			first = ft_strndup(word + j, i - j);
 			printf("first : %s\n", first);
-			if (j != 0)
-				space = 0;
+			// if (j != 0)
+			// 	space = 0;
 			if (first[0] != 0)
 			{
-				new = lzac_ft_lstnew(first, ARGUMENT, space);
+				new = lzac_ft_lstnew(first, ARGUMENT, stuff->space);
 				lzac_ft_lstadd_back(cmd, new);
+				stuff->space = 0;
 			}
 			else
 				free(first);
+			// if (sec[0] == '?')
+			// 	sec = ft_itoa(ft_get_status());
+			// else
 			sec = ft_expend_quote(word, &i, envp);
 			printf("sec : %s\n", sec);
 			if (sec != NULL)
 			{
-				new = lzac_ft_lstnew(sec, ARGUMENT, space);
+				new = lzac_ft_lstnew(sec, ARGUMENT, stuff->space);
 				lzac_ft_lstadd_back(cmd, new);
+				stuff->space = 0;
 			}
 			if (i < (int)ft_strlen(tmp->word) - 1)
 				j = i;
@@ -323,7 +328,7 @@ t_cmd	*get_cmd(char *str, char **envp)
 		{
 			if (ft_quote(&stuff, '\"', &cmd) == 1)
 				return (NULL);
-			expend_in_quote(envp, &cmd);
+			expend_in_quote(envp, &cmd, &stuff);
 		}
 		else if (str[stuff.i] == '<')
 			ft_rdleft(&stuff, &cmd);
