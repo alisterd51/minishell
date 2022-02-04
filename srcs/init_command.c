@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 22:22:58 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/04 18:48:05 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 20:39:16 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,16 @@ t_arg	*init_arg(t_cmd *lst_token)
 	return (NULL);
 }
 
-static void	sub_init_redirect1(t_redir *redir, t_cmd *lst_token)
+static t_redir	*sub_init_redirect1(t_redir *redir, t_cmd *lst_token)
 {
 	redir->type = lst_token->type;
 	lst_token = lst_token->next;
 	redir->file = ft_strdup(lst_token->word);
 	redir->next = init_redirect(lst_token->next);
+	return (redir);
 }
 
-static void	sub_init_redirect2(t_redir *redir, t_cmd *lst_token)
+static t_redir	*sub_init_redirect2(t_redir *redir, t_cmd *lst_token)
 {
 	int	type_heredoc;
 
@@ -60,6 +61,7 @@ static void	sub_init_redirect2(t_redir *redir, t_cmd *lst_token)
 	lst_token = lst_token->next;
 	redir->file = ft_itoa(fd_heredoc(lst_token->word, type_heredoc));
 	redir->next = init_redirect(lst_token->next);
+	return (redir);
 }
 
 t_redir	*init_redirect(t_cmd *lst_token)
@@ -78,10 +80,9 @@ t_redir	*init_redirect(t_cmd *lst_token)
 			}
 			*redir = (t_redir){0};
 			if (lst_token->type != D_LEFT && lst_token->type != D_LEFT_EXP)
-				sub_init_redirect1(redir, lst_token);
+				return (sub_init_redirect1(redir, lst_token));
 			else
-				sub_init_redirect2(redir, lst_token);
-			return (redir);
+				return (sub_init_redirect2(redir, lst_token));
 		}
 		lst_token = lst_token->next;
 	}

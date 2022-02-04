@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 22:22:58 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/04 18:25:49 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 21:01:49 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static char	*generate_heredoc(void)
 	{
 		ft_strlcpy(new_heredoc, "/tmp/heredoc", 1024);
 		add = ft_itoa(add_id);
+		if (add == NULL)
+			return (NULL);
 		ft_strlcat(new_heredoc, add, 1024);
 		free(add);
 		fd = open(new_heredoc, O_WRONLY | O_EXCL | O_CREAT, 0644);
@@ -44,31 +46,50 @@ static char	*generate_heredoc(void)
 	return (NULL);
 }
 
-static void	free_heredoc(void *cpath)
+static void	free_heredoc_1(void *cpath)
 {
 	unlink((char *)cpath);
+	free(cpath);
+}
+
+static void	free_heredoc_2(void *cpath)
+{
 	free(cpath);
 }
 
 static char	*intern_herdoc(int mode)
 {
 	static t_list	*list_heredoc = NULL;
+	t_list			*new_node;
 	char			*new_name;
 
 	if (mode == 0)
 	{
 		new_name = generate_heredoc();
-		ft_lstadd_front(&list_heredoc, ft_lstnew(new_name));
+		if (new_name == NULL)
+			return (NULL);
+		new_node = ft_lstnew(new_name);
+		if (new_node == NULL)
+		{
+			free(new_name);
+			return (NULL);
+		}
+		ft_lstadd_front(&list_heredoc, new_node);
 		return (new_name);
 	}
 	else if (mode == 1)
-		ft_lstclear(&list_heredoc, free_heredoc);
+		ft_lstclear(&list_heredoc, free_heredoc_1);
+	else if (mode == 2)
+		ft_lstclear(&list_heredoc, free_heredoc_2);
 	return (NULL);
 }
 
-void	clean_heredoc(void)
+void	clean_heredoc(int mode)
 {
-	intern_herdoc(1);
+	if (mode == 1)
+		intern_herdoc(1);
+	else
+		intern_herdoc(2);
 }
 
 char	*new_heredoc(void)

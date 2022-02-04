@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:54:07 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/04 09:04:46 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 21:03:52 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	intern_exec(char *line, t_list *lst_env)
 		ft_set_status(status);
 	}
 	clean_colector();
-	clean_heredoc();
+	clean_heredoc(1);
 }
 
 static int	intern_init(char **env, t_list **lst_env)

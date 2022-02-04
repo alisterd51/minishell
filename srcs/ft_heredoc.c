@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 00:46:40 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/04 19:03:40 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 21:43:58 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,17 @@
 #include <signal.h>
 #include "minishell.h"
 
-static int	read_heredoc(int fd, char const *terminat)
+static int	ft_perror(char const *str)
+{
+	perror(str);
+	return (-1);
+}
+
+static int	read_heredoc(int fd, char const *terminat, int expend)
 {
 	char	*line;
 
+	(void)expend;
 	line = readline(DEFAULT_PS2);
 	while (line && ft_strcmp(terminat, line))
 	{
@@ -39,22 +46,18 @@ int	fd_heredoc(char *file, int expend)
 	char	*heredoc;
 
 	heredoc = new_heredoc();
-	(void)expend;
+	if (heredoc == NULL)
+		return (ft_perror("new heredoc"));
 	fd = open(heredoc, O_WRONLY | O_TRUNC);
 	if (fd == -1)
-	{
-		perror(heredoc);
-		return (-1);
-	}
+		return (ft_perror(heredoc));
 	signal(SIGINT, handler_int_heredoc);
-	read_heredoc(fd, file);
+	read_heredoc(fd, file, expend);
 	signal(SIGINT, handler_int);
 	close(fd);
 	fd = open(heredoc, O_RDONLY);
 	if (fd == -1)
-	{
-		perror(heredoc);
-		return (-1);
-	}
+		return (ft_perror(heredoc));
+	to_fd_colector(fd);
 	return (fd);
 }

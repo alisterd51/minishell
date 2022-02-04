@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/04 19:00:45 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 21:42:10 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ static int	redir_d_left(char *file, int *fd_save)
 {
 	int	fd;
 
+	if (file == NULL)
+		return (-1);
 	fd = ft_atoi(file);
+	to_fd_colector(fd);
 	dup2(fd, fd_save[0]);
 	close(fd);
 	return (0);

@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
-#    Updated: 2022/02/04 18:46:49 by anclarma         ###   ########.fr        #
+#    Updated: 2022/02/04 19:30:22 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ C_FILES		= main.c					\
 SRCS		= $(patsubst %, $(C_DIR)/%, $(C_FILES))
 O_FILES		= $(C_FILES:.c=.o)
 OBJS		= $(patsubst %, $(O_DIR)/%, $(O_FILES))
-CC			= gcc
+CC			= clang
 CFLAGS		= -Wall -Wextra -Werror		\
 			  -MMD -MP -g3
 LFLAGS		= -Wall -Wextra -Werror
@@ -85,6 +85,9 @@ $(O_DIR):
 
 $(NAME):	$(LIBFT) $(O_DIR) $(OBJS)
 			$(CC) $(OBJS) $(LFLAGS) $(CLIBS) -o $@
+
+malloc_test: $(LIBFT) $(O_DIR) $(OBJS)
+	$(CC) $(LFLAGS) -fsanitize=undefined -rdynamic -o $@ ${OBJS} $(CLIBS) -L. -lmallocator
 
 $(LIBFT):
 			make -C libft all

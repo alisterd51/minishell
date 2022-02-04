@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/04 06:38:18 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 21:12:27 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void	exec_arg_2(char **tab, t_list **lst_env, char *cpath, int *fd_save)
 	clean_tab(&tab);
 	free(cpath);
 	clean_colector();
+	clean_heredoc(2);
 	exit(ret);
 }
 
@@ -122,6 +123,7 @@ void	exec_ast(t_ast *ast, t_list **lst_env, int *status)
 				*status = exec_arg(ast, lst_env);
 			clean_env(lst_env);
 			clean_colector();
+			clean_heredoc(2);
 			exit(*status);
 		}
 		else

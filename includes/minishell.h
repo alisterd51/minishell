@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/04 19:03:09 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 21:44:38 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,11 +188,12 @@ char	*pwd_p(void);
 */
 void	clean_colector(void);
 void	to_clean_colector(t_ast **ast);
+void	to_fd_colector(int fd);
 
 /*
 ** utils_heredoc.c
 */
-void	clean_heredoc(void);
+void	clean_heredoc(int mode);
 char	*new_heredoc(void);
 
 #endif
