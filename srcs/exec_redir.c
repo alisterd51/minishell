@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/04 07:15:00 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 08:22:30 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static int	redir_d_left(char *file, int *fd_save)
 	fd = ft_atoi(file);
 	dup2(fd, fd_save[0]);
 	close(fd);
-	unlink("/tmp/.heredoc");
 	return (0);
 }
 

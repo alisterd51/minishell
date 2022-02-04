@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/04 06:33:20 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 09:05:14 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,5 +181,7 @@ char	*pwd_p(void);
 */
 void	clean_colector(void);
 void	to_clean_colector(t_ast **ast);
+
+void	clean_heredoc(void);
 
 #endif
