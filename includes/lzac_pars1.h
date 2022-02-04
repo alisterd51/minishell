@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 18:51:26 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/04 02:50:13 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/04 09:43:21 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,6 @@ void	ft_space(t_stuff *stuff, char *str);
 t_ast	*token_to_ast(t_cmd *lst_token);
 void	print_token(t_cmd *lst_token);
 int		ft_expstrclen(char *str, char c);
+char	*ft_strndup_exp(char *word, int i, int j);
 
 #endif
