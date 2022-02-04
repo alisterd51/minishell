@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/29 00:22:58 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 01:09:43 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <stdio.h>
 #include "minishell.h"
 
-static void	exec_arg_2(char **tab, t_list **lst_env, char *cpath)
+static void	exec_arg_2(char **tab, t_list **lst_env, char *cpath, int *fd_save)
 {
 	char	**env;
 	int		ret;
@@ -30,7 +30,11 @@ static void	exec_arg_2(char **tab, t_list **lst_env, char *cpath)
 		perror(tab[0]);
 	clean_env(lst_env);
 	clean_tab(&env);
+	clean_tab(&tab);
 	free(cpath);
+	clean_colector();
+	close(fd_save[0]);
+	close(fd_save[1]);
 	exit(ret);
 }
 
@@ -47,7 +51,7 @@ static char	*sub_solve_path(char **tab, t_list **lst_env)
 	return (cpath);
 }
 
-static int	exec_arg_1(char **tab, t_list **lst_env)
+static int	exec_arg_1(char **tab, t_list **lst_env, int *fd_save)
 {
 	char	*cpath;
 	int		ret;
@@ -62,7 +66,7 @@ static int	exec_arg_1(char **tab, t_list **lst_env)
 	{
 		pid = fork();
 		if (pid == 0)
-			exec_arg_2(tab, lst_env, cpath);
+			exec_arg_2(tab, lst_env, cpath, fd_save);
 		else
 			waitpid(pid, &status, 0);
 	}
@@ -90,7 +94,7 @@ int	exec_arg(t_ast *ast, t_list **lst_env)
 	if (tab && tab[0] && is_builtin(tab[0]))
 		ret = exec_builtin(tab, lst_env);
 	else if (tab && tab[0])
-		ret = exec_arg_1(tab, lst_env);
+		ret = exec_arg_1(tab, lst_env, fd_save);
 	unlink("/tmp/.heredoc");
 	dup2(fd_save[0], 0);
 	dup2(fd_save[1], 1);
