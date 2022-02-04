@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/04 03:24:19 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 21:54:38 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,7 @@ void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
 		{
 			stuff->i++;
 			free(word);
+			stuff->i += j - 1;
 			return ;
 		}
 	}
@@ -223,6 +224,7 @@ char	*ft_expend_quote(char *word, int *i, char **envp)
 	{
 		(*i)++;
 		free(word);
+		(*i) += j - 1;
 		return (NULL);
 	}
 	(*i) += j; 
@@ -232,30 +234,68 @@ char	*ft_expend_quote(char *word, int *i, char **envp)
 void	expend_in_quote(char **envp, t_cmd **cmd)
 {
 	t_cmd	*tmp;
+	t_cmd	*tmp_del;
+	t_cmd	*new;
 	char	*first;
 	char	*sec;
-	char	*third;
-	int i;
+	int		i;
+	int		j;
+	char	*word;
+	int		space;
 
+	space = 1;
 	i = 0;
+	j = 0;
 	tmp = *cmd;
+	tmp_del = *cmd;
 	while (tmp->next)
 		tmp = tmp->next;
+	while (tmp_del->next->next)
+		tmp_del = tmp_del->next;
 	while (tmp->word[i])
 	{
 		if (tmp->word[i] == '$' && (tmp->word[i + 1] != ' ' || tmp->word[i + 1] != '|'))
-		{
- 			first = ft_strndup(tmp->word, i);
-			sec = ft_expend_quote(tmp->word, &i, envp);
-			third = ft_strjoin(first, sec);
-			free(first);
-			free(sec);
-			free(tmp->word);
-			tmp->word = third;
-			return ;
-		}
+			break;
 		i++;
 	}
+	if (i == (int)ft_strlen(tmp->word))
+		return ;
+	word = tmp->word;
+	while (tmp->word[i])
+	{
+		printf("word[i] : %c, %d\n", word[i], i);
+		printf("word[j] : %c, %d\n", word[j], j);
+		if (word[i] == '$' && (word[i + 1] != ' ' || word[i + 1] != '|'))
+		{
+ 			first = ft_strndup(word + j, i - j);
+			printf("first : %s\n", first);
+			if (j != 0)
+				space = 0;
+			if (first[0] != 0)
+			{
+				new = lzac_ft_lstnew(first, ARGUMENT, space);
+				lzac_ft_lstadd_back(cmd, new);
+			}
+			else
+				free(first);
+			sec = ft_expend_quote(word, &i, envp);
+			printf("sec : %s\n", sec);
+			if (sec != NULL)
+			{
+				new = lzac_ft_lstnew(sec, ARGUMENT, space);
+				lzac_ft_lstadd_back(cmd, new);
+			}
+			if (i < (int)ft_strlen(tmp->word) - 1)
+				j = i;
+		}
+		else
+			i++;
+	}
+	tmp = tmp_del->next;
+	tmp_del->next = tmp_del->next->next;
+	free(tmp->word);
+	free(tmp);
+	return ;
 }
 
 t_cmd	*get_cmd(char *str, char **envp)
@@ -287,7 +327,7 @@ t_cmd	*get_cmd(char *str, char **envp)
 		else if (str[stuff.i] == '>')
 			ft_rdright(&stuff, &cmd);
 		else if (ft_isalnum(str[stuff.i]) || str[stuff.i] == '/'
-			|| str[stuff.i] == '-' || str[stuff.i] == '.')
+			|| str[stuff.i] == '-' || str[stuff.i] == '.' || str[stuff.i] == '%')
 			ft_alnum(&stuff, &cmd);
 		else if (str[stuff.i] == '|')
 			lzac_ft_pipe(&stuff, &cmd);
