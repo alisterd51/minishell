@@ -6,12 +6,16 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 22:22:58 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/03 22:19:00 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 07:23:03 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <signal.h>
+#include <unistd.h>
 #include "minishell.h"
 
 static t_arg	*init_arg(t_cmd *lst_token)
@@ -39,6 +43,59 @@ static t_arg	*init_arg(t_cmd *lst_token)
 	}
 	return (NULL);
 }
+//il faut une fonction qui vas generer des noms de heredoc et qui vas les clean a la fin
+static int	fd_heredoc(char *file, int expend)
+{
+	int		fd;
+
+	(void)expend;
+	fd = open("/tmp/.heredoc", O_CREAT | O_WRONLY | O_TRUNC, 0666);
+	if (fd == -1)
+	{
+		perror("/tmp/.heredoc");
+		return (-1);
+	}
+	signal(SIGINT, handler_int_heredoc);
+	ft_heredoc(fd, file);
+	signal(SIGINT, handler_int);
+	close(fd);
+	fd = open("/tmp/.heredoc", O_RDONLY);
+	if (fd == -1)
+	{
+		perror("/tmp/.heredoc");
+		return (-1);
+	}
+	return (fd);
+}
+
+char	*ft_itoa(int n)
+{
+	char	*nb;
+	long	nbtmp;
+	int		size;
+	int		sign;
+
+	sign = n < 0 ? -1 : 1;
+	size = (sign > 0 ? 0 : 1) + (n == 0 ? 1 : 0);
+	nbtmp = (long)n * sign;
+	while (nbtmp > 0)
+	{
+		nbtmp /= 10;
+		size++;
+	}
+	if (!(nb = malloc(sizeof(char) * (size + 1))))
+		return (NULL);
+	nbtmp = (long)n * sign;
+	nb[size] = '\0';
+	while (--size >= 0)
+	{
+		nb[size] = nbtmp % 10 + '0';
+		nbtmp /= 10;
+	}
+	if (sign < 0)
+		nb[0] = '-';
+	return (nb);
+}
 
 static t_redir	*init_redirect(t_cmd *lst_token)
 {
@@ -55,10 +112,26 @@ static t_redir	*init_redirect(t_cmd *lst_token)
 				return (NULL);
 			}
 			*redir = (t_redir){0};
-			redir->type = lst_token->type;
-			lst_token = lst_token->next;
-			redir->file = ft_strdup(lst_token->word);
-			redir->next = init_redirect(lst_token->next);
+			if (lst_token->type != D_LEFT && lst_token->type != D_LEFT_EXP)
+			{
+				redir->type = lst_token->type;
+				lst_token = lst_token->next;
+				redir->file = ft_strdup(lst_token->word);
+				redir->next = init_redirect(lst_token->next);
+			}
+			else
+			{
+				int	type_heredoc;
+
+				if (lst_token->type == D_LEFT)
+					type_heredoc = 0;
+				else
+					type_heredoc = 1;
+				redir->type = lst_token->type;
+				lst_token = lst_token->next;
+				redir->file = ft_itoa(fd_heredoc(lst_token->word, type_heredoc));
+				redir->next = init_redirect(lst_token->next);
+			}
 			return (redir);
 		}
 		lst_token = lst_token->next;

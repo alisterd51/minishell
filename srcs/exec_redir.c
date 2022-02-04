@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/04 05:55:20 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 07:15:00 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <unistd.h>
 #include "minishell.h"
 
-static int	redir_s_left(char *file)
+static int	redir_s_left(char *file, int *fd_save)
 {
 	int	new_fd;
 
@@ -30,43 +30,23 @@ static int	redir_s_left(char *file)
 		perror(file);
 		return (-1);
 	}
-	dup2(new_fd, STDIN_FILENO);
+	dup2(new_fd, fd_save[0]);
 	close(new_fd);
 	return (0);
 }
 
-/*
-** manque l'expend
-*/
-
-static int	redir_d_left(char *file, int expend)
+static int	redir_d_left(char *file, int *fd_save)
 {
-	int		fd;
+	int fd;
 
-	(void)expend;
-	fd = open("/tmp/.heredoc", O_CREAT | O_WRONLY, 0666);
-	if (fd == -1)
-	{
-		perror("/tmp/.heredoc");
-		return (-1);
-	}
-	signal(SIGINT, handler_int_heredoc);
-	ft_heredoc(fd, file);
-	signal(SIGINT, handler_int);
-	close(fd);
-	fd = open("/tmp/.heredoc", O_RDONLY);
-	if (fd == -1)
-	{
-		perror("/tmp/.heredoc");
-		return (-1);
-	}
-	dup2(fd, STDIN_FILENO);
+	fd = ft_atoi(file);
+	dup2(fd, fd_save[0]);
 	close(fd);
 	unlink("/tmp/.heredoc");
 	return (0);
 }
 
-static int	redir_s_right(char *file)
+static int	redir_s_right(char *file, int *fd_save)
 {
 	int	new_fd;
 
@@ -76,12 +56,12 @@ static int	redir_s_right(char *file)
 		perror(file);
 		return (-1);
 	}
-	dup2(new_fd, STDOUT_FILENO);
+	dup2(new_fd, fd_save[1]);
 	close(new_fd);
 	return (0);
 }
 
-static int	redir_d_right(char *file)
+static int	redir_d_right(char *file, int *fd_save)
 {
 	int		new_fd;
 
@@ -91,12 +71,12 @@ static int	redir_d_right(char *file)
 		perror(file);
 		return (-1);
 	}
-	dup2(new_fd, STDOUT_FILENO);
+	dup2(new_fd, fd_save[1]);
 	close(new_fd);
 	return (0);
 }
 
-int	exec_redir(t_redir *redir)
+int	exec_redir(t_redir *redir, int *fd_save)
 {
 	int	ret;
 
@@ -104,15 +84,15 @@ int	exec_redir(t_redir *redir)
 	while (redir)
 	{
 		if (redir->type == S_LEFT)
-			ret = redir_s_left(redir->file);
+			ret = redir_s_left(redir->file, fd_save);
 		else if (redir->type == D_LEFT)
-			ret = redir_d_left(redir->file, 0);
+			ret = redir_d_left(redir->file, fd_save);
 		else if (redir->type == D_LEFT_EXP)
-			ret = redir_d_left(redir->file, 1);
+			ret = redir_d_left(redir->file, fd_save);
 		else if (redir->type == S_RIGHT)
-			ret = redir_s_right(redir->file);
+			ret = redir_s_right(redir->file, fd_save);
 		else if (redir->type == D_RIGHT)
-			ret = redir_d_right(redir->file);
+			ret = redir_d_right(redir->file, fd_save);
 		if (ret != 0)
 			return (-1);
 		redir = redir->next;

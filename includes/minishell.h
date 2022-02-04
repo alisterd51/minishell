@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/03 22:19:32 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 06:33:20 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int		exec_builtin(char **tab, t_list **lst_env);
 /*
 ** exec_redir.c
 */
-int		exec_redir(t_redir *redir);
+int		exec_redir(t_redir *redir, int *fd_save);
 
 /*
 ** ft_heredoc.c
