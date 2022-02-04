@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/04 01:02:41 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/04 02:50:03 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -306,13 +306,14 @@ t_cmd	*get_cmd(char *str, char **envp)
 				stuff.i++;
 		}
 	}
-	get_type(cmd);
+	if (get_type(cmd) == 2)
+		return (NULL);
 	if (get_error(cmd) == 2)
 		return (NULL);
 	return (cmd);
 }
 
-void	get_type(t_cmd *cmd)
+int	get_type(t_cmd *cmd)
 {
 	t_cmd	*tmp;
 	t_cmd	*tmp2;
@@ -327,9 +328,15 @@ void	get_type(t_cmd *cmd)
 			if (tmp->next->type == S_LEFT || tmp->next->type == S_RIGHT
 				|| tmp->next->type == D_RIGHT
 				|| tmp->next->type == D_LEFT)
-				print_error("syntax error near unexpected token redirection\n", cmd);
+				{
+					print_error("syntax error near unexpected token redirection\n", cmd);
+					return (2);
+				}
 			else if (tmp->next->type == PIPELINE)
+			{
 				print_error("syntax error near unexpected token `|'\n", cmd);
+				return (2);
+			}
 			tmp->next->type = T_FILE;
 		}
 		if (tmp && tmp->next && tmp->type == D_LEFT)
@@ -337,9 +344,15 @@ void	get_type(t_cmd *cmd)
 			if (tmp->next->type == S_LEFT || tmp->next->type == S_RIGHT
 				|| tmp->next->type == D_RIGHT
 				|| tmp->next->type == D_LEFT)
-				print_error("syntax error near unexpected token redirection\n", cmd);
+				{
+					print_error("syntax error near unexpected token redirection\n", cmd);
+					return (2);
+				}
 			else if (tmp->next->type == PIPELINE)
+			{
 				print_error("syntax error near unexpected token `|'\n", cmd);
+				return (2);
+			}
 			tmp->next->type = DELIMITOR;
 		}
 		if (tmp->next && tmp->next->space == 0 && tmp->type == ARGUMENT
@@ -356,6 +369,7 @@ void	get_type(t_cmd *cmd)
 		else
 			tmp = tmp->next;
 	}
+	return (0);
 }
 
 int	get_error(t_cmd *cmd)

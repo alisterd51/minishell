@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 18:51:26 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/03 05:52:37 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 02:50:13 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_cmd	*parsing_shell(char *str, char **envp);
 void	lzac_ft_lstadd_back(t_cmd **cmd, t_cmd *new);
 t_cmd	*lzac_ft_lstnew(char *word, int type, int space);
 void	free_lst(t_cmd **cmd);
-void	get_type(t_cmd *cmd);
+int		get_type(t_cmd *cmd);
 int		ft_strarglen(char *str);
 int		lzac_ft_lstsize(t_cmd *lst);
 void	print_error(char *msg, t_cmd *cmd);
