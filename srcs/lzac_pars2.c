@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/04 02:50:03 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/04 03:14:58 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,6 @@ char	*search_env(char **envp, char *word)
 		i++;
 	if (envp[i] && (ft_strncmp(envp[i], key, ft_strlen(key)) == 0))
 	{
-		printf("%s\n", envp[i]);
 		str = envp[i];
 		str = str + ft_strlen(key);
 		free(key);
@@ -190,7 +189,7 @@ void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
 
 	j = 0;
 	stuff->i++;
-	stuff->type = EXPEND;
+	stuff->type = ARGUMENT;
 	j = ft_expstrclen(stuff->str + stuff->i, ' ');
 	if (j == 0)
 	{
@@ -248,15 +247,11 @@ void	expend_in_quote(char **envp, t_cmd **cmd)
 	{
 		if (tmp->word[i] == '$' && (tmp->word[i + 1] != ' ' || tmp->word[i + 1] != '|'))
 		{
-			first = ft_strndup(tmp->word, i);
-			printf("first : %s\n", first);
+ 			first = ft_strndup(tmp->word, i);
 			sec = ft_expend_quote(tmp->word, &i, envp);
-			printf("sec : %s\n", sec);
 			third = ft_strjoin(first, sec);
 			free(first);
 			free(sec);
-			printf("third : %s\n", third);
-			printf("word : %s\n", tmp->word);
 			free(tmp->word);
 			tmp->word = third;
 			return ;
