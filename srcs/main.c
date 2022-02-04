@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:54:07 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/04 22:23:59 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 23:31:05 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@
 
 #include "lzac_pars1.h"
 
-static void	intern_exec(char *line, t_list *lst_env)
+static void	intern_exec(char *line, t_list **lst_env)
 {
 	t_ast	*ast;
 	t_cmd	*lst_token;
 	char	**env;
 	int		status;
-	env = list_to_tab(lst_env);
+	env = list_to_tab(*lst_env);
 	if (env == NULL)
 	{
 		perror("intern_exec");
@@ -42,7 +42,7 @@ static void	intern_exec(char *line, t_list *lst_env)
 	if (ast != NULL)
 	{
 		status = 0;
-		exec_ast(ast, &lst_env, &status);
+		exec_ast(ast, lst_env, &status);
 		ft_set_status(status);
 	}
 	clean_colector();
@@ -76,7 +76,7 @@ int	main(int ac, char **av, char **env)
 	{
 		if (*line != '\0')
 			add_history(line);
-		intern_exec(line, lst_env);
+		intern_exec(line, &lst_env);
 		free(line);
 		line = NULL;
 		if (ft_get_end() == 0)
