@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 22:22:58 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/04 10:36:00 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/04 18:21:54 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,35 +18,6 @@
 #include <unistd.h>
 #include <limits.h>
 #include "minishell.h"
-
-char	*ft_itoa(int n)
-{
-	char	*nb;
-	long	nbtmp;
-	int		size;
-	int		sign;
-
-	sign = n < 0 ? -1 : 1;
-	size = (sign > 0 ? 0 : 1) + (n == 0 ? 1 : 0);
-	nbtmp = (long)n * sign;
-	while (nbtmp > 0)
-	{
-		nbtmp /= 10;
-		size++;
-	}
-	if (!(nb = malloc(sizeof(char) * (size + 1))))
-		return (NULL);
-	nbtmp = (long)n * sign;
-	nb[size] = '\0';
-	while (--size >= 0)
-	{
-		nb[size] = nbtmp % 10 + '0';
-		nbtmp /= 10;
-	}
-	if (sign < 0)
-		nb[0] = '-';
-	return (nb);
-}
 
 static t_arg	*init_arg(t_cmd *lst_token)
 {
@@ -72,65 +43,6 @@ static t_arg	*init_arg(t_cmd *lst_token)
 		lst_token = lst_token->next;
 	}
 	return (NULL);
-}
-
-char	*generate_heredoc(void)
-{
-	char	new_heredoc[1024];
-	char	*add;
-	int		add_id;
-	int		fd;
-
-	add_id = 0;
-	ft_strlcpy(new_heredoc, "/tmp/heredoc", 1024);
-	fd = open(new_heredoc, O_WRONLY | O_EXCL | O_CREAT, 0644);
-	while (fd == -1 && add_id < INT_MAX)
-	{
-		ft_strlcpy(new_heredoc, "/tmp/heredoc", 1024);
-		add = ft_itoa(add_id);
-		ft_strlcat(new_heredoc, add, 1024);
-		free(add);
-		fd = open(new_heredoc, O_WRONLY | O_EXCL | O_CREAT, 0644);
-		add_id++;
-	}
-	if (fd != -1)
-	{
-		close(fd);
-		return (ft_strdup(new_heredoc));
-	}
-	return (NULL);
-}
-
-void	free_heredoc(void *cpath)
-{
-	unlink((char *)cpath);
-	free(cpath);
-}
-
-char	*intern_herdoc(int mode)
-{
-	static t_list	*list_heredoc = NULL;
-	char			*new_name;
-
-	if (mode == 0)
-	{
-		new_name = generate_heredoc();
-		ft_lstadd_front(&list_heredoc, ft_lstnew(new_name));
-		return (new_name);
-	}
-	else if (mode == 1)
-		ft_lstclear(&list_heredoc, free_heredoc);
-	return (NULL);
-}
-
-void	clean_heredoc(void)
-{
-	intern_herdoc(1);
-}
-
-char	*new_heredoc(void)
-{
-	return (intern_herdoc(0));
 }
 
 static int	fd_heredoc(char *file, int expend)

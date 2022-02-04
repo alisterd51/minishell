@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 20:14:19 by anclarma          #+#    #+#              #
-#    Updated: 2022/02/04 01:01:31 by anclarma         ###   ########.fr        #
+#    Updated: 2022/02/04 18:11:55 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ C_FILES		= ft_lstadd_back.c			\
 			  ft_strnstr.c				\
 			  ft_bzero.c				\
 			  ft_atoi.c					\
+			  ft_itoa.c					\
 			  ft_calloc.c				\
 			  ft_realloc.c				\
 			  ft_realpath.c				\

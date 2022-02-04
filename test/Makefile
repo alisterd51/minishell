@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:41:40 by anclarma          #+#    #+#              #
-#    Updated: 2022/02/03 22:23:32 by anclarma         ###   ########.fr        #
+#    Updated: 2022/02/04 18:27:26 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ C_FILES		= main.c					\
 			  utils_tab.c				\
 			  utils_tab2.c				\
 			  utils_list.c				\
+			  utils_heredoc.c			\
 			  exec_ast.c				\
 			  exec_builtin.c			\
 			  exec_redir.c				\
