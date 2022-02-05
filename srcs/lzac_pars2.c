@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/05 03:33:33 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/05 03:46:05 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,7 @@ void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
 	else
 	{
 		key = ft_strndup(stuff->str + stuff->i, j);
-		if (key[0] == '?')
+		if (key && key[0] == '?')
 			word = ft_itoa(ft_get_status());
 		else 
 			word = search_env(envp, key);
@@ -222,15 +222,16 @@ void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
 char	*ft_expend_quote(char *word, int *i, char **envp)
 {
 	int		j;
+	char	*key;
 
 	j = 0;
 	(*i)++;
 	j = ft_expstrclen(word + *i, ' ');
-	word = ft_strndup(word + *i, j);
-	if (word[0] == '?')
+	key = ft_strndup(word + *i, j);
+	if (key && key[0] == '?')
 		word = ft_itoa(ft_get_status());
 	else
-		word = search_env(envp, word);
+		word = search_env(envp, key);
 	if (word == NULL)
 	{
 		(*i)++;
