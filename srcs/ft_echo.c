@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 18:08:03 by anclarma          #+#    #+#             */
-/*   Updated: 2021/12/18 23:10:16 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/05 06:51:08 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	valid_option(const char *option, char *arg)
 	return (1);
 }
 
-int	ft_echo(int ac, char **av)
+int	ft_echo(int ac, char **av, int *fd)
 {
 	int	newline;
 
@@ -43,13 +43,13 @@ int	ft_echo(int ac, char **av)
 	}
 	while (ac > 0)
 	{
-		ft_putstr_fd(*av, 1);
+		ft_putstr_fd(*av, fd[1]);
 		if (ac > 1)
-			ft_putchar_fd(' ', 1);
+			ft_putchar_fd(' ', fd[1]);
 		ac--;
 		av++;
 	}
 	if (newline)
-		ft_putchar_fd('\n', 1);
+		ft_putchar_fd('\n', fd[1]);
 	return (0);
 }

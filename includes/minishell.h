@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/04 21:44:38 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/05 06:47:04 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	exec_ast(t_ast *ast, t_list **lst_env, int *status);
 /*
 ** exec_builtin.c
 */
-int		exec_builtin(char **tab, t_list **lst_env);
+int		exec_builtin(char **tab, t_list **lst_env, int *fd);
 
 /*
 ** exec_redir.c

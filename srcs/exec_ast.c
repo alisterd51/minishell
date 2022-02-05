@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/04 22:24:56 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/05 06:41:53 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	exec_arg(t_ast *ast, t_list **lst_env)
 		perror("minishell: exec_arg");
 	ret = 0;
 	if (tab && tab[0] && is_builtin(tab[0]))
-		ret = exec_builtin(tab, lst_env);
+		ret = exec_builtin(tab, lst_env, fd_save);
 	else if (tab && tab[0])
 		ret = exec_arg_1(tab, lst_env, fd_save);
 	if (fd_save[0] != 0)

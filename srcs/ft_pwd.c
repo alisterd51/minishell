@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 18:08:03 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/03 16:53:29 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/05 06:48:42 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*alloc_pwd(void)
 	return (buf);
 }
 
-int	ft_pwd(int ac, char **av)
+int	ft_pwd(int ac, char **av, int *fd)
 {
 	char	*buf;
 
@@ -75,7 +75,7 @@ int	ft_pwd(int ac, char **av)
 		perror("minishell: pwd");
 		return (1);
 	}
-	ft_putendl_fd(buf, 1);
+	ft_putendl_fd(buf, fd[1]);
 	free(buf);
 	return (0);
 }

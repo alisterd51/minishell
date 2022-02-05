@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 14:26:01 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/05 00:40:03 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/05 06:46:17 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,13 @@ static void	set_key_value(char *str, t_list **env)
 	free(value);
 }
 
-int	ft_export(int ac, char **av, t_list **env)
+int	ft_export(int ac, char **av, t_list **env, int *fd)
 {
 	ac--;
 	av++;
 	if (ac == 0)
 	{
-		ft_env(*env);
+		ft_env(*env, fd);
 		return (0);
 	}
 	while (*av)

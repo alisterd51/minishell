@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/04 21:42:10 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/05 06:40:17 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ static int	redir_s_left(char *file, int *fd_save)
 		perror(file);
 		return (-1);
 	}
-	dup2(new_fd, fd_save[0]);
-	close(new_fd);
+	fd_save[0] = new_fd;
 	return (0);
 }
 
@@ -43,8 +42,7 @@ static int	redir_d_left(char *file, int *fd_save)
 		return (-1);
 	fd = ft_atoi(file);
 	to_fd_colector(fd);
-	dup2(fd, fd_save[0]);
-	close(fd);
+	fd_save[0] = fd;
 	return (0);
 }
 
@@ -58,8 +56,7 @@ static int	redir_s_right(char *file, int *fd_save)
 		perror(file);
 		return (-1);
 	}
-	dup2(new_fd, fd_save[1]);
-	close(new_fd);
+	fd_save[1] = new_fd;
 	return (0);
 }
 
@@ -73,8 +70,7 @@ static int	redir_d_right(char *file, int *fd_save)
 		perror(file);
 		return (-1);
 	}
-	dup2(new_fd, fd_save[1]);
-	close(new_fd);
+	fd_save[1] = new_fd;
 	return (0);
 }
 

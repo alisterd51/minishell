@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 18:08:03 by anclarma          #+#    #+#             */
-/*   Updated: 2021/12/16 11:23:07 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/05 06:52:34 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ static int	ft_strisnum(char *str)
 	return (1);
 }
 
-int	ft_exit(int ac, char **av, int status)
+int	ft_exit(int ac, char **av, int status, int *fd)
 {
-	ft_putendl_fd("exit", 1);
+	ft_putendl_fd("exit", fd[1]);
 	ft_set_end(1);
 	if (ac == 1)
 		return (status);
