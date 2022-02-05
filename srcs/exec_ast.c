@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/05 09:27:08 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/06 00:10:52 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ static int	exec_arg_1(char **tab, t_list **lst_env, int *fd_save)
 	status = 0;
 	if (access(cpath, X_OK) == 0)
 	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
 		pid = fork();
 		if (pid == 0)
 		{
@@ -73,6 +75,8 @@ static int	exec_arg_1(char **tab, t_list **lst_env, int *fd_save)
 		}
 		else
 			waitpid(pid, &status, 0);
+		signal(SIGINT, handler_int);
+		signal(SIGQUIT, SIG_IGN);
 	}
 	else
 	{
@@ -84,8 +88,11 @@ static int	exec_arg_1(char **tab, t_list **lst_env, int *fd_save)
 	clean_colector();
 	if (WIFEXITED(status))
 		status = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		status = WTERMSIG(status);
+	else if (status == 2)
+	{
+		ft_putchar_fd('\n', 1);
+		status = 130;
+	}
 	return (status);
 }
 
@@ -98,11 +105,11 @@ int	exec_arg(t_ast *ast, t_list **lst_env)
 	fd_save[0] = 0;
 	fd_save[1] = 1;
 	if (exec_redir(ast->paw2, fd_save) != 0)
-		return (1);
+		return (-1);
+	ret = ft_get_status();
 	tab = arg_to_tab(ast->paw1);
 	if (tab == NULL)
 		perror("minishell: exec_arg");
-	ret = 0;
 	if (tab && tab[0] && is_builtin(tab[0]))
 		ret = exec_builtin(tab, lst_env, fd_save);
 	else if (tab && tab[0])
@@ -130,8 +137,6 @@ void	exec_ast(t_ast *ast, t_list **lst_env, int *status)
 		pid = fork();
 		if (pid == 0)
 		{
-			signal(SIGINT, SIG_DFL);
-			signal(SIGQUIT, SIG_DFL);
 			if (ast->type == PIPELINE)
 				ft_pipe(ast, lst_env, status);
 			else if (ast->type == COMMAND)
@@ -146,6 +151,4 @@ void	exec_ast(t_ast *ast, t_list **lst_env, int *status)
 	}
 	if (WIFEXITED(*status))
 		*status = WEXITSTATUS(*status);
-	else if (WIFSIGNALED(*status))
-		*status = WTERMSIG(*status);
 }
