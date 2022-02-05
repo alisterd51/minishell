@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 22:22:58 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/04 21:55:01 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/05 04:08:51 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_strarglen(char *str)
 
 	i = 0;
 	while (str[i] && str[i] != '<' && str[i] != '>' && str[i] != '|'
-		&& str[i] != ' ' && str[i] != '\'' && str[i] != '\"')
+		&& str[i] != ' ' && str[i] != '\'' && str[i] != '\"' && str[i] != '$')
 		i++;
 	return (i);
 }

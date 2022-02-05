@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/05 04:00:55 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/05 04:52:16 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,14 +252,19 @@ void	expend_in_quote(char **envp, t_cmd **cmd, t_stuff *stuff)
 	char	*sec;
 	int		i;
 	int		j;
+	int		k;
 	char	*word;
 
 	i = 0;
 	j = 0;
+	k = 0;
 	tmp = *cmd;
 	tmp_del = *cmd;
 	while (tmp && tmp->next)
+	{
 		tmp = tmp->next;
+		k++;
+	}
 	if (tmp_del && tmp_del->next)
 	{
 		while (tmp_del->next->next)
@@ -274,11 +279,13 @@ void	expend_in_quote(char **envp, t_cmd **cmd, t_stuff *stuff)
 	if (tmp && i == (int)ft_strlen(tmp->word))
 		return ;
 	word = tmp->word;
+	// printf("inside\n");
 	while (tmp->word[i])
 	{
 		if (word[i] == '$' && (word[i + 1] != ' ' || word[i + 1] != '|'))
 		{
  			first = ft_strndup(word + j, i - j);
+			//  printf("first : %s\n", first);
 			if (first[0] != 0)
 			{
 				new = lzac_ft_lstnew(first, ARGUMENT, stuff->space);
@@ -290,6 +297,7 @@ void	expend_in_quote(char **envp, t_cmd **cmd, t_stuff *stuff)
 			sec = ft_expend_quote(word, &i, envp);
 			if (sec != NULL)
 			{
+			// printf("sec : %s\n", sec);
 				new = lzac_ft_lstnew(sec, ARGUMENT, stuff->space);
 				lzac_ft_lstadd_back(cmd, new);
 				stuff->space = 0;
@@ -300,12 +308,21 @@ void	expend_in_quote(char **envp, t_cmd **cmd, t_stuff *stuff)
 		else
 			i++;
 	}
+	// printf("k : %d", k);
+	if (k == 0)
+	{
+		(*cmd) = (*cmd)->next;
+		free(tmp);
+	}
+	else
+	{
 	tmp = tmp_del->next;
 	if (tmp_del->next != NULL)
 		tmp_del->next = tmp_del->next->next;
 	if (tmp != NULL)
 		free(tmp->word);
 	free(tmp);
+	}
 	return ;
 }
 
@@ -329,10 +346,10 @@ t_cmd	*get_cmd(char *str, char **envp)
 		}
 		else if (str[stuff.i] == '\"')
 		{
+			// printf("ft_quote\n");
 			if (ft_quote(&stuff, '\"', &cmd) == 1)
 				return (NULL);
-			if (cmd)
-				expend_in_quote(envp, &cmd, &stuff);
+			expend_in_quote(envp, &cmd, &stuff);
 		}
 		else if (str[stuff.i] == '<')
 			ft_rdleft(&stuff, &cmd);
