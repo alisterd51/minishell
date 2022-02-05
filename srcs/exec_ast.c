@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 12:13:41 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/05 06:41:53 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/05 09:27:08 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,27 +55,38 @@ static char	*sub_solve_path(char **tab, t_list **lst_env)
 static int	exec_arg_1(char **tab, t_list **lst_env, int *fd_save)
 {
 	char	*cpath;
-	int		ret;
 	int		status;
 	pid_t	pid;
 
 	cpath = sub_solve_path(tab, lst_env);
 	if (cpath == NULL)
 		return (-1);
-	ret = 0;
+	status = 0;
 	if (access(cpath, X_OK) == 0)
 	{
 		pid = fork();
 		if (pid == 0)
+		{
+			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
 			exec_arg_2(tab, lst_env, cpath, fd_save);
+		}
 		else
 			waitpid(pid, &status, 0);
 	}
 	else
-		perror(tab[0]);
+	{
+		ft_putstr_fd(tab[0], 2);
+		ft_putendl_fd(": command not found", 2);
+		status = 127;
+	}
 	free(cpath);
 	clean_colector();
-	return (ret);
+	if (WIFEXITED(status))
+		status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		status = WTERMSIG(status);
+	return (status);
 }
 
 int	exec_arg(t_ast *ast, t_list **lst_env)
@@ -119,6 +130,8 @@ void	exec_ast(t_ast *ast, t_list **lst_env, int *status)
 		pid = fork();
 		if (pid == 0)
 		{
+			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
 			if (ast->type == PIPELINE)
 				ft_pipe(ast, lst_env, status);
 			else if (ast->type == COMMAND)
@@ -131,4 +144,8 @@ void	exec_ast(t_ast *ast, t_list **lst_env, int *status)
 		else
 			waitpid(pid, status, 0);
 	}
+	if (WIFEXITED(*status))
+		*status = WEXITSTATUS(*status);
+	else if (WIFSIGNALED(*status))
+		*status = WTERMSIG(*status);
 }

@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:54:07 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/05 06:34:12 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/05 09:18:30 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static void	intern_exec(char *line, t_list **lst_env)
 
 static int	intern_init(char **env, t_list **lst_env)
 {
-	signal(SIGINT, handler_int);
 	signal(SIGQUIT, SIG_IGN);
 	*lst_env = init_env(env);
 	if (*lst_env == NULL)
@@ -73,16 +72,21 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	if (intern_init(env, &lst_env))
 		return (1);
+	signal(SIGINT, handler_int);
 	line = readline(DEFAULT_PS1);
 	while (line)
 	{
 		if (*line != '\0')
 			add_history(line);
+		signal(SIGINT, SIG_IGN);
 		intern_exec(line, &lst_env);
 		free(line);
 		line = NULL;
 		if (ft_get_end() == 0)
+		{
+			signal(SIGINT, handler_int);
 			line = readline(DEFAULT_PS1);
+		}
 	}
 	if (ft_get_end() == 0)
 		ft_putendl_fd("exit", 1);
