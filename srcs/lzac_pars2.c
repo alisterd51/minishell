@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/05 04:52:16 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/05 06:01:40 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,12 +302,20 @@ void	expend_in_quote(char **envp, t_cmd **cmd, t_stuff *stuff)
 				lzac_ft_lstadd_back(cmd, new);
 				stuff->space = 0;
 			}
-			if (i < (int)ft_strlen(tmp->word) - 1)
+			// if (i < (int)ft_strlen(tmp->word) - 1)
 				j = i;
 		}
 		else
 			i++;
 	}
+	if (j < i)
+	{
+		first = ft_strndup(word + j, i - j);
+		new = lzac_ft_lstnew(first, ARGUMENT, stuff->space);
+		lzac_ft_lstadd_back(cmd, new);
+	}
+	printf("i : %d, word[i] : %c\n", i, word[i]);
+	printf("j : %d, word[j] : %c\n", j, word[j]);
 	// printf("k : %d", k);
 	if (k == 0)
 	{
