@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/05 03:46:05 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/05 04:00:55 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
 {
 	t_cmd	*new;
 	char	*word;
-	char	*key;
+	// char	*key;
 	int		j;
 
 	j = 0;
@@ -201,11 +201,11 @@ void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
 	}
 	else
 	{
-		key = ft_strndup(stuff->str + stuff->i, j);
-		if (key && key[0] == '?')
+		word = ft_strndup(stuff->str + stuff->i, j);
+		if (word && word[0] == '?')
 			word = ft_itoa(ft_get_status());
 		else 
-			word = search_env(envp, key);
+			word = search_env(envp, word);
 		if (word == NULL)
 		{
 			stuff->i++;
@@ -222,16 +222,16 @@ void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
 char	*ft_expend_quote(char *word, int *i, char **envp)
 {
 	int		j;
-	char	*key;
+	// char	*word;
 
 	j = 0;
 	(*i)++;
 	j = ft_expstrclen(word + *i, ' ');
-	key = ft_strndup(word + *i, j);
-	if (key && key[0] == '?')
+	word = ft_strndup(word + *i, j);
+	if (word && word[0] == '?')
 		word = ft_itoa(ft_get_status());
 	else
-		word = search_env(envp, key);
+		word = search_env(envp, word);
 	if (word == NULL)
 	{
 		(*i)++;
