@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/05 02:20:55 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/05 02:26:41 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,6 @@ int	ft_quote(t_stuff *stuff, char c, t_cmd **cmd)
 	}
 	word = ft_strndup(stuff->str + stuff->i, j);
 	new = lzac_ft_lstnew(word, ARGUMENT, stuff->space);
-	if (new == NULL)
-		return (NULL);
 	lzac_ft_lstadd_back(cmd, new);
 	stuff->i += j + 1;
 	return (0);
@@ -108,8 +106,6 @@ void	ft_alnum(t_stuff *stuff, t_cmd **cmd)
 	j = ft_strarglen(stuff->str + stuff->i);
 	word = ft_strndup(stuff->str + stuff->i, j);
 	new = lzac_ft_lstnew(word, stuff->type, stuff->space);
-	if (new == NULL)
-		return (NULL);
 	lzac_ft_lstadd_back(cmd, new);
 	stuff->i += j;
 }
@@ -128,8 +124,6 @@ void	ft_rdleft(t_stuff *stuff, t_cmd **cmd)
 	}
 	else
 		new = lzac_ft_lstnew("<", stuff->type, stuff->space);
-	if (new == NULL)
-		return (NULL);
 	lzac_ft_lstadd_back(cmd, new);
 }
 
@@ -147,8 +141,6 @@ void	ft_rdright(t_stuff *stuff, t_cmd **cmd)
 	}
 	else
 		new = lzac_ft_lstnew(">", stuff->type, stuff->space);
-	if (new == NULL)
-		return (NULL);
 	lzac_ft_lstadd_back(cmd, new);
 }
 
@@ -158,8 +150,6 @@ void	lzac_ft_pipe(t_stuff *stuff, t_cmd **cmd)
 
 	stuff->type = PIPELINE;
 	new = lzac_ft_lstnew("|", stuff->type, stuff->space);
-	if (new == NULL)
-		return (NULL);
 	lzac_ft_lstadd_back(cmd, new);
 	stuff->i++;
 }
@@ -220,8 +210,6 @@ void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
 		}
 	}
 	new = lzac_ft_lstnew(word, stuff->type, stuff->space);
-	if (new == NULL)
-		return (NULL);
 	lzac_ft_lstadd_back(cmd, new);
 		stuff->i += j;
 }
@@ -288,8 +276,6 @@ void	expend_in_quote(char **envp, t_cmd **cmd, t_stuff *stuff)
 			if (first[0] != 0)
 			{
 				new = lzac_ft_lstnew(first, ARGUMENT, stuff->space);
-				if (new == NULL)
-					return (NULL);
 				lzac_ft_lstadd_back(cmd, new);
 				stuff->space = 0;
 			}
@@ -299,8 +285,6 @@ void	expend_in_quote(char **envp, t_cmd **cmd, t_stuff *stuff)
 			if (sec != NULL)
 			{
 				new = lzac_ft_lstnew(sec, ARGUMENT, stuff->space);
-				if (new == NULL)
-					return (NULL);
 				lzac_ft_lstadd_back(cmd, new);
 				stuff->space = 0;
 			}
