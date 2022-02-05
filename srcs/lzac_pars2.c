@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/05 06:59:17 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/05 07:25:02 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -320,6 +320,8 @@ void	expend_in_quote(char **envp, t_cmd **cmd, t_stuff *stuff)
 	if (k == 0)
 	{
 		(*cmd) = (*cmd)->next;
+		if (tmp != NULL)
+			free(tmp->word);
 		free(tmp);
 	}
 	else
