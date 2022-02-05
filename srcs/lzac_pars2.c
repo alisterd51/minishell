@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/05 03:19:09 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/05 06:59:17 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,7 @@ void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
 {
 	t_cmd	*new;
 	char	*word;
+	// char	*key;
 	int		j;
 
 	j = 0;
@@ -201,7 +202,7 @@ void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
 	else
 	{
 		word = ft_strndup(stuff->str + stuff->i, j);
-		if (word[0] == '?')
+		if (word && word[0] == '?')
 			word = ft_itoa(ft_get_status());
 		else 
 			word = search_env(envp, word);
@@ -221,12 +222,13 @@ void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
 char	*ft_expend_quote(char *word, int *i, char **envp)
 {
 	int		j;
+	// char	*word;
 
 	j = 0;
 	(*i)++;
 	j = ft_expstrclen(word + *i, ' ');
 	word = ft_strndup(word + *i, j);
-	if (word[0] == '?')
+	if (word && word[0] == '?')
 		word = ft_itoa(ft_get_status());
 	else
 		word = search_env(envp, word);
@@ -250,14 +252,19 @@ void	expend_in_quote(char **envp, t_cmd **cmd, t_stuff *stuff)
 	char	*sec;
 	int		i;
 	int		j;
+	int		k;
 	char	*word;
 
 	i = 0;
 	j = 0;
+	k = 0;
 	tmp = *cmd;
 	tmp_del = *cmd;
 	while (tmp && tmp->next)
+	{
 		tmp = tmp->next;
+		k++;
+	}
 	if (tmp_del && tmp_del->next)
 	{
 		while (tmp_del->next->next)
@@ -272,11 +279,13 @@ void	expend_in_quote(char **envp, t_cmd **cmd, t_stuff *stuff)
 	if (tmp && i == (int)ft_strlen(tmp->word))
 		return ;
 	word = tmp->word;
+	// printf("inside\n");
 	while (tmp->word[i])
 	{
 		if (word[i] == '$' && (word[i + 1] != ' ' || word[i + 1] != '|'))
 		{
  			first = ft_strndup(word + j, i - j);
+			//  printf("first : %s\n", first);
 			if (first[0] != 0)
 			{
 				new = lzac_ft_lstnew(first, ARGUMENT, stuff->space);
@@ -288,22 +297,40 @@ void	expend_in_quote(char **envp, t_cmd **cmd, t_stuff *stuff)
 			sec = ft_expend_quote(word, &i, envp);
 			if (sec != NULL)
 			{
+			// printf("sec : %s\n", sec);
 				new = lzac_ft_lstnew(sec, ARGUMENT, stuff->space);
 				lzac_ft_lstadd_back(cmd, new);
 				stuff->space = 0;
 			}
-			if (i < (int)ft_strlen(tmp->word) - 1)
+			// if (i < (int)ft_strlen(tmp->word) - 1)
 				j = i;
 		}
 		else
 			i++;
 	}
+	if (j < i)
+	{
+		first = ft_strndup(word + j, i - j);
+		new = lzac_ft_lstnew(first, ARGUMENT, stuff->space);
+		lzac_ft_lstadd_back(cmd, new);
+	}
+	// printf("i : %d, word[i] : %c\n", i, word[i]);
+	// printf("j : %d, word[j] : %c\n", j, word[j]);
+	// printf("k : %d", k);
+	if (k == 0)
+	{
+		(*cmd) = (*cmd)->next;
+		free(tmp);
+	}
+	else
+	{
 	tmp = tmp_del->next;
 	if (tmp_del->next != NULL)
 		tmp_del->next = tmp_del->next->next;
 	if (tmp != NULL)
 		free(tmp->word);
 	free(tmp);
+	}
 	return ;
 }
 
@@ -327,10 +354,10 @@ t_cmd	*get_cmd(char *str, char **envp)
 		}
 		else if (str[stuff.i] == '\"')
 		{
+			// printf("ft_quote\n");
 			if (ft_quote(&stuff, '\"', &cmd) == 1)
 				return (NULL);
-			if (cmd)
-				expend_in_quote(envp, &cmd, &stuff);
+			expend_in_quote(envp, &cmd, &stuff);
 		}
 		else if (str[stuff.i] == '<')
 			ft_rdleft(&stuff, &cmd);
