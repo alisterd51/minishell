@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/05 02:26:41 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/05 03:19:09 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ int	ft_quote(t_stuff *stuff, char c, t_cmd **cmd)
 	}
 	word = ft_strndup(stuff->str + stuff->i, j);
 	new = lzac_ft_lstnew(word, ARGUMENT, stuff->space);
+	if (new == NULL)
+		free(word);
 	lzac_ft_lstadd_back(cmd, new);
 	stuff->i += j + 1;
 	return (0);
@@ -106,6 +108,8 @@ void	ft_alnum(t_stuff *stuff, t_cmd **cmd)
 	j = ft_strarglen(stuff->str + stuff->i);
 	word = ft_strndup(stuff->str + stuff->i, j);
 	new = lzac_ft_lstnew(word, stuff->type, stuff->space);
+	if (new == NULL)
+		free(word);
 	lzac_ft_lstadd_back(cmd, new);
 	stuff->i += j;
 }
@@ -252,20 +256,20 @@ void	expend_in_quote(char **envp, t_cmd **cmd, t_stuff *stuff)
 	j = 0;
 	tmp = *cmd;
 	tmp_del = *cmd;
-	while (tmp->next)
+	while (tmp && tmp->next)
 		tmp = tmp->next;
-	if (tmp_del->next != NULL)
+	if (tmp_del && tmp_del->next)
 	{
 		while (tmp_del->next->next)
 			tmp_del = tmp_del->next;
 	}
-	while (tmp->word[i])
+	while (tmp && tmp->word && tmp->word[i])
 	{
 		if (tmp->word[i] == '$' && (tmp->word[i + 1] != ' ' || tmp->word[i + 1] != '|'))
 			break;
 		i++;
 	}
-	if (i == (int)ft_strlen(tmp->word))
+	if (tmp && i == (int)ft_strlen(tmp->word))
 		return ;
 	word = tmp->word;
 	while (tmp->word[i])
@@ -295,8 +299,10 @@ void	expend_in_quote(char **envp, t_cmd **cmd, t_stuff *stuff)
 			i++;
 	}
 	tmp = tmp_del->next;
-	tmp_del->next = tmp_del->next->next;
-	free(tmp->word);
+	if (tmp_del->next != NULL)
+		tmp_del->next = tmp_del->next->next;
+	if (tmp != NULL)
+		free(tmp->word);
 	free(tmp);
 	return ;
 }
@@ -323,7 +329,8 @@ t_cmd	*get_cmd(char *str, char **envp)
 		{
 			if (ft_quote(&stuff, '\"', &cmd) == 1)
 				return (NULL);
-			expend_in_quote(envp, &cmd, &stuff);
+			if (cmd)
+				expend_in_quote(envp, &cmd, &stuff);
 		}
 		else if (str[stuff.i] == '<')
 			ft_rdleft(&stuff, &cmd);
