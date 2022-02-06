@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
-#    Updated: 2022/02/06 04:00:25 by anclarma         ###   ########.fr        #
+#    Updated: 2022/02/06 09:06:08 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,15 @@ C_FILES		= main.c					\
 			  set_ast_heredoc.c			\
 			  sub_exec_ast.c			\
 			  utils_exec_ast.c			\
-			  utils_colector.c
+			  utils_colector.c			\
+			  expend.c					\
+			  pars_list.c				\
+			  get_type.c				\
+			  pars_error.c				\
+			  ft_pars_pipe.c			\
+			  ft_pars_type.c			\
+			  expend_utils.c			\
+			  expend_utils2.c
 SRCS		= $(patsubst %, $(C_DIR)/%, $(C_FILES))
 O_FILES		= $(C_FILES:.c=.o)
 OBJS		= $(patsubst %, $(O_DIR)/%, $(O_FILES))
