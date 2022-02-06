@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 23:13:38 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/06 09:00:47 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/06 12:05:23 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,26 @@ void	expend_in_quote(char **envp, t_cmd **cmd, t_stuff *stuff)
 	else
 		expend_step1(tmp, tmp_del);
 	return ;
+}
+
+void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
+{
+	t_cmd	*new;
+	char	*word;
+	int		j;
+
+	j = 0;
+	stuff->i = stuff->i + 1;
+	stuff->type = ARGUMENT;
+	j = ft_expstrclen(stuff->str + stuff->i, ' ');
+	if (j == 0)
+	{
+		word = "$";
+		stuff->type = DOLLAR;
+	}
+	else if (sub_ft_expend(&word, stuff, j, envp) == 1)
+		return ;
+	new = lzac_ft_lstnew(word, stuff->type, stuff->space);
+	lzac_ft_lstadd_back(cmd, new);
+	stuff->i = stuff->i + j;
 }
