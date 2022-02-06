@@ -52,5 +52,6 @@ void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd);
 int		print_err_ret(char *msg, t_cmd *cmd);
 int		get_type2(t_cmd *cmd);
 // int		get_type_exe(t_cmd *cmd, t_cmd **tmp);
+int		get_cmd_exe(t_stuff *stuff, char *str, t_cmd **cmd, char **envp);
 
 #endif

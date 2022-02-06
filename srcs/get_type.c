@@ -121,6 +121,8 @@
 // 	return (0);
 // }
 
+// norm :
+
 int	cond_type(t_cmd *tmp)
 {
 	if (tmp->next->type == S_LEFT || tmp->next->type == S_RIGHT
@@ -160,14 +162,6 @@ int	get_type(t_cmd *cmd)
 				return (print_err_ret("token `|'\n", cmd));
 			tmp->next->type = T_FILE;
 		}
-		if (tmp && tmp->next && tmp->type == D_LEFT)
-		{
-			if (cond_type(tmp))
-				return (print_err_ret("redirection\n", cmd));
-			else if (tmp->next->type == PIPELINE)
-				return (print_err_ret("token `|'\n", cmd));
-			tmp->next->type = DELIMITOR;
-		}
 		if (tmp->next && tmp->next->space == 0 && tmp->type == ARGUMENT
 			&& tmp->next->type == ARGUMENT)
 			join_args(&tmp);
@@ -179,26 +173,25 @@ int	get_type(t_cmd *cmd)
 	return (0);
 }
 
-// int	get_type2(t_cmd *cmd)
-// {
-// 	t_cmd	*tmp;
+int	get_type2(t_cmd *cmd)
+{
+	t_cmd	*tmp;
 
-// 	tmp = cmd;
-// 	while (tmp)
-// 	{
-// 		if (tmp && tmp->next && tmp->type == D_LEFT)
-// 		{
-// 			if (cond_type(tmp))
-// 				return (print_err_ret("redirection\n", cmd));
-// 			else if (tmp->next->type == PIPELINE)
-// 				return (print_err_ret("token `|'\n", cmd));
-// 			tmp->next->type = DELIMITOR;
-// 		}
-// 	}
-// 	return (0);
-// }
-
-
+	tmp = cmd;
+	while (tmp)
+	{
+		if (tmp && tmp->next && tmp->type == D_LEFT)
+		{
+			if (cond_type(tmp))
+				return (print_err_ret("redirection\n", cmd));
+			else if (tmp->next->type == PIPELINE)
+				return (print_err_ret("token `|'\n", cmd));
+			tmp->next->type = DELIMITOR;
+		}
+		tmp = tmp->next;
+	}
+	return (0);
+}
 
 // stable :
 

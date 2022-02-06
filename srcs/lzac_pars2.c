@@ -337,49 +337,79 @@ t_cmd	*get_cmd(char *str, char **envp)
 	stuff = (t_stuff){.str = str, .type = NONE};
 	while (str[stuff.i])
 	{
-		stuff.type = NONE;
-		stuff.space = 0;
-		if (ft_isspace(str[stuff.i]))
-			ft_space(&stuff, str);
-		if (str[stuff.i] == '\'')
-		{
-			if (ft_quote(&stuff, '\'', &cmd) == 1)
-				return (NULL);
-		}
-		else if (str[stuff.i] == '\"')
-		{
-			if (ft_quote(&stuff, '\"', &cmd) == 1)
-				return (NULL);
-			expend_in_quote(envp, &cmd, &stuff);
-		}
-		else if (str[stuff.i] == '<')
-			ft_rdleft(&stuff, &cmd);
-		else if (str[stuff.i] == '>')
-			ft_rdright(&stuff, &cmd);
-		else if (ft_isalnum(str[stuff.i]) || str[stuff.i] == '/'
-			|| str[stuff.i] == '-' || str[stuff.i] == '.' || str[stuff.i] == '%'
-			|| str[stuff.i] == '_' || str[stuff.i] == '=' || str[stuff.i] == '?'
-			|| str[stuff.i] == '*' || str[stuff.i] == '-' || str[stuff.i] == '+'
-			|| str[stuff.i] == '(' || str[stuff.i] == ')' || str[stuff.i] == '&'
-			|| str[stuff.i] == '^' || str[stuff.i] == '#' || str[stuff.i] == '@'
-			|| str[stuff.i] == '!' || str[stuff.i] == ',' || str[stuff.i] == '~'
-			|| str[stuff.i] == ';' || str[stuff.i] == ':')
-			ft_alnum(&stuff, &cmd);
-		else if (str[stuff.i] == '|')
-			lzac_ft_pipe(&stuff, &cmd);
-		else if (str[stuff.i] == '$')
-			ft_expend(&stuff, envp, &cmd);
-		else
-		{
-			if (stuff.space != 1)
-				stuff.i++;
-		}
+		if (get_cmd_exe(&stuff, str, &cmd, envp) == 2)
+			return (NULL);
+		// stuff.type = NONE;
+		// stuff.space = 0;
+		// if (ft_isspace(str[stuff.i]))
+		// 	ft_space(&stuff, str);
+		// if (str[stuff.i] == '\'')
+		// {
+		// 	if (ft_quote(&stuff, '\'', &cmd) == 1)
+		// 		return (NULL);
+		// }
+		// else if (str[stuff.i] == '\"')
+		// {
+		// 	if (ft_quote(&stuff, '\"', &cmd) == 1)
+		// 		return (NULL);
+		// 	expend_in_quote(envp, &cmd, &stuff);
+		// }
+		// else if (str[stuff.i] == '<')
+		// 	ft_rdleft(&stuff, &cmd);
+		// else if (str[stuff.i] == '>')
+		// 	ft_rdright(&stuff, &cmd);
+		// else if (ft_isalnum(str[stuff.i]))
+		// 	ft_alnum(&stuff, &cmd);
+		// else if (str[stuff.i] == '|')
+		// 	lzac_ft_pipe(&stuff, &cmd);
+		// else if (str[stuff.i] == '$')
+		// 	ft_expend(&stuff, envp, &cmd);
+		// else
+		// {
+		// 	if (stuff.space != 1)
+		// 		stuff.i++;
+		// }
 	}
 	if (get_type(cmd) == 2)
 		return (NULL);
 	if (get_error(cmd) == 2)
 		return (NULL);
 	return (cmd);
+}
+
+int	get_cmd_exe(t_stuff *stuff, char *str, t_cmd **cmd, char **envp)
+{
+	stuff->type = NONE;
+		stuff->space = 0;
+		if (ft_isspace(str[stuff->i]))
+			ft_space(stuff, str);
+		if (str[stuff->i] == '\'')
+		{
+			if (ft_quote(stuff, '\'', cmd) == 1)
+				return (2);
+		}
+		else if (str[stuff->i] == '\"')
+		{
+			if (ft_quote(stuff, '\"', cmd) == 1)
+				return (2);
+			expend_in_quote(envp, cmd, stuff);
+		}
+		else if (str[stuff->i] == '<')
+			ft_rdleft(stuff, cmd);
+		else if (str[stuff->i] == '>')
+			ft_rdright(stuff, cmd);
+		else if (ft_isalnum(str[stuff->i]))
+			ft_alnum(stuff, cmd);
+		else if (str[stuff->i] == '|')
+			lzac_ft_pipe(stuff, cmd);
+		else if (str[stuff->i] == '$')
+			ft_expend(stuff, envp, cmd);
+		else
+		{
+			if (stuff->space != 1)
+				stuff->i++;
+		}
+	return (0);
 }
 
 // int	get_type(t_cmd *cmd)
