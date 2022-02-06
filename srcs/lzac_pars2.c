@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/06 09:02:34 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/06 09:35:34 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	intern_get_cmd(char *str, t_stuff *stuff, t_cmd **cmd, char **envp)
 		ft_rdleft(stuff, cmd);
 	else if (str[stuff->i] == '>')
 		ft_rdright(stuff, cmd);
-	else if (ft_isalnum(str[stuff->i]))
+	else if (ft_isalnumsymb(str[stuff->i]))
 		ft_alnum(stuff, cmd);
 	else if (str[stuff->i] == '|')
 		lzac_ft_pipe(stuff, cmd);
