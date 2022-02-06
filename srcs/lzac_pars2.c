@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/06 10:34:26 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/06 12:46:10 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ t_cmd	*get_cmd(char *str, char **envp)
 		stuff.type = NONE;
 		stuff.space = 0;
 		if (intern_get_cmd(str, &stuff, &cmd, envp) == 1)
+		{
+			free_lst(&cmd);
 			return (NULL);
+		}
 	}
 	if (get_type(cmd) == 2)
 		return (NULL);

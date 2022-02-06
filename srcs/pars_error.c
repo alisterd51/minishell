@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 23:23:32 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/06 00:21:06 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/06 13:47:03 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,20 @@
 void	free_lst(t_cmd **cmd)
 {
 	t_cmd	*tmp;
+	t_cmd	*next;
 
 	tmp = *cmd;
 	while (tmp)
 	{
-		*cmd = tmp;
-		tmp = tmp->next;
-		if ((*cmd)->type != S_LEFT && (*cmd)->type != S_RIGHT
-			&& (*cmd)->type != D_RIGHT && (*cmd)->type != D_LEFT
-			&& (*cmd)->type != PIPELINE && (*cmd)->type != DOLLAR)
-			free((*cmd)->word);
-		free(*cmd);
+		if (tmp->type != S_LEFT && tmp->type != S_RIGHT
+			&& tmp->type != D_RIGHT && tmp->type != D_LEFT
+			&& tmp->type != PIPELINE && tmp->type != DOLLAR)
+			free(tmp->word);
+		next = tmp->next;
+		free(tmp);
+		tmp = next;
 	}
+	*cmd = NULL;
 }
 
 int	get_error(t_cmd *cmd)
@@ -68,9 +70,10 @@ int	print_err_ret(char *msg, t_cmd *cmd)
 	return (2);
 }
 
-void	print_error(char *msg, t_cmd *cmd)
+int	print_error(char *msg, t_cmd **cmd)
 {
-	free_lst(&cmd);
+	free_lst(cmd);
 	ft_putstr_fd(msg, 2);
 	ft_set_status(2);
+	return (1);
 }

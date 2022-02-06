@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 08:49:11 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/06 11:59:25 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/06 13:37:12 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	expend_step3(char *word, int i, int j, t_expend_stuff *st)
 
 	first = ft_strndup(word + j, i - j);
 	new = lzac_ft_lstnew(first, ARGUMENT, st->stuff->space);
+	if (new == NULL)
+		free(first);
 	lzac_ft_lstadd_back(st->cmd, new);
 }
 
@@ -46,6 +48,8 @@ void	sub_expend_step4(char *word, t_stuff *stuff, t_cmd **cmd)
 	t_cmd	*new;
 
 	new = lzac_ft_lstnew(word, ARGUMENT, stuff->space);
+	if (new == NULL)
+		free(word);
 	lzac_ft_lstadd_back(cmd, new);
 	stuff->space = 0;
 }
@@ -60,7 +64,7 @@ void	expend_step4(char *word, int *i, int *j, t_expend_stuff *st)
 		if (word[*i] == '$' && (word[*i + 1] != ' ' || word[*i + 1] != '|'))
 		{
 			first = ft_strndup(word + *j, *i - *j);
-			if (first[0] != 0)
+			if (first && first[0] != 0)
 				sub_expend_step4(first, st->stuff, st->cmd);
 			else
 				free(first);

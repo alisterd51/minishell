@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 22:22:58 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/04 18:57:02 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/06 13:27:43 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ t_ast	*token_to_ast(t_cmd *lst_token)
 	if (lst_token == NULL)
 		return (NULL);
 	node_command = init_command(lst_token);
+	if (node_command == NULL)
+		return (NULL);
 	while (lst_token && lst_token->type != PIPELINE)
 		lst_token = lst_token->next;
 	if (lst_token)

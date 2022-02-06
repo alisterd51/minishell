@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 23:34:44 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/06 10:30:28 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/06 13:47:58 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,17 @@ int	ft_quote(t_stuff *stuff, char c, t_cmd **cmd)
 	if (stuff->str[stuff->i + 1])
 		stuff->i = stuff->i + 1;
 	else
-	{
-		print_error("unclosed quote\n", *cmd);
-		return (1);
-	}
+		return (print_error("unclosed quote\n", cmd));
 	j = ft_strclen(stuff->str + stuff->i, c);
 	if (j < 0)
-	{
-		print_error("unclosed quote\n", *cmd);
-		return (1);
-	}
+		return (print_error("unclosed quote\n", cmd));
 	word = ft_strndup(stuff->str + stuff->i, j);
 	new = lzac_ft_lstnew(word, ARGUMENT, stuff->space);
 	if (new == NULL)
+	{
 		free(word);
+		return (1);
+	}
 	lzac_ft_lstadd_back(cmd, new);
 	stuff->i = stuff->i + j + 1;
 	return (0);

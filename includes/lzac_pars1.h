@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 18:51:26 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/06 12:05:43 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/06 13:46:26 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	free_lst(t_cmd **cmd);
 int		get_type(t_cmd *cmd);
 int		ft_strarglen(char *str);
 int		lzac_ft_lstsize(t_cmd *lst);
-void	print_error(char *msg, t_cmd *cmd);
+int		print_error(char *msg, t_cmd **cmd);
 int		get_error(t_cmd *cmd);
 void	ft_space(t_stuff *stuff, char *str);
 void	print_token(t_cmd *lst_token);

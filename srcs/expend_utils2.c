@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 08:51:30 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/06 12:04:14 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/06 12:51:31 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ char	*search_env(char **envp, char *word)
 		return (NULL);
 	key = ft_strjoin(word, "=");
 	free(word);
+	if (key == NULL)
+		return (NULL);
 	while (envp[i] && ft_strncmp(envp[i], key, ft_strlen(key)) != 0)
 		i++;
 	if (envp[i] && (ft_strncmp(envp[i], key, ft_strlen(key)) == 0))
@@ -46,7 +48,7 @@ int	sub_ft_expend(char **word, t_stuff *stuff, int j, char **envp)
 		free(*word);
 		*word = ft_itoa(ft_get_status());
 	}
-	else
+	else if (*word)
 		*word = search_env(envp, *word);
 	if (*word == NULL)
 	{

@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 23:13:38 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/06 12:05:23 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/06 12:53:03 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
 	else if (sub_ft_expend(&word, stuff, j, envp) == 1)
 		return ;
 	new = lzac_ft_lstnew(word, stuff->type, stuff->space);
+	if (new == NULL)
+		free(word);
 	lzac_ft_lstadd_back(cmd, new);
 	stuff->i = stuff->i + j;
 }
