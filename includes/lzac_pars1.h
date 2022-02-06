@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 18:51:26 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/04 21:55:25 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/06 04:08:15 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,15 @@ int		get_error(t_cmd *cmd);
 void	ft_space(t_stuff *stuff, char *str);
 void	print_token(t_cmd *lst_token);
 int		ft_expstrclen(char *str, char c);
-char	*ft_strndup_exp(char *word, int i, int j);
+int		ft_quote(t_stuff *stuff, char c, t_cmd **cmd);
+void	expend_in_quote(char **envp, t_cmd **cmd, t_stuff *stuff);
+void	ft_rdleft(t_stuff *stuff, t_cmd **cmd);
+void	ft_rdright(t_stuff *stuff, t_cmd **cmd);
+void	ft_alnum(t_stuff *stuff, t_cmd **cmd);
+void	lzac_ft_pipe(t_stuff *stuff, t_cmd **cmd);
+void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd);
+int		print_err_ret(char *msg, t_cmd *cmd);
+int		get_type2(t_cmd *cmd);
+// int		get_type_exe(t_cmd *cmd, t_cmd **tmp);
 
 #endif

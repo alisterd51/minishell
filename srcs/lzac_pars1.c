@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 22:22:58 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/05 04:08:51 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/05 08:41:58 by lzaccome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,20 +64,4 @@ void	print_token(t_cmd *lst_token)
 			lst_token->space);
 		lst_token = lst_token->next;
 	}
-}
-
-char	*ft_strndup_exp(char *word, int i, int j)
-{
-	char *ret;
-	int k;
-
-	k = 0;
-	ret = (char *)malloc(sizeof(char) * (i - j));
-	while (word[j] && j <= i)
-	{
-		ret[k] = word[j];
-		j++;
-		k++;
-	}
-	return (ret);
 }
