@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 08:51:30 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/06 10:22:42 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/06 11:27:58 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,24 @@ char	*search_env(char **envp, char *word)
 	return (NULL);
 }
 
+int	sub_ft_expend(char **word, t_stuff *stuff, int j, char **envp)
+{
+	*word = ft_strndup(stuff->str + stuff->i, j);
+	if (*word && (*word)[0] == '?')
+	{
+		free(*word);
+		*word = ft_itoa(ft_get_status());
+	}
+	else
+		*word = search_env(envp, *word);
+	if (*word == NULL)
+	{
+		stuff->i = stuff->i + j;
+		return (1);
+	}
+	return (0);
+}
+
 void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
 {
 	t_cmd	*new;
@@ -53,21 +71,8 @@ void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
 		word = "$";
 		stuff->type = DOLLAR;
 	}
-	else
-	{
-		word = ft_strndup(stuff->str + stuff->i, j);
-		if (word && word[0] == '?')
-			word = ft_itoa(ft_get_status());
-		else
-			word = search_env(envp, word);
-		if (word == NULL)
-		{
-			stuff->i = stuff->i + 1;
-			free(word);
-			stuff->i = stuff->i + j - 1;
-			return ;
-		}
-	}
+	else if (sub_ft_expend(&word, stuff, j, envp) == 1)
+		return ;
 	new = lzac_ft_lstnew(word, stuff->type, stuff->space);
 	lzac_ft_lstadd_back(cmd, new);
 	stuff->i = stuff->i + j;
@@ -82,7 +87,10 @@ char	*ft_expend_quote(char *word, int *i, char **envp)
 	j = ft_expstrclen(word + *i, ' ');
 	word = ft_strndup(word + *i, j);
 	if (word && word[0] == '?')
+	{
+		free(word);
 		word = ft_itoa(ft_get_status());
+	}
 	else
 		word = search_env(envp, word);
 	if (word == NULL)
