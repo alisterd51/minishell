@@ -328,6 +328,20 @@
 // 	return ;
 // }
 
+int	ft_isalnumsymb(int c)
+{
+	return (('0' <= c && c <= '9')
+		|| ('A' <= c && c <= 'Z')
+		|| ('a' <= c && c <= 'z') || c == '/'
+		|| c == '-' || c == '.' || c == '%'
+		|| c == '_' || c == '=' || c == '?'
+		|| c == '*' || c == '-' || c == '+'
+		|| c == '(' || c == ')' || c == '&'
+		|| c == '^' || c == '#' || c == '@'
+		|| c == '!' || c == ',' || c == '~'
+		|| c == ';' || c == ':');
+}
+
 t_cmd	*get_cmd(char *str, char **envp)
 {
 	t_cmd		*cmd;
@@ -377,28 +391,35 @@ t_cmd	*get_cmd(char *str, char **envp)
 	return (cmd);
 }
 
+int	get_ft_quote(t_stuff *stuff, char *str, t_cmd **cmd, char **envp)
+{
+	if (str[stuff->i] == '\'')
+	{
+		if (ft_quote(stuff, '\'', cmd) == 1)
+			return (2);
+	}
+	else if (str[stuff->i] == '\"')
+	{
+		if (ft_quote(stuff, '\"', cmd) == 1)
+			return (2);
+		expend_in_quote(envp, cmd, stuff);
+	}
+	return (0);
+}
+
 int	get_cmd_exe(t_stuff *stuff, char *str, t_cmd **cmd, char **envp)
 {
 	stuff->type = NONE;
 		stuff->space = 0;
 		if (ft_isspace(str[stuff->i]))
 			ft_space(stuff, str);
-		if (str[stuff->i] == '\'')
-		{
-			if (ft_quote(stuff, '\'', cmd) == 1)
-				return (2);
-		}
-		else if (str[stuff->i] == '\"')
-		{
-			if (ft_quote(stuff, '\"', cmd) == 1)
-				return (2);
-			expend_in_quote(envp, cmd, stuff);
-		}
+		if (get_ft_quote(stuff, str, cmd, envp) == 2)
+			return (2);
 		else if (str[stuff->i] == '<')
 			ft_rdleft(stuff, cmd);
 		else if (str[stuff->i] == '>')
 			ft_rdright(stuff, cmd);
-		else if (ft_isalnum(str[stuff->i]))
+		else if (ft_isalnumsymb(str[stuff->i]))
 			ft_alnum(stuff, cmd);
 		else if (str[stuff->i] == '|')
 			lzac_ft_pipe(stuff, cmd);
@@ -411,6 +432,7 @@ int	get_cmd_exe(t_stuff *stuff, char *str, t_cmd **cmd, char **envp)
 		}
 	return (0);
 }
+
 
 // int	get_type(t_cmd *cmd)
 // {
