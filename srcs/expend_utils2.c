@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expend-utils2.c                                    :+:      :+:    :+:   */
+/*   expend_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 08:51:30 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/06 09:03:42 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/06 10:22:42 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
 	int		j;
 
 	j = 0;
-	stuff->i++;
+	stuff->i = stuff->i + 1;
 	stuff->type = ARGUMENT;
 	j = ft_expstrclen(stuff->str + stuff->i, ' ');
 	if (j == 0)
@@ -62,15 +62,15 @@ void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
 			word = search_env(envp, word);
 		if (word == NULL)
 		{
-			stuff->i++;
+			stuff->i = stuff->i + 1;
 			free(word);
-			stuff->i += j - 1;
+			stuff->i = stuff->i + j - 1;
 			return ;
 		}
 	}
 	new = lzac_ft_lstnew(word, stuff->type, stuff->space);
 	lzac_ft_lstadd_back(cmd, new);
-	stuff->i += j;
+	stuff->i = stuff->i + j;
 }
 
 char	*ft_expend_quote(char *word, int *i, char **envp)
@@ -78,7 +78,7 @@ char	*ft_expend_quote(char *word, int *i, char **envp)
 	int		j;
 
 	j = 0;
-	(*i)++;
+	*i = *i + 1;
 	j = ft_expstrclen(word + *i, ' ');
 	word = ft_strndup(word + *i, j);
 	if (word && word[0] == '?')
@@ -87,9 +87,9 @@ char	*ft_expend_quote(char *word, int *i, char **envp)
 		word = search_env(envp, word);
 	if (word == NULL)
 	{
-		(*i)++;
+		*i = *i + 1;
 		free(word);
-		(*i) += j - 1;
+		*i = *i + j - 1;
 		return (NULL);
 	}
 	(*i) += j;
