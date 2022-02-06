@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 08:51:30 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/06 11:59:37 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/06 12:04:14 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,28 +54,6 @@ int	sub_ft_expend(char **word, t_stuff *stuff, int j, char **envp)
 		return (1);
 	}
 	return (0);
-}
-
-void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd)
-{
-	t_cmd	*new;
-	char	*word;
-	int		j;
-
-	j = 0;
-	stuff->i = stuff->i + 1;
-	stuff->type = ARGUMENT;
-	j = ft_expstrclen(stuff->str + stuff->i, ' ');
-	if (j == 0)
-	{
-		word = "$";
-		stuff->type = DOLLAR;
-	}
-	else if (sub_ft_expend(&word, stuff, j, envp) == 1)
-		return ;
-	new = lzac_ft_lstnew(word, stuff->type, stuff->space);
-	lzac_ft_lstadd_back(cmd, new);
-	stuff->i = stuff->i + j;
 }
 
 char	*ft_expend_quote(char *word, int *i, char **envp)

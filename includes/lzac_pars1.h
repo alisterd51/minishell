@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 18:51:26 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/06 11:59:04 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/06 12:05:43 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,7 @@ int		ft_cmdsize(t_cmd *lst);
 void	expend_step2(t_cmd **cmd, t_cmd *tmp);
 void	expend_step1(t_cmd *tmp, t_cmd *tmp_del);
 char	*ft_expend_quote(char *word, int *i, char **envp);
+void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd);
+int		sub_ft_expend(char **word, t_stuff *stuff, int j, char **envp);
 
 #endif
