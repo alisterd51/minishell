@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 00:46:40 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/06 04:47:15 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/06 05:18:52 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,7 @@ int	fd_heredoc(char *file, int expend, t_list **lst_env)
 	signal(SIGINT, handler_int);
 	close(fd);
 	fd = open(heredoc, O_RDONLY);
-	if (fd == -1)
+	if (fd == -1 || to_fd_colector(fd))
 		return (ft_perror(heredoc));
-	to_fd_colector(fd);
 	return (fd);
 }

@@ -47,6 +47,8 @@ test_minishell()
 	./minishell < ./test/cmd6
 	printf "${LIGHT_CYAN}${BOLD}minishell < cmd7${RESET}\n"
 	./minishell < ./test/cmd7
+	printf "${LIGHT_CYAN}${BOLD}minishell < cmd7_1${RESET}\n"
+	./minishell < ./test/cmd7_1
 	printf "${LIGHT_CYAN}${BOLD}minishell < cmd8${RESET}\n"
 	./minishell < ./test/cmd8
 	printf "${LIGHT_CYAN}${BOLD}minishell < cmd9${RESET}\n"
@@ -74,6 +76,8 @@ test_valgrind_minishell()
 	${VALGRIND} ./minishell < ./test/cmd6
 	printf "${LIGHT_CYAN}${BOLD}minishell < cmd7${RESET}\n"
 	${VALGRIND} ./minishell < ./test/cmd7
+	printf "${LIGHT_CYAN}${BOLD}minishell < cmd7_1${RESET}\n"
+	${VALGRIND} ./minishell < ./test/cmd7_1
 	printf "${LIGHT_CYAN}${BOLD}minishell < cmd8${RESET}\n"
 	${VALGRIND} ./minishell < ./test/cmd8
 	printf "${LIGHT_CYAN}${BOLD}minishell < cmd9${RESET}\n"

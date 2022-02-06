@@ -18,9 +18,3 @@ pwd
 cd /
 pwd
 cd ..
-unset A
-env | grep A
-export A
-env | grep A
-export A=a
-env | grep A

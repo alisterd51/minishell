@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 22:22:58 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/06 03:03:25 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/06 05:32:00 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ static t_redir	*sub_init_redirect1(t_redir *redir, t_cmd *lst_token)
 	redir->type = lst_token->type;
 	lst_token = lst_token->next;
 	redir->file = ft_strdup(lst_token->word);
+	if (!redir->file)
+	{
+		free(redir->file);
+		free(redir);
+		return (NULL);
+	}
 	redir->next = init_redirect(lst_token->next);
 	return (redir);
 }
