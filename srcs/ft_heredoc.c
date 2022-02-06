@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 00:46:40 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/05 23:59:22 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/06 02:09:26 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	read_heredoc(int fd, char const *terminat, int expend)
 	return (0);
 }
 
-int	fd_heredoc(char *file, int expend)
+int	fd_heredoc(char *file, int expend, t_list **lst_env)
 {
 	int		fd;
 	char	*heredoc;
@@ -63,6 +63,9 @@ int	fd_heredoc(char *file, int expend)
 		signal(SIGINT, handler_int_heredoc);
 		read_heredoc(fd, file, expend);
 		close(fd);
+		clean_env(lst_env);
+		clean_colector();
+		clean_heredoc(2);
 		exit(ft_get_status());
 	}
 	else

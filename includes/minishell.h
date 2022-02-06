@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/05 06:47:04 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/06 02:10:23 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int		exec_redir(t_redir *redir, int *fd_save);
 /*
 ** ft_heredoc.c
 */
-int		fd_heredoc(char *file, int expend);
+int		fd_heredoc(char *file, int expend, t_list **lst_env);
 
 /*
 ** ft_handler.c
@@ -195,5 +195,10 @@ void	to_fd_colector(int fd);
 */
 void	clean_heredoc(int mode);
 char	*new_heredoc(void);
+
+/*
+**
+*/
+void	set_ast_heredoc(t_ast *ast, t_list **lst_env);
 
 #endif

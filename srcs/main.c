@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 04:54:07 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/06 00:18:59 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/06 02:07:27 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,12 @@ static void	intern_exec(char *line, t_list **lst_env)
 	lst_token = parsing_shell(line, env);
 	// print_token(lst_token);
 	clean_tab(&env);
-	int	test = ft_get_status();
-	ft_set_status(0);
 	ast = token_to_ast(lst_token);
 	free_lst(&lst_token);
 	to_clean_colector(&ast);
+	int	test = ft_get_status();
+	ft_set_status(0);
+	set_ast_heredoc(ast, lst_env);
 	if (ft_get_status() != 0)
 	{
 		clean_colector();
