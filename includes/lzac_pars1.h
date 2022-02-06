@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 18:51:26 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/06 08:58:33 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/06 09:44:54 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <fcntl.h>
 # include "struct.h"
 
-typedef struct s_stuff	t_stuff;
+typedef struct s_stuff			t_stuff;
 struct	s_stuff
 {
 	char	*str;
