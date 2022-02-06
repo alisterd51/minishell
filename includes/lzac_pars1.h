@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lzac_pars1.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 18:51:26 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/06 04:08:15 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/06 08:58:33 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,14 @@ struct	s_stuff
 	int		type;
 	int		space;
 	int		i;
+};
+
+typedef struct s_expend_stuff	t_expend_stuff;
+struct	s_expend_stuff
+{
+	t_cmd	**cmd;
+	t_stuff	*stuff;
+	char	**envp;
 };
 
 t_cmd	*get_cmd(char *str, char **envp);
@@ -51,7 +59,13 @@ void	lzac_ft_pipe(t_stuff *stuff, t_cmd **cmd);
 void	ft_expend(t_stuff *stuff, char **envp, t_cmd **cmd);
 int		print_err_ret(char *msg, t_cmd *cmd);
 int		get_type2(t_cmd *cmd);
-// int		get_type_exe(t_cmd *cmd, t_cmd **tmp);
 int		get_cmd_exe(t_stuff *stuff, char *str, t_cmd **cmd, char **envp);
+t_cmd	*ft_cmdlast(t_cmd *lst);
+void	expend_step4(char *word, int *i, int *j, t_expend_stuff *st);
+void	expend_step3(char *word, int i, int j, t_expend_stuff *st);
+int		ft_cmdsize(t_cmd *lst);
+void	expend_step2(t_cmd **cmd, t_cmd *tmp);
+void	expend_step1(t_cmd *tmp, t_cmd *tmp_del);
+char	*ft_expend_quote(char *word, int *i, char **envp);
 
 #endif
