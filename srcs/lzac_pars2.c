@@ -6,7 +6,7 @@
 /*   By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/06 09:35:34 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/06 10:34:26 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_cmd	*get_cmd(char *str, char **envp)
 
 	cmd = NULL;
 	stuff = (t_stuff){.str = str, .type = NONE};
-	while (str[stuff.i])
+	while (stuff.i < (int)ft_strlen(str) && str[stuff.i])
 	{
 		stuff.type = NONE;
 		stuff.space = 0;
