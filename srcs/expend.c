@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 23:13:38 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/05 23:18:29 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/06 07:06:15 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,89 +96,120 @@ char	*ft_expend_quote(char *word, int *i, char **envp)
 	return (word);
 }
 
+int	ft_cmdsize(t_cmd *lst)
+{
+	int	ret;
+
+	ret = 0;
+	while (lst)
+	{
+		ret++;
+		lst = lst->next;
+	}
+	return (ret);
+}
+
+t_cmd	*ft_cmdlast(t_cmd *lst)
+{
+	while (lst && lst->next)
+		lst = lst->next;
+	return (lst);
+}
+
+typedef struct s_expend_stuff	t_expend_stuff;
+struct	s_expend_stuff
+{
+	t_cmd	**cmd;
+	t_stuff	*stuff;
+	char	**envp;
+};
+
+// void	expend_step1(t_cmd *tmp, t_cmd *tmp_del)
+// {
+// 	tmp = tmp_del->next;
+// 	if (tmp_del->next != NULL)
+// 		tmp_del->next = tmp_del->next->next;
+// 	if (tmp != NULL)
+// 		free(tmp->word);
+// 	free(tmp);
+// }
+
+// void	expend_step2(t_cmd **cmd, t_cmd *tmp)
+// {
+// 	*cmd = (*cmd)->next;
+// 	if (tmp != NULL)
+// 		free(tmp->word);
+// 	free(tmp);
+// }
+
+// void	expend_step3(char *word, int i, int j, t_expend_stuff *st)
+// {
+// 	char	*first;
+// 	t_cmd	*new;
+
+// 	first = ft_strndup(word + j, i - j);
+// 	new = lzac_ft_lstnew(first, ARGUMENT, st->stuff->space);
+// 	lzac_ft_lstadd_back(st->cmd, new);
+// }
+
+// void	sub_expend_step4(char *word, t_stuff *stuff, t_cmd **cmd)
+// {
+// 	t_cmd	*new;
+
+// 	new = lzac_ft_lstnew(word, ARGUMENT, stuff->space);
+// 	lzac_ft_lstadd_back(cmd, new);
+// 	stuff->space = 0;
+// }
+
+// void	expend_step4(char *word, int *i, int *j, t_expend_stuff *st)
+// {
+// 	char	*first;
+// 	char	*sec;
+
+// 	while (word[*i])
+// 	{
+// 		if (word[*i] == '$' && (word[*i + 1] != ' ' || word[*i + 1] != '|'))
+// 		{
+// 			first = ft_strndup(word + *j, *i - *j);
+// 			if (first[0] != 0)
+// 				sub_expend_step4(first, st->stuff, st->cmd);
+// 			else
+// 				free(first);
+// 			sec = ft_expend_quote(word, i, st->envp);
+// 			if (sec != NULL)
+// 				sub_expend_step4(sec, st->stuff, st->cmd);
+// 			*j = *i;
+// 		}
+// 		else
+// 			*i = *i + 1;
+// 	}
+// }
+
 void	expend_in_quote(char **envp, t_cmd **cmd, t_stuff *stuff)
 {
-	t_cmd	*tmp;
-	t_cmd	*tmp_del;
-	t_cmd	*new;
-	char	*first;
-	char	*sec;
-	int		i;
-	int		j;
-	int		k;
-	char	*word;
+	t_cmd			*tmp;
+	t_cmd			*tmp_del;
+	int				ij[2];
+	t_expend_stuff	st;
 
-	i = 0;
-	j = 0;
-	k = 0;
-	tmp = *cmd;
+	st = (t_expend_stuff){.cmd = cmd, .stuff = stuff, .envp = envp};
+	ij[0] = 0;
+	ij[1] = 0;
+	tmp = ft_cmdlast(*cmd);
 	tmp_del = *cmd;
-	while (tmp && tmp->next)
-	{
-		tmp = tmp->next;
-		k++;
-	}
-	if (tmp_del && tmp_del->next)
-	{
-		while (tmp_del->next->next)
-			tmp_del = tmp_del->next;
-	}
-	while (tmp && tmp->word && tmp->word[i])
-	{
-		if (tmp->word[i] == '$' && (tmp->word[i + 1] != ' '
-				|| tmp->word[i + 1] != '|'))
-			break ;
-		i++;
-	}
-	if (tmp && i == (int)ft_strlen(tmp->word))
+	while (tmp_del && tmp_del->next && tmp_del->next->next)
+		tmp_del = tmp_del->next;
+	while (tmp && tmp->word && tmp->word[ij[0]] && !(tmp->word[ij[0]] == '$'
+			&& (tmp->word[ij[0] + 1] != ' ' || tmp->word[ij[0] + 1] != '|')))
+		ij[0]++;
+	if (tmp && ij[0] == (int)ft_strlen(tmp->word))
 		return ;
-	word = tmp->word;
-	while (tmp->word[i])
-	{
-		if (word[i] == '$' && (word[i + 1] != ' ' || word[i + 1] != '|'))
-		{
-			first = ft_strndup(word + j, i - j);
-			if (first[0] != 0)
-			{
-				new = lzac_ft_lstnew(first, ARGUMENT, stuff->space);
-				lzac_ft_lstadd_back(cmd, new);
-				stuff->space = 0;
-			}
-			else
-				free(first);
-			sec = ft_expend_quote(word, &i, envp);
-			if (sec != NULL)
-			{
-				new = lzac_ft_lstnew(sec, ARGUMENT, stuff->space);
-				lzac_ft_lstadd_back(cmd, new);
-				stuff->space = 0;
-			}
-			j = i;
-		}
-		else
-			i++;
-	}
-	if (j < i)
-	{
-		first = ft_strndup(word + j, i - j);
-		new = lzac_ft_lstnew(first, ARGUMENT, stuff->space);
-		lzac_ft_lstadd_back(cmd, new);
-	}
-	if (k == 0)
-	{
-		(*cmd) = (*cmd)->next;
-		if (tmp != NULL)
-			free(tmp->word);
-		free(tmp);
-	}
+	expend_step4(tmp->word, ij + 0, ij + 1, &st);
+	if (ij[1] < ij[0])
+		expend_step3(tmp->word, ij[0], ij[1], &st);
+	if (ft_cmdsize(*cmd) - 1 == 0)
+		expend_step2(cmd, tmp);
 	else
-	{
-		tmp = tmp_del->next;
-		if (tmp_del->next != NULL)
-			tmp_del->next = tmp_del->next->next;
-		if (tmp != NULL)
-			free(tmp->word);
-		free(tmp);
-	}
+		expend_step1(tmp, tmp_del);
 	return ;
 }

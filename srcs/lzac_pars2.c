@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:50:28 by lzaccome          #+#    #+#             */
-/*   Updated: 2022/02/05 23:37:44 by lzaccome         ###   ########.fr       */
+/*   Updated: 2022/02/06 08:45:39 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -342,6 +342,33 @@ int	ft_isalnumsymb(int c)
 		|| c == ';' || c == ':');
 }
 
+int	intern_get_cmd(char *str, t_stuff *stuff, t_cmd **cmd, char **envp)
+{
+	if (ft_isspace(str[stuff->i]))
+		ft_space(stuff, str);
+	if (str[stuff->i] == '\'' && ft_quote(stuff, '\'', cmd) == 1)
+		return (1);
+	else if (str[stuff->i] == '\"')
+	{
+		if (ft_quote(stuff, '\"', cmd) == 1)
+			return (1);
+		expend_in_quote(envp, cmd, stuff);
+	}
+	else if (str[stuff->i] == '<')
+		ft_rdleft(stuff, cmd);
+	else if (str[stuff->i] == '>')
+		ft_rdright(stuff, cmd);
+	else if (ft_isalnum(str[stuff->i]))
+		ft_alnum(stuff, cmd);
+	else if (str[stuff->i] == '|')
+		lzac_ft_pipe(stuff, cmd);
+	else if (str[stuff->i] == '$')
+		ft_expend(stuff, envp, cmd);
+	else if (stuff->space != 1)
+		stuff->i = stuff->i + 1;
+	return (0);
+}
+
 t_cmd	*get_cmd(char *str, char **envp)
 {
 	t_cmd		*cmd;
@@ -351,38 +378,10 @@ t_cmd	*get_cmd(char *str, char **envp)
 	stuff = (t_stuff){.str = str, .type = NONE};
 	while (str[stuff.i])
 	{
-		if (get_cmd_exe(&stuff, str, &cmd, envp) == 2)
+		stuff.type = NONE;
+		stuff.space = 0;
+		if (intern_get_cmd(str, &stuff, &cmd, envp) == 1)
 			return (NULL);
-		// stuff.type = NONE;
-		// stuff.space = 0;
-		// if (ft_isspace(str[stuff.i]))
-		// 	ft_space(&stuff, str);
-		// if (str[stuff.i] == '\'')
-		// {
-		// 	if (ft_quote(&stuff, '\'', &cmd) == 1)
-		// 		return (NULL);
-		// }
-		// else if (str[stuff.i] == '\"')
-		// {
-		// 	if (ft_quote(&stuff, '\"', &cmd) == 1)
-		// 		return (NULL);
-		// 	expend_in_quote(envp, &cmd, &stuff);
-		// }
-		// else if (str[stuff.i] == '<')
-		// 	ft_rdleft(&stuff, &cmd);
-		// else if (str[stuff.i] == '>')
-		// 	ft_rdright(&stuff, &cmd);
-		// else if (ft_isalnum(str[stuff.i]))
-		// 	ft_alnum(&stuff, &cmd);
-		// else if (str[stuff.i] == '|')
-		// 	lzac_ft_pipe(&stuff, &cmd);
-		// else if (str[stuff.i] == '$')
-		// 	ft_expend(&stuff, envp, &cmd);
-		// else
-		// {
-		// 	if (stuff.space != 1)
-		// 		stuff.i++;
-		// }
 	}
 	if (get_type(cmd) == 2)
 		return (NULL);
@@ -390,49 +389,49 @@ t_cmd	*get_cmd(char *str, char **envp)
 		return (NULL);
 	return (cmd);
 }
+/*
+   int	get_ft_quote(t_stuff *stuff, char *str, t_cmd **cmd, char **envp)
+   {
+   if (str[stuff->i] == '\'')
+   {
+   if (ft_quote(stuff, '\'', cmd) == 1)
+   return (2);
+   }
+   else if (str[stuff->i] == '\"')
+   {
+   if (ft_quote(stuff, '\"', cmd) == 1)
+   return (2);
+   expend_in_quote(envp, cmd, stuff);
+   }
+   return (0);
+   }
 
-int	get_ft_quote(t_stuff *stuff, char *str, t_cmd **cmd, char **envp)
-{
-	if (str[stuff->i] == '\'')
-	{
-		if (ft_quote(stuff, '\'', cmd) == 1)
-			return (2);
-	}
-	else if (str[stuff->i] == '\"')
-	{
-		if (ft_quote(stuff, '\"', cmd) == 1)
-			return (2);
-		expend_in_quote(envp, cmd, stuff);
-	}
-	return (0);
-}
-
-int	get_cmd_exe(t_stuff *stuff, char *str, t_cmd **cmd, char **envp)
-{
-	stuff->type = NONE;
-		stuff->space = 0;
-		if (ft_isspace(str[stuff->i]))
-			ft_space(stuff, str);
-		if (get_ft_quote(stuff, str, cmd, envp) == 2)
-			return (2);
-		else if (str[stuff->i] == '<')
-			ft_rdleft(stuff, cmd);
-		else if (str[stuff->i] == '>')
-			ft_rdright(stuff, cmd);
-		else if (ft_isalnumsymb(str[stuff->i]))
-			ft_alnum(stuff, cmd);
-		else if (str[stuff->i] == '|')
-			lzac_ft_pipe(stuff, cmd);
-		else if (str[stuff->i] == '$')
-			ft_expend(stuff, envp, cmd);
-		else
-		{
-			if (stuff->space != 1)
-				stuff->i++;
-		}
-	return (0);
-}
-
+   int	get_cmd_exe(t_stuff *stuff, char *str, t_cmd **cmd, char **envp)
+   {
+   stuff->type = NONE;
+   stuff->space = 0;
+   if (ft_isspace(str[stuff->i]))
+   ft_space(stuff, str);
+   if (get_ft_quote(stuff, str, cmd, envp) == 2)
+   return (2);
+   else if (str[stuff->i] == '<')
+   ft_rdleft(stuff, cmd);
+   else if (str[stuff->i] == '>')
+   ft_rdright(stuff, cmd);
+   else if (ft_isalnumsymb(str[stuff->i]))
+   ft_alnum(stuff, cmd);
+   else if (str[stuff->i] == '|')
+   lzac_ft_pipe(stuff, cmd);
+   else if (str[stuff->i] == '$')
+   ft_expend(stuff, envp, cmd);
+   else
+   {
+   if (stuff->space != 1)
+   stuff->i++;
+   }
+   return (0);
+   }
+   */
 
 // int	get_type(t_cmd *cmd)
 // {
