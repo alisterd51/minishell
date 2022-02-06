@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:41:40 by anclarma          #+#    #+#              #
-#    Updated: 2022/02/04 18:27:26 by anclarma         ###   ########.fr        #
+#    Updated: 2022/02/06 03:45:02 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,13 +51,17 @@ C_FILES		= main.c					\
 			  ft_handler.c				\
 			  ft_pipe.c					\
 			  init_list.c				\
+			  init_command.c			\
 			  clean_list.c				\
 			  solve_path.c				\
 			  ret_status.c				\
 			  end_status.c				\
 			  colector.c				\
 			  lzac_pars1.c				\
-			  lzac_pars2.c
+			  lzac_pars2.c				\
+			  set_ast_heredoc.c			\
+			  sub_exec_ast.c			\
+			  utils_exec_ast.c
 SRCS		= $(patsubst %, $(C_DIR)/%, $(C_FILES))
 SRCS1		= main_ast.c
 SRCS2		= main_ft_echo.c

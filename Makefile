@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
-#    Updated: 2022/02/06 01:56:49 by anclarma         ###   ########.fr        #
+#    Updated: 2022/02/06 03:42:30 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,9 @@ C_FILES		= main.c					\
 			  colector.c				\
 			  lzac_pars1.c				\
 			  lzac_pars2.c				\
-			  set_ast_heredoc.c
+			  set_ast_heredoc.c			\
+			  sub_exec_ast.c			\
+			  utils_exec_ast.c
 SRCS		= $(patsubst %, $(C_DIR)/%, $(C_FILES))
 O_FILES		= $(C_FILES:.c=.o)
 OBJS		= $(patsubst %, $(O_DIR)/%, $(O_FILES))

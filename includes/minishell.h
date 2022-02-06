@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/06 02:10:23 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/06 03:42:01 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,8 +197,19 @@ void	clean_heredoc(int mode);
 char	*new_heredoc(void);
 
 /*
-**
+** set_ast_heredoc.c
 */
 void	set_ast_heredoc(t_ast *ast, t_list **lst_env);
+
+/*
+** sub_exec_ast.c
+*/
+int		exec_arg_1(char **tab, t_list **lst_env, int *fd_save);
+
+/*
+** utils_exec_ast.c
+*/
+char	*sub_solve_path(char **tab, t_list **lst_env);
+int		calc_status(int status);
 
 #endif
