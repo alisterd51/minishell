@@ -6,7 +6,7 @@
 #    By: anclarma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:41:40 by anclarma          #+#    #+#              #
-#    Updated: 2022/02/06 03:45:02 by anclarma         ###   ########.fr        #
+#    Updated: 2022/02/06 04:48:23 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,8 @@ C_FILES		= main.c					\
 			  lzac_pars2.c				\
 			  set_ast_heredoc.c			\
 			  sub_exec_ast.c			\
-			  utils_exec_ast.c
+			  utils_exec_ast.c			\
+			  utils_colector.c
 SRCS		= $(patsubst %, $(C_DIR)/%, $(C_FILES))
 SRCS1		= main_ast.c
 SRCS2		= main_ft_echo.c

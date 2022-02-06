@@ -6,7 +6,7 @@
 /*   By: lzaccome <lzaccome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 06:34:19 by anclarma          #+#    #+#             */
-/*   Updated: 2022/02/06 03:42:01 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/06 03:59:59 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,5 +211,11 @@ int		exec_arg_1(char **tab, t_list **lst_env, int *fd_save);
 */
 char	*sub_solve_path(char **tab, t_list **lst_env);
 int		calc_status(int status);
+
+/*
+** utils_colector.c
+*/
+void	close_fd(void *ptr);
+int		*new_int(int i);
 
 #endif
