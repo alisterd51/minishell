@@ -6,7 +6,7 @@
 /*   By: anclarma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 03:52:18 by anclarma          #+#    #+#             */
-/*   Updated: 2022/01/04 22:52:20 by anclarma         ###   ########.fr       */
+/*   Updated: 2022/02/06 12:10:50 by anclarma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	ft_cd(int ac, char **av, t_list **env)
 	step = 0;
 	while (step < 10)
 		step = (fonc_step[step])(&cd_var);
+	if (cd_var.ret == -1)
+		perror(av[1]);
 	free(cd_var.curpath);
 	free(cd_var.operand);
 	free(cd_var.new_pwd);
