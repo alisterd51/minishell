@@ -6,7 +6,7 @@
 #    By: anclarma <anclarma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 19:28:48 by anclarma          #+#    #+#              #
-#    Updated: 2022/02/06 09:06:08 by anclarma         ###   ########.fr        #
+#    Updated: 2022/02/10 16:37:11 by anclarma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,6 +73,12 @@ LFLAGS		= -Wall -Wextra -Werror
 CINCLUDES	= -I ./includes				\
 			  -I ./libft/includes
 CLIBS		= -L ./libft -lft -lreadline
+UNAME		= $(shell uname)
+
+ifeq ($(UNAME),Darwin)
+	CINCLUDES	+= -I $(HOME)/.brew/opt/readline/include
+	CLIBS		+= -L $(HOME)/.brew/opt/readline/lib
+endif
 
 all:		$(NAME)
 
